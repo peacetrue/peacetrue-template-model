@@ -1,0 +1,36 @@
+package ${basePackageName}.service;
+
+import com.github.peacetrue.associate.AssociatedSourceBuilder;
+import com.github.peacetrue.associate.AssociatedSourceBuilderImpl;
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+import java.util.Objects;
+
+/**
+ * @author xiayx
+ */
+@Configuration
+@EnableConfigurationProperties(Service${DomainName}Properties.class)
+@MapperScan(basePackageClasses = Service${DomainName}AutoConfiguration.class, annotationClass = Mapper.class)
+@ComponentScan(basePackageClasses = Service${DomainName}AutoConfiguration.class)
+@PropertySource("classpath:/application-${domain-name}-service.properties")
+public class Service${DomainName}AutoConfiguration {
+
+    private Service${DomainName}Properties properties;
+
+    public Service${DomainName}AutoConfiguration(Service${DomainName}Properties properties) {
+        this.properties = Objects.requireNonNull(properties);
+    }
+
+    @Bean
+    public AssociatedSourceBuilder associatedSourceBuilder() {
+        return new AssociatedSourceBuilderImpl();
+    }
+
+}

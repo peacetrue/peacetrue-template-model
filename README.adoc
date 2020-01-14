@@ -1,6 +1,6 @@
-= gradle 模板项目
+= 模型模板
 xiayx <xiayouxue@hotmail.com>
-v1.0, 2019-08-23: SNAPSHOT
+v1.0, 2020-01-12: SNAPSHOT
 :doctype: docbook
 :toc: left
 :numbered:
@@ -10,4 +10,31 @@ v1.0, 2019-08-23: SNAPSHOT
 :testsourcedir: src/test/java
 :source-highlighter: highlightjs
 
-查看 http://peacetrue.github.io/public/peacetrue-template-gradle/index.html[详情^]
+//查看 http://peacetrue.github.io/public/peacetrue-template-model/index.html[详情^]
+
+== 模型结构
+
+=== 文件结构
+
+=== 上下文变量
+
+////
+HashMap<String, Object> context = new HashMap<>();
+        context.put("project-name", "peacetrue-demo");
+        context.put("project-name", "peacetrue-demo");
+        context.put("basePackageName", "com.github.peacetrue.demo");
+        context.put("DomainName", "Demo");
+        context.put("domainName", "demo");
+        context.put("domain-name", "demo");
+        context.put("domain-name", "demo");
+        context.put("domainDescription", "示例");
+////
+
+* project-name：项目目录名称，使用场景：文件名、构件名
+* domainName：项目概念名称，使用场景：变量名
+** DomainName：大写驼峰形式，使用场景：类名
+** domain-name：中划线分隔式，使用场景：配置文件名
+* domainDescription：项目概念描述，使用场景：包名
+* basePackageName：模块基础包名
+
+== 模型内容

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    <script src="../node_modules/vue/dist/vue.js"></script>
+    <link rel="stylesheet" href="../node_modules/iview/dist/styles/iview.css"/>
+    <script src="../node_modules/iview/dist/iview.js"></script>
+    <script src="../node_modules/lodash/lodash.js"></script>
+    <script src="../node_modules/axios/dist/axios.js"></script>
+    <script src="../node_modules/qs/dist/qs.js"></script>
+    <script src="../node_modules/peacetrue-iview/dist/components/page-table/index.js"></script>
+    <script src="../node_modules/peacetrue-async-validator/dist/peace.async-validator.js"></script>
+    <script src="../node_modules/peacetrue-js/dist/peace.core.js"></script>
+    <script src="../node_modules/jsonpath/jsonpath.js"></script>
+    <style>
+        .operation-bar {
+            margin: 10px;
+        }
+
+        input.readonly, .readonly input {
+            border: none;
+        }
+    </style>
+</head>
+<body>
+<div id="container">
+    <${module-name}-list
+        url="http://localhost:8082/${module-name}s"
+        unique-url="http://localhost:8082/common/${module-name}s/unique"
+        :success-format="data=>data">
+        </${module-name}-list>
+</div>
+<script>
+    //处理参数和数据
+    axios.defaults.paramsSerializer = function (params) {
+        return Qs.stringify(params, {arrayFormat: 'repeat', serializeDate: (d) => d.getTime(), allowDots: true});
+    };
+
+    axios.defaults.transformRequest.unshift(function (data, headers) {
+        return Qs.stringify(data, {arrayFormat: 'repeat', serializeDate: (d) => d.getTime(), allowDots: true});
+    });
+
+    axios.interceptors.response.use(function (result) {
+        let data = result.data || {};
+        if (data.code === 'success') return Promise.resolve(data.data);
+        return Promise.reject(data);
+    });
+
+    let vue = new Vue({
+        el: '#container',
+        data() {
+            return {};
+        },
+        methods: {},
+        components: {
+            ${ModuleName}List: window['${ModuleName}List']
+        }
+    });
+</script>
+</body>
+</html>

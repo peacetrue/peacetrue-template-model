@@ -1,0 +1,15 @@
+description '${domainDescription}控制器'
+
+dependencies {
+    api project(":${project-name}-service-api")
+    implementation "com.github.peacetrue:peacetrue-spring"
+    implementation "org.springframework:spring-webmvc"
+    implementation 'org.springframework.data:spring-data-commons'
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation project(':${project-name}-service-mybatis')
+    testImplementation project(path: ':${project-name}-service-mybatis', configuration: 'testArtifacts')
+}

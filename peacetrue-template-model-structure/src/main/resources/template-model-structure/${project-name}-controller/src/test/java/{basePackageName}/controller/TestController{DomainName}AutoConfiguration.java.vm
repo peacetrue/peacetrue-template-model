@@ -1,0 +1,23 @@
+package ${basePackageName}.controller;
+
+import ${basePackageName}.service.TestService${DomainName}AutoConfiguration;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;
+import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+
+/**
+ * @author xiayx
+ */
+@Configuration
+@ImportAutoConfiguration(classes = {
+        TestService${DomainName}AutoConfiguration.class,
+        WebMvcAutoConfiguration.class,
+        HttpMessageConvertersAutoConfiguration.class,
+        Controller${DomainName}AutoConfiguration.class,
+})
+@PropertySource("classpath:application-${domain-name}-controller-test.properties")
+public class TestController${DomainName}AutoConfiguration {
+
+}

@@ -1,0 +1,66 @@
+package ${basePackageName}.service;
+
+import com.github.peacetrue.spring.util.BeanUtils;
+import io.github.benas.randombeans.api.EnhancedRandom;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
+/**
+ * @author xiayx
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = TestService${DomainName}AutoConfiguration.class)
+@Transactional
+public class ${ModuleName}ServiceImplTest {
+
+    @Autowired
+    private ${ModuleName}Service ${uc.lc(${ModuleName})}Service;
+
+    public static final ${ModuleName}Add RECORD_ADD = EnhancedRandom.random(${ModuleName}Add.class);
+    static {
+        RECORD_ADD.setOperatorId(1L);
+    }
+    
+    @Test
+    public void add() {
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
+        Assert.assertEquals(vo, ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(vo.getId())));
+    }
+
+    @Test
+    public void query() {
+        Page<${ModuleName}VO> vos = ${uc.lc(${ModuleName})}Service.query(new ${ModuleName}Query(), new PageRequest(0, 1));
+        Assert.assertEquals(vos.getTotalElements(), 1);
+    }
+
+    @Test
+    public void get() {
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
+        Assert.assertNotNull(vo);
+    }
+
+    @Test
+    public void modify() {
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
+        ${ModuleName}Modify modify = new ${ModuleName}Modify();
+        BeanUtils.copyProperties(vo, modify);
+        modify.setCode("2");
+        int count = ${uc.lc(${ModuleName})}Service.modify(modify);
+        Assert.assertEquals(count, 1);
+        vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
+        Assert.assertEquals(modify.getCode(), vo.getCode());
+    }
+
+    @Test
+    public void delete() {
+        int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(new Long[]{1L}));
+        Assert.assertEquals(count, 1);
+    }
+}

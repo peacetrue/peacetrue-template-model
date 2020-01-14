@@ -1,0 +1,28 @@
+package ${basePackageName}.service;
+
+import com.github.peacetrue.result.exception.ResultException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+import javax.annotation.Nullable;
+
+/**
+ * @author xiayx
+ */
+public interface ${ModuleName}Service {
+
+    /** 新增 */
+     ${ModuleName}VO add(${ModuleName}Add params) throws ResultException;
+
+    /** 分页查询 */
+     Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable) throws ResultException;
+
+    /** 获取 */
+     ${ModuleName}VO get(${ModuleName}Get params) throws ResultException;
+
+    /** 修改 */
+     int modify(${ModuleName}Modify params) throws ResultException;
+
+    /** 删除 */
+     int delete(${ModuleName}Delete params) throws ResultException;
+}

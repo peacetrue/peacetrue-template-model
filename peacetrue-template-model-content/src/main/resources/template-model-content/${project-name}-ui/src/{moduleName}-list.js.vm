@@ -1,0 +1,223 @@
+let {Card, Form, FormItem, Input, Icon, Button, InputNumber, DatePicker} = require('iview/dist/iview');
+let PageTable = require('peacetrue-iview/dist/components/page-table');
+let Axios = require('axios');
+let Lodash = require('lodash');
+let PromiseConfirm = require('peacetrue-iview/dist/mixins/promise-confirm');
+let {Rules, Generator, setFields} = require('peacetrue-async-validator/dist/peace.async-validator');
+
+module.exports = {
+    template: `
+    <div class="${module-name}-list">
+        <Card>
+            <span slot="title">查询条件</span>
+            <Form ref="form" :model="params" inline>
+    #foreach($property in $properties)
+        #if($property.name != 'id')
+            #if($property.type.name == 'java.lang.String')
+                <FormItem prop="$property.name">
+                    <Input type="text" v-model="params.$property.name" placeholder="$property.comment"/>
+                </FormItem>
+            #end
+            #if($property.type.name == 'java.util.Date')
+                <FormItem prop="${property.name}.lowerBound">
+                    <DatePicker type="date" placeholder="${property.comment}起始值" v-model="params.${property.name}.lowerBound"></DatePicker>
+                </FormItem>
+                <FormItem prop="${property.name}.upperBound">
+                    <DatePicker type="date" placeholder="${property.comment}结束值" v-model="params.${property.name}.upperBound"></DatePicker>
+                </FormItem>
+            #end
+        #end
+    #end
+                <FormItem >
+                    <Button type="primary" @click="query(true)">查询</Button>
+                    <Button @click="reset">清空</Button>
+                </FormItem>
+            </Form>
+        </Card>
+        <Row class="operation-bar">
+            <Col span="24">
+                <Button type="primary" size="small" @click="openAdd()">新增</Button>
+                &nbsp;
+                <Button type="primary" size="small" @click="remove()">删除</Button>
+            </Col>
+        </Row>
+        <Card>
+            <div slot="title">查询结果</div>
+            <page-table ref="pageTable" :url="url" :columns="columns" v-model="params" :success-format="successFormat"></page-table>
+        </Card>
+        <Modal v-model="detail.model" :title="detail.title">
+            <Form ref="detail" :model="detail.data" :rules="detail.rules" :label-width="100">
+    #set($auditProperties=['creatorId','createdTime','modifierId','modifiedTime'])
+    #foreach($property in $properties)
+        #if(!$auditProperties.contains($property.name)&&$property.name!='id')
+            #if($property.type.name == 'java.lang.String')
+                <FormItem label="$property.comment" prop="$property.name">
+                    <i-input type="text" v-model="detail.data.$property.name" placeholder="#ternaryOperateFalse($property.nullable,'必填')、长度1~$property.size" :readonly="detail.readonly" :class="detail.style"></i-input>
+                </FormItem>
+            #end
+            #if($property.type.name == 'java.util.Date')
+                <FormItem label="$property.comment" prop="${property.name}">
+                    <DatePicker type="date" placeholder="${property.comment}" v-model="detail.data.$property.name"></DatePicker>
+                </FormItem>
+            #end
+        #end
+    #end
+    <template v-if="detail.readonly">
+    #foreach($property in $properties)
+        #if($auditProperties.contains($property.name))
+            #if($property.type.name == 'java.lang.String')
+                <FormItem label="$property.comment" prop="$property.name">
+                    <i-input type="text" v-model="detail.data.$property.name" :readonly="detail.readonly" :class="detail.style"></i-input>
+                </FormItem>
+            #end
+        #end
+    #end
+    </template>
+            </Form>
+            <div slot="footer" v-show="!detail.readonly">
+                <i-button type="success" size="large" long :loading="detail.loading" @click="save">提交</i-button>
+            </div>
+        </Modal>
+    </div>
+    `,
+    props: {
+        url: {type: String, required: false, default: '/${moduleName}s'},
+        uniqueUrl: {type: String, required: false, default: '/common/${moduleName}s/unique'},
+        params: {type: Object, required: false, default() {return {page: 0, size: 10, code: null, name: null, createdTime: {lowerBound: null, upperBound: null}, modifiedTime: {lowerBound: null, upperBound: null}};}},
+        successFormat: {type: Function, required: false, default(data) {return data;}},
+        columns: {
+            type: Array, required: false, default() {
+                return [
+                    {type: 'selection', width: 60, align: 'center'},
+                    #foreach($property in $properties)
+                        #if($property.name=='createdTime')
+                            {title: '$property.comment', key: '$property.name', width: 200, tooltip: true, sortable: 'custom'},
+                        #else
+                            {title: '$property.comment', key: '$property.name', tooltip: true},
+                        #end
+                    #end
+                    {title: '操作', width: 200, fixed: 'right', render: (h, r) => {return this.renderOperate(h, r);}},
+                ];
+            }
+        },
+    },
+    data() {
+        setFields({
+            #foreach($property in $properties)
+                $property.name:"$property.comment",
+            #end
+        });
+        return {
+            detail: {
+                model: false,
+                loading: false,
+                data: {},
+                readonly: false,
+                style: null,
+                rules: Generator.generate({
+                    #foreach($property in $properties)
+                        $property.name:[{required: #ternaryOperate($property.nullable,'false','true')}, {max: $property.size}],
+                    #end
+                })
+            },
+        };
+    },
+    methods: {
+        query(reset) {
+            this.${esc.d}refs.pageTable.query(reset);
+        },
+        renderOperate(h, r) {
+            let buttons = [
+                h(Button, {props: {type: 'primary', size: 'small'}, on: {click: () => this.openView(r.row)}}, '查看'),
+                " ",
+                h(Button, {props: {type: 'primary', size: 'small'}, on: {click: () => this.openModify(r.row)}}, '修改'),
+                " ",
+                h(Button, {props: {type: 'primary', size: 'small'}, on: {click: () => this.remove(r.row)}}, '删除'),
+            ];
+            return h('div', buttons);
+        },
+        reset() {
+            this.${esc.d}refs.form.resetFields();
+            return this.query(true);
+        },
+        save() {},
+        openView(row) {
+            this.detail.model = true;
+            this.detail.title = '查看示例';
+            this.detail.data = row;
+            this.detail.rules.code[2].unique.original = row.code;
+            this.detail.readonly = true;
+            this.detail.style = 'readonly';
+        },
+        openAdd() {
+            this.detail.model = true;
+            this.detail.title = '创建示例';
+            this.detail.data = {};
+            this.detail.readonly = false;
+            this.detail.style = null;
+            this.detail.rules.code[2].unique.original = null;
+            this.${esc.d}refs.form.resetFields();
+            this.save = this.add;
+        },
+        add() {
+            this.${esc.d}refs.detail.validate((valid) => {
+                if (!valid) return;
+                this.promiseConfirm('确认要创建示例么？').then(() => {
+                    this.detail.loading = true;
+                    let params = Lodash.cloneDeep(this.detail.data);
+                    Axios.post(this.url, params)
+                        .then(t => {
+                            this.detail.model = false;
+                            this.query(true);
+                        })
+                        .finally(t => this.detail.loading = false);
+                });
+            });
+        },
+        openModify(row) {
+            this.detail.model = true;
+            this.detail.title = '修改示例';
+            this.detail.data = Lodash.merge({}, row);
+            this.detail.readonly = false;
+            this.detail.style = null;
+            this.detail.rules.code[2].unique.original = row.code;
+            this.${esc.d}refs.form.resetFields();
+            this.save = this.modify;
+        },
+        modify() {
+            this.${esc.d}refs.detail.validate((valid) => {
+                if (!valid) return;
+                this.promiseConfirm('确认要修改么？').then(() => {
+                    this.detail.loading = true;
+                    let params = Lodash.cloneDeep(this.detail.data);
+                    Axios.put(this.url, params)
+                        .then(t => {
+                            this.detail.model = false;
+                            this.query(true);
+                        })
+                        .finally(t => this.detail.loading = false);
+
+                });
+            });
+        },
+        remove(row) {
+            if (row) {
+                row = [row];
+            } else {
+                let selection = this.${esc.d}refs.pageTable.selection;
+                if (selection.length === 0) return this.${esc.d}Message.warning('尚未选中任何记录!');
+                row = selection;
+            }
+            this.promiseConfirm('确认要删除么？').then(() => {
+                Axios.delete(`${esc.d}{this.url}?${esc.d}{row.map(t => 'id=' + t.id).join('&')}`).then(t => {
+                    this.query(true);
+                });
+            })
+        },
+    },
+    components: {
+        Card, Form, FormItem, Input, Icon, Button, InputNumber, DatePicker, PageTable
+    },
+    mixins: [PromiseConfirm]
+};
+

@@ -1,0 +1,28 @@
+package ${basePackageName}.service;
+
+import com.github.peacetrue.core.OperatorCapableImpl;
+import lombok.*;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+#setId($properties)
+#setOperatorIdType($properties)
+
+/**
+ * @author xiayx
+ */
+@Getter
+@Setter
+@ToString(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+public class ${ModuleName}Delete extends OperatorCapableImpl<$operatorIdType> {
+
+    private static final long serialVersionUID = 0L;
+
+    @NotNull
+    @Min(1)
+    private ${id.type.simpleName}[] ${id.name};
+
+}

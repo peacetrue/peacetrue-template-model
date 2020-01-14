@@ -1,0 +1,6 @@
+peacetrue.${domainName}.urls.base-path=/${domain-name}s
+peacetrue.${domainName}.urls.add=
+peacetrue.${domainName}.urls.query=
+peacetrue.${domainName}.urls.get=
+peacetrue.${domainName}.urls.modify=
+peacetrue.${domainName}.urls.delete=

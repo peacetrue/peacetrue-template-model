@@ -7,11 +7,11 @@ plugins {
     id("idea")
 }
 
-allprojects { project ->
-
+subprojects { project ->
+    println("project:$project")
     group "com.github.peacetrue.template"
     version "1.0-SNAPSHOT"
-    description "gradle模板"
+    description "模型模板"
 
     apply plugin: "java"
     apply plugin: "java-library"
@@ -24,7 +24,7 @@ allprojects { project ->
             inheritOutputDirs = false
             outputDir = tasks.compileJava.destinationDir
             testOutputDir = tasks.compileTestJava.destinationDir
-            downloadSources = false
+            downloadSources = true
             downloadJavadoc = false
         }
     }

@@ -1,0 +1,63 @@
+package ${basePackageName}.controller;
+
+import ${basePackageName}.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+
+
+/**
+ * @author xiayx            
+ */
+@Controller
+@RequestMapping(value = "${esc.d}{peacetrue.${domainName}.urls.base-path}")
+public class ${ModuleName}Controller {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+    @Autowired
+    private ${ModuleName}Service ${moduleName}Service;
+
+    @ResponseBody
+    @PostMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.add}")
+    public ${ModuleName}VO add(${ModuleName}Add params) {
+        logger.info("新增信息[{}]", params);
+        return ${moduleName}Service.add(params);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.query}", params = "page")
+    public Page<${ModuleName}VO> query(${ModuleName}Query params,
+                                              @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
+        logger.info("分页查询信息[{}]", params);
+        return ${moduleName}Service.query(params, pageable);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.get}", params = {"!page"})
+    public ${ModuleName}VO get(${ModuleName}Get params) {
+        logger.info("获取信息[{}]详情", params);
+        return ${moduleName}Service.get(params);
+    }
+
+    @ResponseBody
+    @PutMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.modify}")
+    public int modify(${ModuleName}Modify params) {
+        logger.info("修改信息[{}]", params);
+        return ${moduleName}Service.modify(params);
+    }
+
+    @ResponseBody
+    @DeleteMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.delete}")
+    public int delete(${ModuleName}Delete params) {
+        logger.info("删除信息[{}]", params);
+        return ${moduleName}Service.delete(params);
+    }
+
+
+}

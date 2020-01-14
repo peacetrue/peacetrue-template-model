@@ -1,0 +1,18 @@
+package ${basePackageName}.service;
+
+import lombok.Data;
+
+import java.io.Serializable;
+import java.util.Date;
+
+#listImport($properties)
+/**
+ * @author xiayx
+ */
+@Data
+public class ${ModuleName}VO implements Serializable {
+
+    private static final long serialVersionUID = 0L;
+
+    #listProperties($properties)
+}

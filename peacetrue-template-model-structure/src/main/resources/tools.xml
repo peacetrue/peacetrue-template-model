@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tools>
+    <toolbox scope="application">
+        <tool class="org.apache.velocity.tools.generic.EscapeTool"/>
+        <tool class="com.github.peacetrue.velocity.tools.UpperCamelTool"/>
+        <tool class="com.github.peacetrue.velocity.tools.LowerCamelTool"/>
+    </toolbox>
+</tools>
