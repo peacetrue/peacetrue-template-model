@@ -11,6 +11,7 @@ import java.util.function.Function;
  * @author xiayx
  */
 public class FileTest {
+
     /**
      * 重命名
      *
@@ -19,22 +20,24 @@ public class FileTest {
      */
     public static void rename(Path path, Function<Path, Path> converter) throws IOException {
         Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-            @Override
-            public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                this.move(dir);
-                return super.preVisitDirectory(dir, attrs);
-            }
 
-            private void move(Path dir) throws IOException {
+            private boolean move(Path dir) throws IOException {
                 Path convertedPath = converter.apply(dir);
-                if (convertedPath.equals(dir)) return;
+                if (convertedPath.equals(dir)) return false;
                 Files.move(dir, convertedPath, StandardCopyOption.REPLACE_EXISTING);
+                return true;
             }
 
             @Override
             public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
                 this.move(file);
                 return super.visitFile(file, attrs);
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                this.move(dir);
+                return super.postVisitDirectory(dir, exc);
             }
         });
     }
@@ -43,7 +46,8 @@ public class FileTest {
     @Test
     public void name() throws IOException {
         String path = "/Users/xiayx/Documents/Projects/peacetrue-template-model/peacetrue-template-model-structure/src/main/resources/template-model-structure";
-        rename(Paths.get(path), path1 -> path1.resolveSibling(path1.getFileName().toString().replaceAll("(\\{.*?})", "\\$$1")));
+//        path = "/Users/xiayx/Documents/Projects/peacetrue-template-model/peacetrue-template-model-content/src/main/resources/template-model-content";
+        rename(Paths.get(path), path1 -> path1.resolveSibling(path1.getFileName().toString().replaceAll("basePackageName", "basePackagePath")));
     }
 
 

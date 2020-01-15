@@ -1,13 +1,11 @@
 package com.github.peacetrue.template.model.content;
 
-import com.github.peacetrue.generator.ContextHandler;
-import com.github.peacetrue.generator.GeneratorAutoConfiguration;
-import com.github.peacetrue.generator.JdbcTypeContextHandler;
-import com.github.peacetrue.generator.UpperCamelContextHandler;
+import com.github.peacetrue.generator.*;
 import com.github.peacetrue.generator.placeholder.PlaceholderResolver;
 import com.github.peacetrue.generator.placeholder.PlaceholderResolverImpl;
 import com.github.peacetrue.generator.velocity.ContextFactory;
 import com.github.peacetrue.generator.velocity.ToolContextFactory;
+import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +15,10 @@ import org.springframework.context.annotation.PropertySource;
  * @author xiayx
  */
 @Configuration
-@AutoConfigureBefore(GeneratorAutoConfiguration.class)
+@AutoConfigureBefore({
+        GeneratorAutoConfiguration.class,
+        VelocityGeneratorAutoConfiguration.class
+})
 @PropertySource("classpath:application-template-model-content.properties")
 public class TemplateModelContentAutoConfiguration {
 
@@ -27,7 +28,7 @@ public class TemplateModelContentAutoConfiguration {
     }
 
     @Bean
-    public ContextHandler jdbcTypeContextHandler() {
+    public JdbcTypeContextHandler jdbcTypeContextHandler() {
         return new JdbcTypeContextHandler();
     }
 
@@ -35,6 +36,12 @@ public class TemplateModelContentAutoConfiguration {
     public UpperCamelContextHandler upperCamelContextHandler() {
         return new UpperCamelContextHandler("ModuleName", "DomainName");
     }
+
+    @Bean
+    public PackageNameContextHandler packageNameContextHandler() {
+        return PackageNameContextHandler.DEFAULT;
+    }
+
 
     @Bean
     public PlaceholderResolver placeholderResolver() {

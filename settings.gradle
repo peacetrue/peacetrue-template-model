@@ -1,4 +1,3 @@
 rootProject.name = "peacetrue-template-model"
 include("peacetrue-template-model-structure")
 include("peacetrue-template-model-content")
-includeFlat("peacetrue-velocity")

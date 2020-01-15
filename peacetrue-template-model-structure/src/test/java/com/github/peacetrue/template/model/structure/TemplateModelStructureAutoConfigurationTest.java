@@ -1,6 +1,5 @@
 package com.github.peacetrue.template.model.structure;
 
-import com.github.peacetrue.generator.FolderGeneratorAutoConfiguration;
 import com.github.peacetrue.generator.Generator;
 import com.github.peacetrue.generator.GeneratorAutoConfiguration;
 import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
@@ -22,7 +21,6 @@ import java.util.Map;
 @SpringBootTest(classes = {
         TemplateModelStructureAutoConfiguration.class,
         GeneratorAutoConfiguration.class,
-        FolderGeneratorAutoConfiguration.class,
         VelocityGeneratorAutoConfiguration.class,
 })
 public class TemplateModelStructureAutoConfigurationTest {

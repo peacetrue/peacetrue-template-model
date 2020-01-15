@@ -1,6 +1,5 @@
 package com.github.peacetrue.template.model.content;
 
-import com.github.peacetrue.generator.FolderGeneratorAutoConfiguration;
 import com.github.peacetrue.generator.Generator;
 import com.github.peacetrue.generator.GeneratorAutoConfiguration;
 import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
@@ -8,7 +7,6 @@ import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.sql.metadata.MetadataSqlAutoConfiguration;
 import com.github.peacetrue.sql.metadata.Model;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
-import org.apache.velocity.app.VelocityEngine;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +27,6 @@ import java.util.Map;
 @SpringBootTest(classes = {
         TemplateModelContentAutoConfiguration.class,
         GeneratorAutoConfiguration.class,
-        FolderGeneratorAutoConfiguration.class,
         VelocityGeneratorAutoConfiguration.class,
         DataSourceAutoConfiguration.class,
         DataSourceTransactionManagerAutoConfiguration.class,

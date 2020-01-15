@@ -18,23 +18,12 @@ v1.0, 2020-01-12: SNAPSHOT
 
 === 上下文变量
 
-////
-HashMap<String, Object> context = new HashMap<>();
-        context.put("project-name", "peacetrue-demo");
-        context.put("project-name", "peacetrue-demo");
-        context.put("basePackageName", "com.github.peacetrue.demo");
-        context.put("DomainName", "Demo");
-        context.put("domainName", "demo");
-        context.put("domain-name", "demo");
-        context.put("domain-name", "demo");
-        context.put("domainDescription", "示例");
-////
-
 * project-name：项目目录名称，使用场景：文件名、构件名
 * domainName：项目概念名称，使用场景：变量名
 ** DomainName：大写驼峰形式，使用场景：类名
 ** domain-name：中划线分隔式，使用场景：配置文件名
 * domainDescription：项目概念描述，使用场景：包名
 * basePackageName：模块基础包名
+** basePackagePath：模块基础路径
 
 == 模型内容
