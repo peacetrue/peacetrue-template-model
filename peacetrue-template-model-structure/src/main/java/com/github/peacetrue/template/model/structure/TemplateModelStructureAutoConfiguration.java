@@ -35,14 +35,4 @@ public class TemplateModelStructureAutoConfiguration {
         return PackageNameContextHandler.DEFAULT;
     }
 
-    @Bean
-    public PlaceholderResolver placeholderResolver() {
-        return new PlaceholderResolverImpl((placeholder, actualValue)
-                -> "basePackageName".equals(placeholder)
-                ? actualValue.replaceAll("\\.", "/")
-                : actualValue
-        );
-    }
-
-
 }

@@ -1,9 +1,12 @@
 package ${basePackageName}.controller;
 
 import ${basePackageName}.service.${ModuleName}ServiceImplTest;
+import ${basePackageName}.service.${ModuleName}Modify;
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.junit.Test;
+import org.junit.FixMethodOrder;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -27,7 +30,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = TestController${DomainName}AutoConfiguration.class)
 @AutoConfigureMockMvc
 @ActiveProfiles("${domain-name}-controller-test")
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ${ModuleName}ControllerTest {
+
+    public static String basePath = "/${module-name}s";
 
     @Autowired
     private MockMvc mockMvc;
@@ -40,31 +46,62 @@ public class ${ModuleName}ControllerTest {
     }
 
     @Test
-    public void add() throws Exception {
+    public void test_01_query() throws Exception {
         this.mockMvc.perform(
-                MockMvcRequestBuilders.post("/${domain-name}s")
+                MockMvcRequestBuilders.get(basePath + "?page=0")
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.content.size()").value(1));
+    }
+
+    @Test
+    public void test_02_get() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.get(basePath + "?id=1")
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$").exists());
+    }
+
+    @Test
+    public void test_03_add() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.post(basePath + "")
                         .params(to(${ModuleName}ServiceImplTest.RECORD_ADD))
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.code").value(${ModuleName}ServiceImplTest.RECORD_ADD.getCode()));
-
+                .andExpect(jsonPath("$.id").value(2));
     }
 
     @Test
-    public void query() {
+    public void test_04_modify() throws Exception {
+        ${ModuleName}Modify modify = new ${ModuleName}Modify();
+        modify.setId(1L);
+        modify.setCode("2");
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.put(basePath + "")
+                        .params(to(modify))
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$").value(1));
     }
 
     @Test
-    public void get() {
-    }
-
-    @Test
-    public void modify() {
-    }
-
-    @Test
-    public void delete() {
+    public void test_05_delete() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.delete(basePath + "?id=1")
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$").value(1));
     }
 }

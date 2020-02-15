@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
  * @author xiayx            
  */
 @Controller
-@RequestMapping(value = "${esc.d}{peacetrue.${domainName}.urls.base-path}")
+@RequestMapping(value = "${esc.d}{peacetrue.${module-name}.urls.base-path:${module-name}s}")
 public class ${ModuleName}Controller {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -24,14 +24,14 @@ public class ${ModuleName}Controller {
     private ${ModuleName}Service ${moduleName}Service;
 
     @ResponseBody
-    @PostMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.add}")
+    @PostMapping(value = "${esc.d}{peacetrue.${module-name}.urls.add:}")
     public ${ModuleName}VO add(${ModuleName}Add params) {
         logger.info("新增信息[{}]", params);
         return ${moduleName}Service.add(params);
     }
 
     @ResponseBody
-    @GetMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.query}", params = "page")
+    @GetMapping(value = "${esc.d}{peacetrue.${module-name}.urls.query:}", params = "page")
     public Page<${ModuleName}VO> query(${ModuleName}Query params,
                                               @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
         logger.info("分页查询信息[{}]", params);
@@ -39,21 +39,21 @@ public class ${ModuleName}Controller {
     }
 
     @ResponseBody
-    @GetMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.get}", params = {"!page"})
+    @GetMapping(value = "${esc.d}{peacetrue.${module-name}.urls.get:}", params = {"!page"})
     public ${ModuleName}VO get(${ModuleName}Get params) {
         logger.info("获取信息[{}]详情", params);
         return ${moduleName}Service.get(params);
     }
 
     @ResponseBody
-    @PutMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.modify}")
+    @PutMapping(value = "${esc.d}{peacetrue.${module-name}.urls.modify:}")
     public int modify(${ModuleName}Modify params) {
         logger.info("修改信息[{}]", params);
         return ${moduleName}Service.modify(params);
     }
 
     @ResponseBody
-    @DeleteMapping(value = "${esc.d}{peacetrue.${moduleName}.urls.delete}")
+    @DeleteMapping(value = "${esc.d}{peacetrue.${module-name}.urls.delete:}")
     public int delete(${ModuleName}Delete params) {
         logger.info("删除信息[{}]", params);
         return ${moduleName}Service.delete(params);

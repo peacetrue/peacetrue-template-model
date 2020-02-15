@@ -42,12 +42,12 @@
 
 ## 排除审计信息（创建者、创建时间、修改者、修改时间）
 #macro( listPropertiesOutAudit $properties)
-    #listProperties($properties,["creatorId","createdTime","createdTime","createdTime"])
+    #listProperties($properties,["creatorId","createdTime","modifierId","modifiedTime"])
 #end
 
 ## 排除主键
 #macro( listPropertiesOutIdAudit $properties)
-    #listProperties($properties,["id","creatorId","createdTime","createdTime","createdTime"])
+    #listProperties($properties,["id","creatorId","createdTime","modifierId","modifiedTime"])
 #end
 
 

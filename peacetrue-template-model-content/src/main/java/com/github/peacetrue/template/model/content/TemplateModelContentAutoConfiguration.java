@@ -1,8 +1,9 @@
 package com.github.peacetrue.template.model.content;
 
-import com.github.peacetrue.generator.*;
-import com.github.peacetrue.generator.placeholder.PlaceholderResolver;
-import com.github.peacetrue.generator.placeholder.PlaceholderResolverImpl;
+import com.github.peacetrue.generator.GeneratorAutoConfiguration;
+import com.github.peacetrue.generator.JdbcTypeContextHandler;
+import com.github.peacetrue.generator.PackageNameContextHandler;
+import com.github.peacetrue.generator.UpperCamelContextHandler;
 import com.github.peacetrue.generator.velocity.ContextFactory;
 import com.github.peacetrue.generator.velocity.ToolContextFactory;
 import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
@@ -40,16 +41,6 @@ public class TemplateModelContentAutoConfiguration {
     @Bean
     public PackageNameContextHandler packageNameContextHandler() {
         return PackageNameContextHandler.DEFAULT;
-    }
-
-
-    @Bean
-    public PlaceholderResolver placeholderResolver() {
-        return new PlaceholderResolverImpl((placeholder, actualValue)
-                -> "basePackageName".equals(placeholder)
-                ? actualValue.replaceAll("\\.", "/")
-                : actualValue
-        );
     }
 
 }

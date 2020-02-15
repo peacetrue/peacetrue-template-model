@@ -1,10 +1,23 @@
+configurations {
+    testArtifacts.extendsFrom testRuntime
+}
+
+task testJar(type: Jar) {
+    archiveClassifier = 'test'
+    from sourceSets.test.output
+}
+
+artifacts {
+    testArtifacts testJar
+}
+
 dependencies {
-    implementation 'com.github.peacetrue.generator:peacetrue-generator:1.0.0-SNAPSHOT'
+    api 'com.github.peacetrue.generator:peacetrue-generator:1.0.0-SNAPSHOT'
     implementation 'com.github.peacetrue.generator:peacetrue-generator-context:1.0.0-SNAPSHOT'
+    implementation 'com.google.guava:guava' //for UpperCamelContextHandler
     implementation 'com.github.peacetrue.generator:peacetrue-generator-velocity:1.0.0-SNAPSHOT'
-    implementation 'com.google.guava:guava'
-    implementation 'org.apache.velocity:velocity-engine-core:2.1'
-    implementation 'org.apache.velocity.tools:velocity-tools-generic:3.0'
+//    implementation 'org.apache.velocity:velocity-engine-core:2.1'
+//    implementation 'org.apache.velocity.tools:velocity-tools-generic:3.0'
     implementation "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
     compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
     compileOnly 'org.springframework.boot:spring-boot-configuration-processor'

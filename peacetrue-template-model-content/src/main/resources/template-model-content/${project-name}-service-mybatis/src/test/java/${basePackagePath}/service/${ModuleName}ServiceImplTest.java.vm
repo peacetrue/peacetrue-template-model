@@ -3,8 +3,10 @@ package ${basePackageName}.service;
 import com.github.peacetrue.spring.util.BeanUtils;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Assert;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = TestService${DomainName}AutoConfiguration.class)
 @Transactional
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ${ModuleName}ServiceImplTest {
 
     @Autowired
@@ -27,27 +30,27 @@ public class ${ModuleName}ServiceImplTest {
     static {
         RECORD_ADD.setOperatorId(1L);
     }
-    
-    @Test
-    public void add() {
-        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
-        Assert.assertEquals(vo, ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(vo.getId())));
-    }
 
     @Test
-    public void query() {
+    public void test_01_query() {
         Page<${ModuleName}VO> vos = ${uc.lc(${ModuleName})}Service.query(new ${ModuleName}Query(), new PageRequest(0, 1));
         Assert.assertEquals(vos.getTotalElements(), 1);
     }
 
     @Test
-    public void get() {
+    public void test_02_get() {
         ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
         Assert.assertNotNull(vo);
     }
 
     @Test
-    public void modify() {
+    public void test_03_add() {
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
+        Assert.assertEquals(vo, ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(vo.getId())));
+    }
+
+    @Test
+    public void test_04_modify() {
         ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
         ${ModuleName}Modify modify = new ${ModuleName}Modify();
         BeanUtils.copyProperties(vo, modify);
@@ -59,7 +62,7 @@ public class ${ModuleName}ServiceImplTest {
     }
 
     @Test
-    public void delete() {
+    public void test_05_delete() {
         int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(new Long[]{1L}));
         Assert.assertEquals(count, 1);
     }

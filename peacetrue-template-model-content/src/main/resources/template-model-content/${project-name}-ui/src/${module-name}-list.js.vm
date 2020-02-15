@@ -81,8 +81,8 @@ module.exports = {
     </div>
     `,
     props: {
-        url: {type: String, required: false, default: '/${moduleName}s'},
-        uniqueUrl: {type: String, required: false, default: '/common/${moduleName}s/unique'},
+        url: {type: String, required: false, default: '/${module-name}s'},
+        uniqueUrl: {type: String, required: false, default: '/common/${module-name}s/unique'},
         params: {type: Object, required: false, default() {return {page: 0, size: 10, code: null, name: null, createdTime: {lowerBound: null, upperBound: null}, modifiedTime: {lowerBound: null, upperBound: null}};}},
         successFormat: {type: Function, required: false, default(data) {return data;}},
         columns: {
@@ -107,6 +107,7 @@ module.exports = {
                 $property.name:"$property.comment",
             #end
         });
+        //Rules.use('unique', {url: this.uniqueUrl})
         return {
             detail: {
                 model: false,
@@ -143,7 +144,7 @@ module.exports = {
         save() {},
         openView(row) {
             this.detail.model = true;
-            this.detail.title = '查看示例';
+            this.detail.title = '查看${domainDescription}';
             this.detail.data = row;
             this.detail.rules.code[2].unique.original = row.code;
             this.detail.readonly = true;
@@ -151,7 +152,7 @@ module.exports = {
         },
         openAdd() {
             this.detail.model = true;
-            this.detail.title = '创建示例';
+            this.detail.title = '创建${domainDescription}';
             this.detail.data = {};
             this.detail.readonly = false;
             this.detail.style = null;
@@ -162,7 +163,7 @@ module.exports = {
         add() {
             this.${esc.d}refs.detail.validate((valid) => {
                 if (!valid) return;
-                this.promiseConfirm('确认要创建示例么？').then(() => {
+                this.promiseConfirm('确认要创建${domainDescription}么？').then(() => {
                     this.detail.loading = true;
                     let params = Lodash.cloneDeep(this.detail.data);
                     Axios.post(this.url, params)
@@ -176,7 +177,7 @@ module.exports = {
         },
         openModify(row) {
             this.detail.model = true;
-            this.detail.title = '修改示例';
+            this.detail.title = '修改${domainDescription}';
             this.detail.data = Lodash.merge({}, row);
             this.detail.readonly = false;
             this.detail.style = null;
@@ -187,7 +188,7 @@ module.exports = {
         modify() {
             this.${esc.d}refs.detail.validate((valid) => {
                 if (!valid) return;
-                this.promiseConfirm('确认要修改么？').then(() => {
+                this.promiseConfirm('确认要修改${domainDescription}么？').then(() => {
                     this.detail.loading = true;
                     let params = Lodash.cloneDeep(this.detail.data);
                     Axios.put(this.url, params)
@@ -208,7 +209,7 @@ module.exports = {
                 if (selection.length === 0) return this.${esc.d}Message.warning('尚未选中任何记录!');
                 row = selection;
             }
-            this.promiseConfirm('确认要删除么？').then(() => {
+            this.promiseConfirm('确认要删除${domainDescription}么？').then(() => {
                 Axios.delete(`${esc.d}{this.url}?${esc.d}{row.map(t => 'id=' + t.id).join('&')}`).then(t => {
                     this.query(true);
                 });

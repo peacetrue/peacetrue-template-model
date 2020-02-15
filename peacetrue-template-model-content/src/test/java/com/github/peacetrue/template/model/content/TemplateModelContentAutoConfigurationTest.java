@@ -7,15 +7,22 @@ import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.sql.metadata.MetadataSqlAutoConfiguration;
 import com.github.peacetrue.sql.metadata.Model;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
+import com.github.peacetrue.template.model.structure.TemplateModelStructureAutoConfigurationTest;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.FileSystemUtils;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,6 +39,8 @@ import java.util.Map;
         DataSourceTransactionManagerAutoConfiguration.class,
         MetadataSqlAutoConfiguration.class,
 })
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@ActiveProfiles("template-model-content-test")
 public class TemplateModelContentAutoConfigurationTest {
 
     @Autowired
@@ -41,21 +50,14 @@ public class TemplateModelContentAutoConfigurationTest {
     private ModelSupplier modelSupplier;
 
     @Test
-    public void generate() throws IOException {
+    public void generateContent() throws IOException {
+        //TODO 关于没有创建者的情况
         for (Model model : modelSupplier.getModels()) {
-            Map<String, Object> context = getContext();
+            Map<String, Object> context = TemplateModelStructureAutoConfigurationTest.getContext();
             context.putAll(BeanUtils.map(model));
             context.put("ModuleName", model.getName());
             folderGenerator.generate(context);
         }
     }
 
-    private Map<String, Object> getContext() {
-        Map<String, Object> context = new HashMap<>();
-        context.put("project-name", "peacetrue-demo");
-        context.put("basePackageName", "com.github.peacetrue.demo");
-        context.put("DomainName", "Demo");
-        context.put("domainDescription", "示例");
-        return context;
-    }
 }

@@ -12,7 +12,6 @@ CREATE TABLE demo
 
 
 
-
 insert into demo (code, name, creator_id, created_time, modifier_id, modified_time)
 values ('1', '1', 1, '2010-01-01 01:01:01', 1, '2010-01-01 01:01:01');
 
