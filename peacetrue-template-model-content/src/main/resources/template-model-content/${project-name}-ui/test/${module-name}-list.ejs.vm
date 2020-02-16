@@ -9,9 +9,9 @@
     <script src="../node_modules/lodash/lodash.js"></script>
     <script src="../node_modules/axios/dist/axios.js"></script>
     <script src="../node_modules/qs/dist/qs.js"></script>
+    <script src="../node_modules/peacetrue-js/dist/peace.core.js"></script>
     <script src="../node_modules/peacetrue-iview/dist/components/page-table/index.js"></script>
     <script src="../node_modules/peacetrue-async-validator/dist/peace.async-validator.js"></script>
-    <script src="../node_modules/peacetrue-js/dist/peace.core.js"></script>
     <script src="../node_modules/jsonpath/jsonpath.js"></script>
     <style>
         .operation-bar {

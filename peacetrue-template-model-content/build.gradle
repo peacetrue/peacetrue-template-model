@@ -5,16 +5,16 @@ dependencies {
     implementation "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
     implementation 'com.google.guava:guava'
     implementation 'org.mybatis:mybatis'
+    implementation 'com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT'
+    implementation 'com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT'
+    implementation 'com.github.peacetrue:peacetrue-spring'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
     compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     testCompile project(path: ':peacetrue-template-model-structure', configuration: 'testArtifacts')
-    testCompile 'com.github.peacetrue:peacetrue-spring'
     testCompile 'org.springframework.boot:spring-boot-starter-test'
     testCompile 'org.springframework.boot:spring-boot-starter-logging'
-    testCompile 'com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT'
-    testCompile 'com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT'
-    testCompile 'org.springframework.boot:spring-boot-starter-jdbc'
-    testCompile 'com.h2database:h2'
+    testCompile 'com.h2database:h2:1.4.196'
 }

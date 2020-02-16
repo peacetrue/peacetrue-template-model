@@ -8,9 +8,8 @@ plugins {
 }
 
 subprojects { project ->
-    println("project:$project")
     group "com.github.peacetrue.template"
-    version "1.0-SNAPSHOT"
+    version "1.0.0-SNAPSHOT"
     description "模型模板"
 
     apply plugin: "java"
@@ -30,6 +29,7 @@ subprojects { project ->
     }
 
     repositories {
+        mavenLocal()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         mavenCentral()
         jcenter()

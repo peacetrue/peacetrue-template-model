@@ -1,16 +1,20 @@
 package com.github.peacetrue.template.model.content;
 
-import com.github.peacetrue.generator.GeneratorAutoConfiguration;
-import com.github.peacetrue.generator.JdbcTypeContextHandler;
-import com.github.peacetrue.generator.PackageNameContextHandler;
-import com.github.peacetrue.generator.UpperCamelContextHandler;
+import com.github.peacetrue.generator.*;
 import com.github.peacetrue.generator.velocity.ContextFactory;
 import com.github.peacetrue.generator.velocity.ToolContextFactory;
 import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
+import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.sql.metadata.ModelSupplier;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author xiayx
@@ -43,4 +47,13 @@ public class TemplateModelContentAutoConfiguration {
         return PackageNameContextHandler.DEFAULT;
     }
 
+    @Bean
+    public ContextsSupplier contextsSupplier(@Autowired ModelSupplier modelSupplier) {
+        List<Map<String, Object>> contexts = modelSupplier.getModels().stream().map(model -> {
+            Map<String, Object> context = BeanUtils.map(model);
+            context.put("ModuleName", model.getName());
+            return context;
+        }).collect(Collectors.toList());
+        return new ContextsSupplierImpl(contexts);
+    }
 }
