@@ -1,9 +1,8 @@
-package ${basePackageName};
+package ${basePackageName}.modules.${modulename};
 
 import com.github.peacetrue.core.OperatorCapableImpl;
 import lombok.*;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 #setId($properties)
@@ -17,15 +16,11 @@ import javax.validation.constraints.NotNull;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Delete extends OperatorCapableImpl<$operatorIdType> {
+public class ${ModuleName}Get extends OperatorCapableImpl<$operatorIdType> {
 
     private static final long serialVersionUID = 0L;
 
     @NotNull
-    @Min(1)
-    private ${id.type.simpleName}[] ${id.name};
+    private ${id.type.simpleName} ${id.name};
 
-    public ${ModuleName}Delete(${id.type.simpleName} id) {
-        this.id = new ${id.type.simpleName}[]{id};
-    }
 }

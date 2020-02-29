@@ -1,4 +1,4 @@
-package ${basePackageName};
+package ${basePackageName}.modules.${modulename};
 
 import com.github.pagehelper.PageHelper;
 import com.github.peacetrue.core.Range;
@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ${basePackageName}.${ModuleName}DynamicSqlSupport.*;
+import static ${basePackageName}.modules.${modulename}.${ModuleName}DynamicSqlSupport.*;
 
 /**
  * @author xiayx

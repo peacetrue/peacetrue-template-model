@@ -10,7 +10,7 @@ plugins {
 
 subprojects { project ->
     group 'com.github.peacetrue.template'
-    version "1.0.0-SNAPSHOT"
+    version "2.0.0-SNAPSHOT"
     description "模型模板"
 
     apply plugin: "java"
