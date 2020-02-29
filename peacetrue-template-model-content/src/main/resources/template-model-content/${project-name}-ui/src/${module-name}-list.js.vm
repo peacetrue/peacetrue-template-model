@@ -152,7 +152,7 @@ module.exports = {
         },
         openAdd() {
             this.detail.model = true;
-            this.detail.title = '创建${domainDescription}';
+            this.detail.title = '创建${comment}';
             this.detail.data = {};
             this.detail.readonly = false;
             this.detail.style = null;

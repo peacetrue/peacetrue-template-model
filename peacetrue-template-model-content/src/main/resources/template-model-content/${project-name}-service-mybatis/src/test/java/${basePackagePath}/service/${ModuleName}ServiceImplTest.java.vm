@@ -14,6 +14,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+#setOperatorIdType($properties)
+#setId($properties)
+
 /**
  * @author xiayx
  */
@@ -26,9 +29,12 @@ public class ${ModuleName}ServiceImplTest {
     @Autowired
     private ${ModuleName}Service ${uc.lc(${ModuleName})}Service;
 
+    //TODO 需要修改值
+    public static final $id.type.name INIT_ID = 1L;
     public static final ${ModuleName}Add RECORD_ADD = EnhancedRandom.random(${ModuleName}Add.class);
+
     static {
-        RECORD_ADD.setOperatorId(1L);
+        RECORD_ADD.setOperatorId(EnhancedRandom.random(${operatorIdType}.class));
     }
 
     @Test
@@ -39,7 +45,7 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_02_get() {
-        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
         Assert.assertNotNull(vo);
     }
 
@@ -51,19 +57,20 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_04_modify() {
-        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
         ${ModuleName}Modify modify = new ${ModuleName}Modify();
         BeanUtils.copyProperties(vo, modify);
+        //TODO 设置成实际存在的属性
         modify.setCode("2");
         int count = ${uc.lc(${ModuleName})}Service.modify(modify);
         Assert.assertEquals(count, 1);
-        vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(1L));
+        vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
         Assert.assertEquals(modify.getCode(), vo.getCode());
     }
 
     @Test
     public void test_05_delete() {
-        int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(new Long[]{1L}));
+        int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(new ${id.type.name}[]{INIT_ID}));
         Assert.assertEquals(count, 1);
     }
 }

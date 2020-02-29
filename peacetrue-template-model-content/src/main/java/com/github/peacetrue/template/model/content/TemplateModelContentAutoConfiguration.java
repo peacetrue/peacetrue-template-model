@@ -8,6 +8,7 @@ import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
@@ -25,7 +26,14 @@ import java.util.stream.Collectors;
         VelocityGeneratorAutoConfiguration.class
 })
 @PropertySource("classpath:application-template-model-content.properties")
+@EnableConfigurationProperties(TemplateModelContentProperties.class)
 public class TemplateModelContentAutoConfiguration {
+
+    private TemplateModelContentProperties properties;
+
+    public TemplateModelContentAutoConfiguration(TemplateModelContentProperties properties) {
+        this.properties = properties;
+    }
 
     @Bean
     public ContextFactory contextFactory() {
@@ -39,7 +47,7 @@ public class TemplateModelContentAutoConfiguration {
 
     @Bean
     public UpperCamelContextHandler upperCamelContextHandler() {
-        return new UpperCamelContextHandler("ModuleName", "DomainName");
+        return new UpperCamelContextHandler("ModuleName" , "DomainName");
     }
 
     @Bean
@@ -49,11 +57,13 @@ public class TemplateModelContentAutoConfiguration {
 
     @Bean
     public ContextsSupplier contextsSupplier(@Autowired ModelSupplier modelSupplier) {
-        List<Map<String, Object>> contexts = modelSupplier.getModels().stream().map(model -> {
-            Map<String, Object> context = BeanUtils.map(model);
-            context.put("ModuleName", model.getName());
-            return context;
-        }).collect(Collectors.toList());
+        List<Map<String, Object>> contexts = modelSupplier.getModels()
+                .stream().map(model -> {
+                    Map<String, Object> context = BeanUtils.map(model);
+                    context.put("ModuleName" , model.getName());
+                    context.put("fields" , properties.getFields());
+                    return context;
+                }).collect(Collectors.toList());
         return new ContextsSupplierImpl(contexts);
     }
 }

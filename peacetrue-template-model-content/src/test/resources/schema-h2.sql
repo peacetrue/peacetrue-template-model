@@ -6,8 +6,8 @@ CREATE TABLE demo
     name          VARCHAR(255) COMMENT '名称',
     creator_id    BIGINT                            NOT NULL COMMENT '创建者主键',
     created_time  DATETIME                          NOT NULL COMMENT '创建时间',
-    modifier_id   BIGINT                            NOT NULL COMMENT '创建者主键',
-    modified_time DATETIME                          NOT NULL COMMENT '创建时间'
+    modifier_id   BIGINT                            NOT NULL COMMENT '修改者主键',
+    modified_time DATETIME                          NOT NULL COMMENT '修改时间'
 );
 
 insert into demo (code, name, creator_id, created_time, modifier_id, modified_time)

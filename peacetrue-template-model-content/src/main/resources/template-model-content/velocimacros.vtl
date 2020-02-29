@@ -19,8 +19,10 @@
 
 ## 设置操作者主键类型
 #macro( setOperatorIdType $properties)
+    ##默认值，如果没有表创建者
+    #set($operatorIdType = 'String')
     #foreach($property in $properties)
-        #if($property.name == 'creatorId')
+        #if($property.name == $fields.creatorId)
             #set($operatorIdType = $property.type.simpleName)
         #end
     #end

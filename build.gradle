@@ -7,8 +7,9 @@ plugins {
     id("idea")
 }
 
+
 subprojects { project ->
-    group "com.github.peacetrue.template"
+    group 'com.github.peacetrue.template'
     version "1.0.0-SNAPSHOT"
     description "模型模板"
 
@@ -53,7 +54,6 @@ subprojects { project ->
         testImplementation "junit:junit"
         testCompileOnly "org.projectlombok:lombok"
         testAnnotationProcessor "org.projectlombok:lombok"
-        testImplementation "ch.qos.logback:logback-classic"
     }
 
     task antoraCopySourceToExample() {
@@ -71,14 +71,9 @@ subprojects { project ->
         }
     }
 
-    task sourcesJar(type: Jar) {
-        archiveClassifier = "sources"
-        from sourceSets.main.allJava
-    }
-
-    task javadocJar(type: Jar) {
-        archiveClassifier = "javadoc"
-        from javadoc.destinationDir
+    java {
+        withJavadocJar()
+        withSourcesJar()
     }
 
     def repository_snapshots = "https://oss.sonatype.org/content/repositories/snapshots/"
@@ -89,6 +84,17 @@ subprojects { project ->
     publishing {
         publications {
             mavenJava(MavenPublication) {
+                artifactId = project.name
+                from components.java
+                versionMapping {
+                    usage('java-api') {
+                        fromResolutionOf('runtimeClasspath')
+                    }
+                    usage('java-runtime') {
+                        fromResolutionResult()
+                    }
+                }
+
                 pom {
                     name = project.name
                     description = project.description
@@ -113,28 +119,34 @@ subprojects { project ->
                     }
                 }
 
-                from components.java
 
-                artifact sourcesJar
-                artifact javadocJar
             }
         }
 
         repositories {
             maven {
                 url version.endsWith("SNAPSHOT") ? repository_snapshots : repository_releases
-                credentials {
-                    username = ossrhUsername
-                    password = ossrhPassword
+                if (gradle.hasProperty('ossrhUsername')) {
+                    credentials {
+                        username = ossrhUsername
+                        password = ossrhPassword
+                    }
                 }
             }
         }
     }
 
-    signing {
-        sign publishing.publications.mavenJava
+    if (!version.endsWith("SNAPSHOT")) {
+        signing {
+            sign publishing.publications.mavenJava
+        }
     }
 
+    javadoc {
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
 }
 
 

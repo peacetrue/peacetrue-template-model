@@ -7,6 +7,8 @@ import javax.annotation.Generated;
 import java.sql.JDBCType;
 import java.util.Date;
 
+#listImport($properties)
+
 public final class ${ModuleName}DynamicSqlSupport {
 
     public static final ${ModuleName} ${uc.lc(${ModuleName})} = new ${ModuleName}();

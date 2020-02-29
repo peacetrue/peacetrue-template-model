@@ -25,4 +25,7 @@ public class ${ModuleName}Delete extends OperatorCapableImpl<$operatorIdType> {
     @Min(1)
     private ${id.type.simpleName}[] ${id.name};
 
+    public ${ModuleName}Delete(${id.type.simpleName} id) {
+        this.id = new ${id.type.simpleName}[]{id};
+    }
 }

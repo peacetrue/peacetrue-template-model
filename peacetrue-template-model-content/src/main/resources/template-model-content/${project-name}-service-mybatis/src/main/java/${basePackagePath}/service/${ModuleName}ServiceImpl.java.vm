@@ -46,13 +46,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         logger.debug("保存信息[{}]", ${uc.lc(${ModuleName})});
         int count = ${uc.lc(${ModuleName})}Mapper.insertSelective(${uc.lc(${ModuleName})});
         logger.debug("共影响[{}]条记录", count);
-        return to(${uc.lc(${ModuleName})});
-    }
-
-    private  ${ModuleName}VO to(${ModuleName} ${uc.lc(${ModuleName})}) {
-        ${ModuleName}VO vo = new ${ModuleName}VO();
-        BeanUtils.copyProperties(${uc.lc(${ModuleName})}, vo);
-        return vo;
+        return BeanUtils.map(${uc.lc(${ModuleName})}, ${ModuleName}VO.class);
     }
 
     @Override
@@ -73,7 +67,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         logger.debug("共取得'{}'条记录", entities.size());
         if (entities.isEmpty()) return new PageImpl<>(Collections.emptyList());
 
-        List<${ModuleName}VO> vos = entities.stream().map(this::to).collect(Collectors.toList());
+        List<${ModuleName}VO> vos = entities.stream()
+                .map(${uc.lc(${ModuleName})}->BeanUtils.map(${uc.lc(${ModuleName})}, ${ModuleName}VO.class))
+                .collect(Collectors.toList());
         return new PageImpl<>(vos, pageable, PageHelperUtils.getTotal(entities));
     }
 
@@ -85,7 +81,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                 .where(id, SqlBuilder.isEqualTo(params.getId()))
                 .build().execute().stream()
                 .reduce((l, r) -> r)
-                .map(this::to)
+                .map(${uc.lc(${ModuleName})}->BeanUtils.map(${uc.lc(${ModuleName})}, ${ModuleName}VO.class))
                 .orElseThrow(() -> new EntityNotFoundException(${ModuleName}.class, "id", params.getId()));
     }
 

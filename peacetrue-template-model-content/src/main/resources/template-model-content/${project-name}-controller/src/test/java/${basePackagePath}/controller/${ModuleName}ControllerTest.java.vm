@@ -82,8 +82,7 @@ public class ${ModuleName}ControllerTest {
     @Test
     public void test_04_modify() throws Exception {
         ${ModuleName}Modify modify = new ${ModuleName}Modify();
-        modify.setId(1L);
-        modify.setCode("2");
+        modify.setId(${ModuleName}ServiceImplTest.INIT_ID});
         this.mockMvc.perform(
                 MockMvcRequestBuilders.put(basePath + "")
                         .params(to(modify))
