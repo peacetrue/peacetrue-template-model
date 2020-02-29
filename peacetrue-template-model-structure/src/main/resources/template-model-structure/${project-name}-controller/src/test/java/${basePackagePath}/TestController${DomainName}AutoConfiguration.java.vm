@@ -1,6 +1,6 @@
-package ${basePackageName}.controller;
+package ${basePackageName};
 
-import ${basePackageName}.service.TestService${DomainName}AutoConfiguration;
+import ${basePackageName}.TestService${DomainName}AutoConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.web.SpringDataWebAutoConfiguration;
 import org.springframework.boot.autoconfigure.web.HttpMessageConvertersAutoConfiguration;

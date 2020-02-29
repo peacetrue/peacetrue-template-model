@@ -1,7 +1,5 @@
-package ${basePackageName}.controller;
+package ${basePackageName};
 
-import ${basePackageName}.service.${ModuleName}ServiceImplTest;
-import ${basePackageName}.service.${ModuleName}Modify;
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.junit.Test;
 import org.junit.FixMethodOrder;

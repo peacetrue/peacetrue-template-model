@@ -1,4 +1,4 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
 import org.mybatis.dynamic.sql.SqlColumn;
 import org.mybatis.dynamic.sql.SqlTable;
@@ -14,7 +14,7 @@ public final class ${ModuleName}DynamicSqlSupport {
     public static final ${ModuleName} ${uc.lc(${ModuleName})} = new ${ModuleName}();
 
     #foreach($property in $properties)
-        public static final SqlColumn<$property.type.simpleName> $property.name = $uc.lc(${ModuleName}).$property.name;
+    public static final SqlColumn<$property.type.simpleName> $property.name = $uc.lc(${ModuleName}).$property.name;
     #end
 
     public static final class ${ModuleName} extends SqlTable {

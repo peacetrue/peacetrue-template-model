@@ -1,4 +1,4 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
 import com.github.peacetrue.spring.util.BeanUtils;
 import io.github.benas.randombeans.api.EnhancedRandom;

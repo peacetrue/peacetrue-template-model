@@ -1,4 +1,4 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
 import org.apache.ibatis.annotations.*;
 import org.apache.ibatis.type.JdbcType;
@@ -24,7 +24,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-import static ${basePackageName}.service.${ModuleName}DynamicSqlSupport.*;
+import static ${basePackageName}.${ModuleName}DynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.isEqualTo;
 import static org.mybatis.dynamic.sql.SqlBuilder.isIn;
 #setId($properties)

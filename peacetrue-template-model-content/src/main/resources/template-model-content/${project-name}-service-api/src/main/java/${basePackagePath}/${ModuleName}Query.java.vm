@@ -1,4 +1,4 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
 import com.github.peacetrue.core.OperatorCapableImpl;
 import com.github.peacetrue.core.Range;

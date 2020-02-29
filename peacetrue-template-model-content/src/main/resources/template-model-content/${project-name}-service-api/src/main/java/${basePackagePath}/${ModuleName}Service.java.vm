@@ -1,4 +1,4 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
 import com.github.peacetrue.result.exception.ResultException;
 import org.springframework.data.domain.Page;

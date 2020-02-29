@@ -1,4 +1,4 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
 import com.github.pagehelper.autoconfigure.PageHelperAutoConfiguration;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;

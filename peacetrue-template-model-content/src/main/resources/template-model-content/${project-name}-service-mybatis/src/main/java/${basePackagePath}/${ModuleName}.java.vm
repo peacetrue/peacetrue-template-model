@@ -1,18 +1,24 @@
-package ${basePackageName}.service;
+package ${basePackageName};
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.io.Serializable;
 import java.util.Date;
 
 #listImport($properties)
+
 /**
  * @author xiayx
  */
-@Data
-public class ${ModuleName}VO implements Serializable {
+@Getter
+@Setter
+@ToString
+public class ${ModuleName} implements Serializable {
 
     private static final long serialVersionUID = 0L;
 
     #listProperties($properties)
+
 }
