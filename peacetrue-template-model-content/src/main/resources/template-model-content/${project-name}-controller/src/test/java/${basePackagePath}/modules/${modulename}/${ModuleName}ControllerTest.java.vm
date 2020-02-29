@@ -1,4 +1,4 @@
-package ${basePackageName};
+package ${basePackageName}.modules.${modulename};
 
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.junit.Test;
