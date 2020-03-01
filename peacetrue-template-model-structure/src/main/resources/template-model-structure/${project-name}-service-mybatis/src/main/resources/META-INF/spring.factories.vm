@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ${basePackageName}${DomainName}AutoConfiguration
+  ${basePackageName}.Service${DomainName}AutoConfiguration
