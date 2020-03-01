@@ -7,7 +7,6 @@ import com.github.peacetrue.pagehelper.PageHelperUtils;
 import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.util.EntityNotFoundException;
 import org.mybatis.dynamic.sql.SqlBuilder;
-import org.mybatis.dynamic.sql.SqlColumn;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,8 +57,8 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
         List<${ModuleName}> entities = ${uc.lc(${ModuleName})}Mapper.selectByExample()
                 .where()
-                .and(code, SqlBuilder.isLikeWhenPresent(MybatisDynamicUtils.likeValue(params.getCode())))
-                .and(name, SqlBuilder.isEqualToWhenPresent(params.getName()))
+//                .and(code, SqlBuilder.isLikeWhenPresent(MybatisDynamicUtils.likeValue(params.getCode())))
+//                .and(name, SqlBuilder.isEqualToWhenPresent(params.getName()))
                 .and(createdTime, SqlBuilder.isGreaterThanOrEqualToWhenPresent(params.getCreatedTime().getLowerBound()))
                 .and(createdTime, SqlBuilder.isLessThanWhenPresent(MybatisDynamicUtils.endDateValue(params.getCreatedTime().getUpperBound())))
                 .orderBy(MybatisDynamicUtils.orders(${uc.lc(${ModuleName})}, pageable.getSort()))

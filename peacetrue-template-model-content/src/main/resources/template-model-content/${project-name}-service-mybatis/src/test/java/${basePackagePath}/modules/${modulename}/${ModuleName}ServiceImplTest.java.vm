@@ -1,5 +1,6 @@
-package ${basePackageName};
+package ${basePackageName}.modules.${modulename};
 
+import com.github.peacetrue.github.popularize.TestService${DomainName}AutoConfiguration;
 import com.github.peacetrue.spring.util.BeanUtils;
 import io.github.benas.randombeans.api.EnhancedRandom;
 import org.junit.Assert;

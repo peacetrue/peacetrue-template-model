@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -47,7 +46,7 @@ public class TemplateModelContentAutoConfiguration {
 
     @Bean
     public UpperCamelContextHandler upperCamelContextHandler() {
-        return new UpperCamelContextHandler("ModuleName" , "DomainName");
+        return new UpperCamelContextHandler("ModuleName", "DomainName");
     }
 
     @Bean
@@ -57,13 +56,12 @@ public class TemplateModelContentAutoConfiguration {
 
     @Bean
     public ContextsSupplier contextsSupplier(@Autowired ModelSupplier modelSupplier) {
-        List<Map<String, Object>> contexts = modelSupplier.getModels()
+        return () -> modelSupplier.getModels()
                 .stream().map(model -> {
                     Map<String, Object> context = BeanUtils.map(model);
-                    context.put("ModuleName" , model.getName());
-                    context.put("fields" , properties.getFields());
+                    context.put("ModuleName", model.getName());
+                    context.put("fields", properties.getFields());
                     return context;
                 }).collect(Collectors.toList());
-        return new ContextsSupplierImpl(contexts);
     }
 }

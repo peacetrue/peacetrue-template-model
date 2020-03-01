@@ -1,4 +1,4 @@
-package ${basePackageName}.controller;
+package ${basePackageName};
 
 import lombok.Data;
 import lombok.Getter;

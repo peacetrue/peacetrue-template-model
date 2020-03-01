@@ -23,7 +23,7 @@ public final class ${ModuleName}DynamicSqlSupport {
         #end
 
         public ${ModuleName}() {
-            super("$uc.lu(${ModuleName})");
+            super("`$uc.lu(${ModuleName})`");
         }
     }
 }

@@ -1,4 +1,4 @@
-package ${basePackageName}.modules.${modulename};;
+package ${basePackageName}.modules.${modulename};
 
 import lombok.Getter;
 import lombok.Setter;

@@ -15,6 +15,7 @@ dependencies {
 
     testCompile project(path: ':peacetrue-template-model-structure', configuration: 'testArtifacts')
     testCompile 'org.springframework.boot:spring-boot-starter-test'
+    testCompile 'com.github.peacetrue.generator:peacetrue-generator-client:1.0.0-SNAPSHOT'
     testCompile 'org.springframework.boot:spring-boot-starter-logging'
     testCompile 'com.h2database:h2:1.4.196'
 }
