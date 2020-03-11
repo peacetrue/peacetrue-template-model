@@ -38,24 +38,31 @@ public class ${ModuleName}Controller {
     }
 
     @ResponseBody
-    @GetMapping(value = "${esc.d}{peacetrue.${module-name}.urls.get:}", params = {"!page"})
-    public ${ModuleName}VO get(${ModuleName}Get params) {
-        logger.info("获取信息[{}]详情", params);
-        return ${moduleName}Service.get(params);
+    @GetMapping(params = "id")
+    public List<${ModuleName}VO> get(Long[] id) {
+        logger.info("获取信息[{}]详情", Arrays.toString(id));
+        return ${moduleName}Service.query(new ${ModuleName}Query(id));
     }
 
     @ResponseBody
-    @PutMapping(value = "${esc.d}{peacetrue.${module-name}.urls.modify:}")
+    @GetMapping("/{id}")
+    public ${ModuleName}VO get(@PathVariable Long id) {
+        logger.info("获取信息[{}]详情", params);
+        return ${moduleName}Service.get(new ${ModuleName}Get(id));
+    }
+
+    @ResponseBody
+    @PatchMapping(value = "${esc.d}{peacetrue.${module-name}.urls.modify:}")
     public int modify(${ModuleName}Modify params) {
         logger.info("修改信息[{}]", params);
         return ${moduleName}Service.modify(params);
     }
 
     @ResponseBody
-    @DeleteMapping(value = "${esc.d}{peacetrue.${module-name}.urls.delete:}")
-    public int delete(${ModuleName}Delete params) {
-        logger.info("删除信息[{}]", params);
-        return ${moduleName}Service.delete(params);
+    @DeleteMapping("/{id}")
+    public int delete(@PathVariable Long id) {
+        logger.info("删除信息[{}]", id);
+        return websiteService.delete(new ${ModuleName}Delete(id));
     }
 
 

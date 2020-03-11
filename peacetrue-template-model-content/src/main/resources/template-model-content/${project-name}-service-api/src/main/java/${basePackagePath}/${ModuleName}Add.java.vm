@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
 public class ${ModuleName}Add extends OperatorCapableImpl<$operatorIdType> {
 
     private static final long serialVersionUID = 0L;

@@ -17,6 +17,9 @@ public interface ${ModuleName}Service {
     /** 分页查询 */
      Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable) throws ResultException;
 
+    /** 全量查询 */
+    List<${ModuleName}VO}> query(${ModuleName}Query params) throws ResultException;
+
     /** 获取 */
      ${ModuleName}VO get(${ModuleName}Get params) throws ResultException;
 

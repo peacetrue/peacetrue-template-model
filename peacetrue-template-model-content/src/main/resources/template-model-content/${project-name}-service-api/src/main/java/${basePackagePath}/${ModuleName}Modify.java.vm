@@ -1,9 +1,7 @@
 package ${basePackageName};
 
 import com.github.peacetrue.core.OperatorCapableImpl;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 #listImport($properties)
 #setOperatorIdType($properties)
@@ -14,7 +12,9 @@ import lombok.ToString;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class ${ModuleName}Modify extends OperatorCapableImpl<$operatorIdType> {
 
     private static final long serialVersionUID = 0L;

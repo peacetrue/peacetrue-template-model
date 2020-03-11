@@ -9,7 +9,9 @@ import java.util.Date;
 /**
  * @author xiayx
  */
-@Data
+@Getter
+@Setter
+@ToString
 public class ${ModuleName}VO implements Serializable {
 
     private static final long serialVersionUID = 0L;

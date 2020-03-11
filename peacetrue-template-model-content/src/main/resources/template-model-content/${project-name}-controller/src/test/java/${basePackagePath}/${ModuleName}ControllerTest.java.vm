@@ -1,5 +1,6 @@
 package ${basePackageName};
 
+import ${basePackageName}.TestController${DomainName}AutoConfiguration};
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.junit.Test;
 import org.junit.FixMethodOrder;
@@ -55,9 +56,20 @@ public class ${ModuleName}ControllerTest {
     }
 
     @Test
+    public void test_010_query() throws Exception {
+        this.mockMvc.perform(
+                MockMvcRequestBuilders.get(basePath)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.size()").value(1));
+    }
+
+    @Test
     public void test_02_get() throws Exception {
         this.mockMvc.perform(
-                MockMvcRequestBuilders.get(basePath + "?id=1")
+                MockMvcRequestBuilders.get(basePath + "/1")
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk())
@@ -80,9 +92,9 @@ public class ${ModuleName}ControllerTest {
     @Test
     public void test_04_modify() throws Exception {
         ${ModuleName}Modify modify = new ${ModuleName}Modify();
-        modify.setId(${ModuleName}ServiceImplTest.INIT_ID});
+        modify.setId(${ModuleName}ServiceImplTest.INIT_ID);
         this.mockMvc.perform(
-                MockMvcRequestBuilders.put(basePath + "")
+                MockMvcRequestBuilders.put(basePath)
                         .params(to(modify))
                         .accept(MediaType.APPLICATION_JSON)
         )
@@ -94,7 +106,7 @@ public class ${ModuleName}ControllerTest {
     @Test
     public void test_05_delete() throws Exception {
         this.mockMvc.perform(
-                MockMvcRequestBuilders.delete(basePath + "?id=1")
+                MockMvcRequestBuilders.delete(basePath + "/1")
                         .accept(MediaType.APPLICATION_JSON)
         )
                 .andExpect(status().isOk())

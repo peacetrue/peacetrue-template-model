@@ -178,9 +178,8 @@ public interface ${ModuleName}Mapper {
 
 
     //append
-    @SuppressWarnings("unchecked")
     default  List<${ModuleName}> selectById(Collection<$id.type.simpleName> ids) {
-        return this.selectByExample().where(${uc.lc(${ModuleName})}.id, SqlBuilder.isIn(new ArrayList<>(ids))).build().execute();
+        return this.selectByExample().where(${uc.lc(${ModuleName})}.id, SqlBuilder.isIn(ids)).build().execute();
     }
 
 }

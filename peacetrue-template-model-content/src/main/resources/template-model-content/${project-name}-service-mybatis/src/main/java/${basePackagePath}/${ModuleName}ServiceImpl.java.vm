@@ -58,6 +58,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
         List<${ModuleName}> entities = ${uc.lc(${ModuleName})}Mapper.selectByExample()
                 .where()
+                .and(id, SqlBuilder.isInWhenPresent(params.getIds()))
                 .and(code, SqlBuilder.isLikeWhenPresent(MybatisDynamicUtils.likeValue(params.getCode())))
                 .and(name, SqlBuilder.isEqualToWhenPresent(params.getName()))
                 .and(createdTime, SqlBuilder.isGreaterThanOrEqualToWhenPresent(params.getCreatedTime().getLowerBound()))
@@ -74,7 +75,11 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
+    public List<${ModuleName}VO> query(${ModuleName}Query params) throws ResultException {
+        return this.query(params, new PageRequest(0, Integer.MAX_VALUE)).getContent();
+    }
+
+    @Override
     public  ${ModuleName}VO get(${ModuleName}Get params) {
         logger.info("获取符合条件[{}]的信息", params);
         return ${uc.lc(${ModuleName})}Mapper.selectByExample()
