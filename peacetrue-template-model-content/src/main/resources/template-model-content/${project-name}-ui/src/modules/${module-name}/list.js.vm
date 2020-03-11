@@ -1,0 +1,74 @@
+import React, {Fragment} from 'react';
+import {
+    Datagrid,
+    EmailField,
+    Filter,
+    List,
+    ReferenceField,
+    ReferenceInput,
+    sanitizeListRestProps,
+    SelectInput,
+    TextField,
+    TextInput,
+    TopToolbar
+} from 'react-admin';
+import CreateButton from "../common/create-button";
+import UpdateManyButton from "../common/update-many-button";
+
+let stateCodes = [
+    {id: 'normal', name: 'normal'},
+    {id: 'disabled', name: 'disabled'},
+];
+const Filters = (props) => (
+    <Filter {...props}>
+        <TextInput source="name" allowEmpty alwaysOn/>
+        <SelectInput source="stateCode" choices={stateCodes} allowEmpty alwaysOn/>
+    </Filter>
+);
+
+#*
+const Actions = (props) =>
+<TopToolbar className={props.className} {...sanitizeListRestProps(props)}>
+<CreateButton label="注册Github" resource={props.resource} path="/register" data={{websiteCode: 'github'}}/>
+</TopToolbar>
+;
+
+const BulkActionButtons = props => (
+<Fragment>
+<UpdateManyButton label="浏览" resource={props.resource} path="/walk" id={props.selectedIds}/>
+</Fragment>
+);
+*#
+
+export const UserList = props => (
+    <List filters={<Filters/>} {...props}>
+        <Datagrid rowClick="toggleSelection">
+            #foreach($property in $properties)
+                #if($property.name != 'id')
+                    #if($property.type.name == 'java.lang.String')
+                        <FormItem prop="$property.name">
+                            <Input type="text" v-model="params.$property.name" placeholder="$property.comment"/>
+                        </FormItem>
+                    #end
+                    #if($property.type.name == 'java.util.Date')
+                        <FormItem prop="${property.name}.lowerBound">
+                            <DatePicker type="date" placeholder="${property.comment}起始值" v-model="params.${property.name}.lowerBound"></DatePicker>
+                        </FormItem>
+                        <FormItem prop="${property.name}.upperBound">
+                            <DatePicker type="date" placeholder="${property.comment}结束值" v-model="params.${property.name}.upperBound"></DatePicker>
+                        </FormItem>
+                    #end
+                #end
+            #end
+            <TextField source="id"/>
+            <ReferenceField source="websiteId" reference="websites">
+            <TextField source="name"/>
+            </ReferenceField>
+            <TextField source="name"/>
+            <TextField source="password"/>
+            <TextField source="mobile"/>
+            <EmailField source="email"/>
+            <TextField source="loginTime"/>
+        </Datagrid>
+    </List>
+);
