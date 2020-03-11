@@ -20,7 +20,11 @@ v1.0, 2020-01-12: SNAPSHOT
 
 iview ui
 
-== V1.1.0
+== V1.2.0
+
+react-admin ui
+
+== V2.0.0
 
 react-admin ui
 

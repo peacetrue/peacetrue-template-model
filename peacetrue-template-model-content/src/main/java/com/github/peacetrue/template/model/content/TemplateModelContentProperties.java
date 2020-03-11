@@ -12,7 +12,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class TemplateModelContentProperties {
 
     /** 字段名集合 */
-    private Fields fields;
+    private Fields fields = new Fields();
 
     @Data
     public static class Fields {

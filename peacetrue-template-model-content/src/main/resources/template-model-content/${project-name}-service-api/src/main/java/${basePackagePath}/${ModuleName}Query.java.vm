@@ -28,5 +28,13 @@ public class ${ModuleName}Query extends OperatorCapableImpl<$operatorIdType> {
     private ${id.type.simpleName}[] ${id.name}s;
     #listPropertiesDate($properties)
 
+    public ${ModuleName}Query(${id.type.simpleName} id) {
+        this.id = id;
+    }
+
+    public ${ModuleName}Query(${id.type.simpleName}[] ids) {
+        this.ids = ids;
+    }
+
 
 }

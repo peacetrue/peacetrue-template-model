@@ -70,7 +70,7 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_05_delete() {
-        int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(new ${id.type.name}[]{INIT_ID}));
+        int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(INIT_ID));
         Assert.assertEquals(count, 1);
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 
 import javax.annotation.Nullable;
 
+import java.util.List;
 /**
  * @author xiayx
  */
@@ -18,7 +19,7 @@ public interface ${ModuleName}Service {
      Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable) throws ResultException;
 
     /** 全量查询 */
-    List<${ModuleName}VO}> query(${ModuleName}Query params) throws ResultException;
+    List<${ModuleName}VO> query(${ModuleName}Query params) throws ResultException;
 
     /** 获取 */
      ${ModuleName}VO get(${ModuleName}Get params) throws ResultException;

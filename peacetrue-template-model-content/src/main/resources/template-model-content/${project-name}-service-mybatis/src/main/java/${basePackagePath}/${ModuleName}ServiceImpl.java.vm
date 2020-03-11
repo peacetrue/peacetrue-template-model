@@ -75,7 +75,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     @Override
-    public List<${ModuleName}VO> query(${ModuleName}Query params) throws ResultException {
+    public List<${ModuleName}VO> query(${ModuleName}Query params) {
         return this.query(params, new PageRequest(0, Integer.MAX_VALUE)).getContent();
     }
 
@@ -105,9 +105,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     public int delete(${ModuleName}Delete params) {
         logger.info("删除信息[{}]", params);
-        int count = params.getId().length == 1
-                ? ${uc.lc(${ModuleName})}Mapper.deleteByPrimaryKey(params.getId()[0])
-                : ${uc.lc(${ModuleName})}Mapper.deleteInPrimaryKey(Arrays.asList(params.getId()));
+        int count = ${uc.lc(${ModuleName})}Mapper.deleteByPrimaryKey(params.getId());
         logger.debug("共影响[{}]条记录", count);
         return count;
     }
