@@ -12,6 +12,18 @@ v1.0, 2020-01-12: SNAPSHOT
 
 //查看 http://peacetrue.github.io/public/peacetrue-template-model/index.html[详情^]
 
+== V1
+
+单模块
+
+== V1.0.0
+
+iview ui
+
+== V1.1.0
+
+react-admin ui
+
 == 模型结构
 
 === 文件结构
@@ -27,3 +39,6 @@ v1.0, 2020-01-12: SNAPSHOT
 ** basePackagePath：模块基础路径
 
 == 模型内容
+
+== 本地
+

@@ -1,12 +1,12 @@
 dependencies {
     api "org.slf4j:slf4j-api"
-    implementation 'com.github.peacetrue.generator:peacetrue-generator-velocity:1.0.0-SNAPSHOT'
-    implementation 'com.github.peacetrue.generator:peacetrue-generator-context:1.0.0-SNAPSHOT'
-    implementation "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
+    implementation "com.github.peacetrue.generator:peacetrue-generator-velocity"
+    implementation "com.github.peacetrue.generator:peacetrue-generator-context"
+    implementation "com.github.peacetrue:peacetrue-velocity"
     implementation 'com.google.guava:guava'
     implementation 'org.mybatis:mybatis'
-    implementation 'com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT'
-    implementation 'com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT'
+    implementation 'com.github.peacetrue.sql:peacetrue-sql'
+    implementation 'com.github.peacetrue.sql:peacetrue-sql-metadata'
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
