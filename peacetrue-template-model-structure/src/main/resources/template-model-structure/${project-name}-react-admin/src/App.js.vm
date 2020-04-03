@@ -1,7 +1,7 @@
 // in src/App.js
 import React from 'react';
 import {Admin, fetchUtils, Resource} from 'react-admin';
-import {${DomainName}ListJs} from './modules/${domainName}s/list';
+import {${DomainName}List} from './modules/${domainName}s/list';
 import {${DomainName}Create} from './modules/${domainName}s/create';
 import {${DomainName}Edit} from './modules/${domainName}s/edit';
 import {${DomainName}Show} from './modules/${domainName}s/show';
@@ -32,7 +32,7 @@ const dataProvider = springDataProvider('http://localhost:8082', httpClient);
 const App = () $esc.javascript('=>') (
     <Admin i18nProvider={i18nProvider} dataProvider={dataProvider}>
         <Resource options={{label: '$domainDescription'}} name="${domainName}s"
-                  list={${DomainName}ListJs} create={${DomainName}Create}
+                  list={${DomainName}List} create={${DomainName}Create}
                   edit={${DomainName}Edit} show={${DomainName}Show}/>
     </Admin>
 );
