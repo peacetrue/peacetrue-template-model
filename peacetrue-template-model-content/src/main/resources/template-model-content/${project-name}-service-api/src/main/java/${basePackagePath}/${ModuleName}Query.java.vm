@@ -32,7 +32,7 @@ public class ${ModuleName}Query extends OperatorCapableImpl<$operatorIdType> {
         this.id = id;
     }
 
-    public ${ModuleName}Query(${id.type.simpleName}[] ids) {
+    public ${ModuleName}Query(${id.type.simpleName}[]ids) {
         this.ids = ids;
     }
 

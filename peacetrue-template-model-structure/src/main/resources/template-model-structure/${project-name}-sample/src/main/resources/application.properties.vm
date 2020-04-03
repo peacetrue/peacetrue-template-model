@@ -5,4 +5,3 @@ spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
 spring.jackson.time-zone=Asia/Shanghai
 endpoints.enabled=true
 peacetrue.result.exclude-auto-convert-when-return=boolean
-peacetrue.metadata.entity-class-map.${DomainName}=${basePackageName}.${DomainName}

@@ -13,6 +13,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
+import org.unitils.reflectionassert.ReflectionAssert;
+import com.google.common.collect.Sets;
+
+import java.util.Map;
 
 #setOperatorIdType($properties)
 #setId($properties)
@@ -30,11 +34,11 @@ public class ${ModuleName}ServiceImplTest {
     private ${ModuleName}Service ${uc.lc(${ModuleName})}Service;
 
     //TODO 需要修改值
-    public static final $id.type.name INIT_ID = 1L;
+    public static final $id.type.name INIT_ID = #ternaryOperate($id.type.simpleName.equals('String'),'"1"','1L');
     public static final ${ModuleName}Add RECORD_ADD = EnhancedRandom.random(${ModuleName}Add.class);
 
     static {
-        RECORD_ADD.setOperatorId(EnhancedRandom.random(${operatorIdType}.class));
+        RECORD_ADD.setOperatorId(EnhancedRandom.random(${operatorIdType}. class));
     }
 
     @Test
@@ -45,27 +49,32 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_02_get() {
-        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
+            ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
         Assert.assertNotNull(vo);
     }
 
     @Test
     public void test_03_add() {
-        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
-        Assert.assertEquals(vo, ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(vo.getId())));
+            ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
+        ReflectionAssert.assertReflectionEquals(vo, ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(vo.getId())));
     }
 
     @Test
     public void test_04_modify() {
-        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
-        ${ModuleName}Modify modify = new ${ModuleName}Modify();
-        BeanUtils.copyProperties(vo, modify);
-        //TODO 设置成实际存在的属性
-        modify.setCode("2");
+            ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
+            ${ModuleName}Modify modify = EnhancedRandom.random(${ModuleName}Modify.class);
+        modify.setId(vo.getId());
+        modify.setOperatorId(EnhancedRandom.random(${operatorIdType}. class));
         int count = ${uc.lc(${ModuleName})}Service.modify(modify);
         Assert.assertEquals(count, 1);
         vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
-        Assert.assertEquals(modify.getCode(), vo.getCode());
+        Map<String, Object> modifyMap = BeanUtils.map(modify);
+        Map<String, Object> voMap = BeanUtils.map(vo);
+        Sets.SetView<String> difference = Sets.difference(modifyMap.keySet(), voMap.keySet());
+        difference.immutableCopy().forEach(modifyMap::remove);
+        difference = Sets.difference(voMap.keySet(), modifyMap.keySet());
+        difference.immutableCopy().forEach(voMap::remove);
+        Assert.assertEquals(modifyMap, voMap);
     }
 
     @Test

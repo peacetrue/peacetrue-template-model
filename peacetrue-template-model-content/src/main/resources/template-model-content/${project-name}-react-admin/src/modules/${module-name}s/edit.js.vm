@@ -1,0 +1,21 @@
+import React from 'react';
+import {Edit, required, SimpleForm, TextInput, DateTimeInput} from 'react-admin';
+
+export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
+    console.info('${ModuleName}Edit:', props);
+    return (
+        <Edit {...props} title={`$esc.d{props.options.label}#$esc.d{props.id}`}>
+            <SimpleForm>
+                #foreach($property in $properties)
+                    #if($property.name!='id')
+                        #if($property.type.name == 'java.util.Date')
+                            <DateTimeInput label={'$property.comment'} source="$property.name" validate={required()}/>
+                        #else
+                            <TextInput label={'$property.comment'} source="$property.name" validate={required()}/>
+                        #end
+                    #end
+                #end
+            </SimpleForm>
+        </Edit>
+    );
+};

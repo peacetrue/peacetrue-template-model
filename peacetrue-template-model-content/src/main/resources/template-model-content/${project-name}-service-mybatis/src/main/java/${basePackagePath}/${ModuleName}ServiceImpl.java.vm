@@ -35,9 +35,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     private ${ModuleName}Mapper ${uc.lc(${ModuleName})}Mapper;
 
     @Override
-    public  ${ModuleName}VO add(${ModuleName}Add params) {
+    public ${ModuleName}VO add(${ModuleName}Add params) {
         logger.info("新增信息[{}]", params);
-        ${ModuleName} ${uc.lc(${ModuleName})} = new ${ModuleName}();
+        ${ModuleName} ${uc.lc(${ModuleName})} =new ${ModuleName}();
         BeanUtils.copyProperties(params, ${uc.lc(${ModuleName})});
         ${uc.lc(${ModuleName})}.setCreatorId(params.getOperatorId());
         ${uc.lc(${ModuleName})}.setCreatedTime(new Date());
@@ -50,19 +50,29 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     @Override
-    public  Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable) {
+    public Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
         logger.info("分页查询信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
-        if (params.getCreatedTime() == null) params.setCreatedTime(new Range.Date());
+        #foreach($property in $properties)
+            #if($property.type.simpleName == 'Date')
+                if (params.get${lc.uc($property.name)}() == null) params.set${lc.uc($property.name)}(new Range.Date());
+            #end
+        #end
         if (pageable == null) pageable = new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "createdTime"));
         PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
         List<${ModuleName}> entities = ${uc.lc(${ModuleName})}Mapper.selectByExample()
                 .where()
-                .and(id, SqlBuilder.isInWhenPresent(params.getIds()))
-                .and(code, SqlBuilder.isLikeWhenPresent(MybatisDynamicUtils.likeValue(params.getCode())))
-                .and(name, SqlBuilder.isEqualToWhenPresent(params.getName()))
-                .and(createdTime, SqlBuilder.isGreaterThanOrEqualToWhenPresent(params.getCreatedTime().getLowerBound()))
-                .and(createdTime, SqlBuilder.isLessThanWhenPresent(MybatisDynamicUtils.endDateValue(params.getCreatedTime().getUpperBound())))
+        .and(id, MybatisDynamicUtils.getConditionWhenPresent(params.getIds(), SqlBuilder::isIn))
+            #foreach($property in $properties)
+                #if($property.type.simpleName == 'String')
+                .and($property.name, SqlBuilder.isLikeWhenPresent(MybatisDynamicUtils.likeValue(params.get${lc.uc($property.name)}())))
+                #elseif($property.type.simpleName == 'Integer'||$property.type.simpleName == 'Long')
+                .and($property.name, SqlBuilder.isEqualToWhenPresent(params.get${lc.uc($property.name)}()))
+                #elseif($property.type.simpleName == 'Date')
+                        .and($property.name, SqlBuilder.isGreaterThanOrEqualToWhenPresent(params.get${lc.uc($property.name)}().getLowerBound()))
+                .and($property.name, SqlBuilder.isLessThanWhenPresent(MybatisDynamicUtils.endDateValue(params.get${lc.uc($property.name)}().getUpperBound())))
+                #end
+            #end
                 .orderBy(MybatisDynamicUtils.orders(${uc.lc(${ModuleName})}, pageable.getSort()))
                 .build().execute();
         logger.debug("共取得'{}'条记录", entities.size());
@@ -75,25 +85,25 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     @Override
-    public List<${ModuleName}VO> query(${ModuleName}Query params) {
-        return this.query(params, new PageRequest(0, Integer.MAX_VALUE)).getContent();
+    public List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
+        return this.query(params, new PageRequest(0, Integer.MAX_VALUE), projection).getContent();
     }
 
     @Override
-    public  ${ModuleName}VO get(${ModuleName}Get params) {
+    public  ${ModuleName}VO get(${ModuleName}Get params, String... projection) {
         logger.info("获取符合条件[{}]的信息", params);
         return ${uc.lc(${ModuleName})}Mapper.selectByExample()
                 .where(id, SqlBuilder.isEqualTo(params.getId()))
                 .build().execute().stream()
                 .reduce((l, r) -> r)
                 .map(${uc.lc(${ModuleName})}->BeanUtils.map(${uc.lc(${ModuleName})}, ${ModuleName}VO.class))
-                .orElseThrow(() -> new EntityNotFoundException(${ModuleName}.class, "id", params.getId()));
+                .orElseThrow(() -> new EntityNotFoundException(${ModuleName}. class,"id", params.getId()));
     }
 
     @Override
-    public  int modify(${ModuleName}Modify params) {
+    public int modify(${ModuleName}Modify params) {
         logger.info("修改信息[{}]", params);
-        ${ModuleName} ${uc.lc(${ModuleName})} = new ${ModuleName}();
+        ${ModuleName} ${uc.lc(${ModuleName})} =new ${ModuleName}();
         BeanUtils.copyProperties(params, ${uc.lc(${ModuleName})});
         ${uc.lc(${ModuleName})}.setModifierId(params.getOperatorId());
         ${uc.lc(${ModuleName})}.setModifiedTime(new Date());

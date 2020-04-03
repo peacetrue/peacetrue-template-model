@@ -1,6 +1,6 @@
 package ${basePackageName};
 
-import ${basePackageName}.TestController${DomainName}AutoConfiguration};
+import ${basePackageName}.TestController${DomainName}AutoConfiguration;
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.junit.Test;
 import org.junit.FixMethodOrder;
@@ -91,7 +91,7 @@ public class ${ModuleName}ControllerTest {
 
     @Test
     public void test_04_modify() throws Exception {
-        ${ModuleName}Modify modify = new ${ModuleName}Modify();
+            ${ModuleName}Modify modify = new ${ModuleName}Modify();
         modify.setId(${ModuleName}ServiceImplTest.INIT_ID);
         this.mockMvc.perform(
                 MockMvcRequestBuilders.put(basePath)

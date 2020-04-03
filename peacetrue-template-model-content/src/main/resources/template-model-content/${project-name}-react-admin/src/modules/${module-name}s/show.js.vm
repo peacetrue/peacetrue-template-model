@@ -1,0 +1,21 @@
+import React from 'react';
+import {DateField, Show, SimpleShowLayout, TextField} from 'react-admin';
+
+export const ${ModuleName}Show = (props) $esc.javascript('=>') {
+    console.info('${ModuleName}Show:', props);
+    return (
+        <Show {...props} title={`${props.options.label}#${props.id}`}>
+            <SimpleShowLayout>
+                #foreach($property in $properties)
+                    #if($property.name!='id')
+                        #if($property.type.name == 'java.util.Date')
+                            <DateField label={'$property.comment'} source="$property.name" showTime/>
+                        #else
+                            <TextField label={'$property.comment'} source="$property.name"/>
+                        #end
+                    #end
+                #end
+            </SimpleShowLayout>
+        </Show>
+    );
+};

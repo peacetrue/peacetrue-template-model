@@ -7,26 +7,27 @@ import org.springframework.data.domain.Pageable;
 import javax.annotation.Nullable;
 
 import java.util.List;
+
 /**
  * @author xiayx
  */
 public interface ${ModuleName}Service {
 
     /** 新增 */
-     ${ModuleName}VO add(${ModuleName}Add params) throws ResultException;
+        ${ModuleName}VO add(${ModuleName}Add params) throws ResultException;
 
     /** 分页查询 */
-     Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable) throws ResultException;
+    Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) throws ResultException;
 
     /** 全量查询 */
-    List<${ModuleName}VO> query(${ModuleName}Query params) throws ResultException;
+    List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) throws ResultException;
 
     /** 获取 */
-     ${ModuleName}VO get(${ModuleName}Get params) throws ResultException;
+        ${ModuleName}VO get(${ModuleName}Get params, String... projection) throws ResultException;
 
     /** 修改 */
-     int modify(${ModuleName}Modify params) throws ResultException;
+    int modify(${ModuleName}Modify params) throws ResultException;
 
     /** 删除 */
-     int delete(${ModuleName}Delete params) throws ResultException;
+    int delete(${ModuleName}Delete params) throws ResultException;
 }

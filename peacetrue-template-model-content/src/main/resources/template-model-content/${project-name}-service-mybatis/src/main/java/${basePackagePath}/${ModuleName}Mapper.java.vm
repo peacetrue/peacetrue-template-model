@@ -47,20 +47,20 @@ public interface ${ModuleName}Mapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     @ResultMap("${ModuleName}Result")
-     ${ModuleName} selectOne(SelectStatementProvider selectStatement);
+        ${ModuleName} selectOne(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @SelectProvider(type = SqlProviderAdapter.class, method = "select")
     @Results(id = "${ModuleName}Result", value = {
         #foreach($property in $properties)
             #if($property.name=='id')
-                @Result(column = "$uc.lu($property.name)", property = "$property.name", jdbcType = $javaTypeToJdbcType[$property.type.name], id = true),
+                    @Result(column = "$uc.lu($property.name)", property = "$property.name", jdbcType = $javaTypeToJdbcType[$property.type.name], id = true),
             #else
-                @Result(column = "$uc.lu($property.name)", property = "$property.name", jdbcType = $javaTypeToJdbcType[$property.type.name]),
+                    @Result(column = "$uc.lu($property.name)", property = "$property.name", jdbcType = $javaTypeToJdbcType[$property.type.name]),
             #end
         #end
     })
-     List<${ModuleName}> selectMany(SelectStatementProvider selectStatement);
+    List<${ModuleName}> selectMany(SelectStatementProvider selectStatement);
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     @UpdateProvider(type = SqlProviderAdapter.class, method = "update")
@@ -96,10 +96,10 @@ public interface ${ModuleName}Mapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int insert(${ModuleName} record) {
         return insert(SqlBuilder.insert(record)
-                .into($uc.lc(${ModuleName}))
-                #foreach($property in $properties)
-                .map($property.name).toProperty("$property.name")
-                #end
+        .into($uc.lc(${ModuleName}))
+            #foreach($property in $properties)
+                    .map($property.name).toProperty("$property.name")
+            #end
                 .build()
                 .render(RenderingStrategy.MYBATIS3));
     }
@@ -107,22 +107,22 @@ public interface ${ModuleName}Mapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int insertSelective(${ModuleName} record) {
         return insert(SqlBuilder.insert(record)
-                .into($uc.lc(${ModuleName}))
-                #foreach($property in $properties)
-                .map($property.name).toPropertyWhenPresent("$property.name", record::get$lc.uc(${property.name}))
-                #end
+        .into($uc.lc(${ModuleName}))
+            #foreach($property in $properties)
+                    .map($property.name).toPropertyWhenPresent("$property.name", record::get$lc.uc(${property.name}))
+            #end
                 .build()
                 .render(RenderingStrategy.MYBATIS3));
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default  QueryExpressionDSL<MyBatis3SelectModelAdapter<List<${ModuleName}>>> selectByExample() {
+    default QueryExpressionDSL<MyBatis3SelectModelAdapter<List<${ModuleName}>>> selectByExample() {
         return SelectDSL.selectWithMapper(this::selectMany, ${uc.lc(${ModuleName})}.column("*"))
                 .from($uc.lc(${ModuleName}));
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
-    default  QueryExpressionDSL<MyBatis3SelectModelAdapter<List<${ModuleName}>>> selectDistinctByExample() {
+    default QueryExpressionDSL<MyBatis3SelectModelAdapter<List<${ModuleName}>>> selectDistinctByExample() {
         return SelectDSL.selectDistinctWithMapper(this::selectMany, ${uc.lc(${ModuleName})}.column("*"))
                 .from($uc.lc(${ModuleName}));
     }
@@ -139,27 +139,27 @@ public interface ${ModuleName}Mapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default UpdateDSL<MyBatis3UpdateModelAdapter<Integer>> updateByExample(${ModuleName} record) {
         return UpdateDSL.updateWithMapper(this::update, $uc.lc(${ModuleName}))
-                #foreach($property in $properties)
-                .set($property.name).equalTo(record::get$lc.uc(${property.name}))
-                #end
+            #foreach($property in $properties)
+                    .set($property.name).equalTo(record::get$lc.uc(${property.name}))
+            #end
                 ;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default UpdateDSL<MyBatis3UpdateModelAdapter<Integer>> updateByExampleSelective(${ModuleName} record) {
         return UpdateDSL.updateWithMapper(this::update, $uc.lc(${ModuleName}))
-                #foreach($property in $properties)
-                .set($property.name).equalToWhenPresent(record::get$lc.uc(${property.name}))
-                #end
+            #foreach($property in $properties)
+                    .set($property.name).equalToWhenPresent(record::get$lc.uc(${property.name}))
+            #end
                 ;
     }
 
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKey(${ModuleName} record) {
         return UpdateDSL.updateWithMapper(this::update, $uc.lc(${ModuleName}))
-                #foreach($property in $properties)
-                .set($property.name).equalTo(record::get$lc.uc(${property.name}))
-                #end
+            #foreach($property in $properties)
+                    .set($property.name).equalTo(record::get$lc.uc(${property.name}))
+            #end
                 .where(id, isEqualTo(record::getId))
                 .build()
                 .execute();
@@ -168,9 +168,9 @@ public interface ${ModuleName}Mapper {
     @Generated("org.mybatis.generator.api.MyBatisGenerator")
     default int updateByPrimaryKeySelective(${ModuleName} record) {
         return UpdateDSL.updateWithMapper(this::update, $uc.lc(${ModuleName}))
-                #foreach($property in $properties)
-                .set($property.name).equalToWhenPresent(record::get$lc.uc(${property.name}))
-                #end
+            #foreach($property in $properties)
+                    .set($property.name).equalToWhenPresent(record::get$lc.uc(${property.name}))
+            #end
                 .where(id, isEqualTo(record::getId))
                 .build()
                 .execute();
@@ -178,8 +178,8 @@ public interface ${ModuleName}Mapper {
 
 
     //append
-    default  List<${ModuleName}> selectById(Collection<$id.type.simpleName> ids) {
-        return this.selectByExample().where(${uc.lc(${ModuleName})}.id, SqlBuilder.isIn(ids)).build().execute();
+    default List<${ModuleName}> selectById(Collection<$id.type.simpleName> ids) {
+        return this.selectByExample().where(${uc.lc(${ModuleName})}.id,SqlBuilder.isIn(ids)).build().execute();
     }
 
 }

@@ -24,7 +24,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.servlet.ServletRequest;
-import java.util.List;
+import java.util.ListJs;
 
 /**
  * @author xiayx
@@ -44,8 +44,9 @@ public class ${DomainName}Application {
     @Bean
     public HandlerMethodArgumentConsumer handlerMethodArgumentConsumer(){
         return (HandlerMethodArgumentConsumer<OperatorCapableImpl>) object -> {
-            object.setOperatorId("1");
-            object.setOperatorName("1");
+            //TODO 类型推断
+            object.setOperatorId(0L);
+            object.setOperatorName("system");
         };
     }
 
@@ -62,7 +63,7 @@ public class ${DomainName}Application {
             }
 
             @Override
-            public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+            public void addArgumentResolvers(ListJs<HandlerMethodArgumentResolver> argumentResolvers) {
                 argumentResolvers.add(new ModelAttributeMethodProcessor(true) {
                     @Override
                     public boolean supportsParameter(MethodParameter parameter) {
@@ -77,8 +78,8 @@ public class ${DomainName}Application {
                     @Override
                     protected Object createAttribute(String attributeName, MethodParameter parameter, WebDataBinderFactory binderFactory, NativeWebRequest webRequest) throws Exception {
                         OperatorCapableImpl attribute = (OperatorCapableImpl) super.createAttribute(attributeName, parameter, binderFactory, webRequest);
-                        attribute.setOperatorId("1");
-                        attribute.setOperatorName("1");
+                        attribute.setOperatorId(0L);
+                        attribute.setOperatorName("system");
                         return attribute;
                     }
                 });
@@ -87,7 +88,7 @@ public class ${DomainName}Application {
     }
 
     @Bean
-    public HttpMessageConverters httpMessageConverters(@Autowired List<HttpMessageConverter<?>> httpMessageConverters) {
+    public HttpMessageConverters httpMessageConverters(@Autowired ListJs<HttpMessageConverter<?>> httpMessageConverters) {
         return new HttpMessageConverters(false, httpMessageConverters);
     }
 

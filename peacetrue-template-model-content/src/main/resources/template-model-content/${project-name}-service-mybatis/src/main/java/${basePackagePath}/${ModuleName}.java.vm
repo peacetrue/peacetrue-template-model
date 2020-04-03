@@ -15,10 +15,10 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-public class ${ModuleName} implements Serializable {
+public class ${ModuleName} implements Serializable{
 
-    private static final long serialVersionUID = 0L;
+private static final long serialVersionUID=0L;
 
     #listProperties($properties)
 
-}
+        }

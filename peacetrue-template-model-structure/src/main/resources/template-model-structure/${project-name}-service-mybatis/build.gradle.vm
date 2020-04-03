@@ -35,5 +35,6 @@ dependencies {
     testCompile 'com.github.pagehelper:pagehelper-spring-boot-starter'
     testCompile 'com.h2database:h2'
     testCompile 'ch.qos.logback:logback-classic'
+    testCompile 'org.unitils:unitils-core'
 
 }

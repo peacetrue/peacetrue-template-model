@@ -1,0 +1,36 @@
+import React from 'react';
+import {Datagrid, DateInput, DateField, EditButton, Filter, List, TextField, TextInput} from 'react-admin';
+
+const Filters = (props) $esc.javascript('=>') (
+    <Filter {...props}>
+        #foreach($property in $properties)
+            #if($property.type.name == 'java.lang.String')
+                <TextInput label={'${property.comment}'} source="${property.name}" allowEmpty alwaysOn/>
+            #elseif($property.type.name == 'java.util.Date')
+                <DateInput label={'${property.comment}起始值'} source="${property.name}.lowerBound" allowEmpty alwaysOn/>
+                <DateInput label={'${property.comment}结束值'} source="${property.name}.upperBound" allowEmpty alwaysOn/>
+            #end
+        #end
+    </Filter>
+);
+
+export const ${ModuleName}List = props $esc.javascript('=>') {
+    console.info('${ModuleName}List:', props);
+    return (
+        <List {...props} title={`$esc.d{props.options.label}列表`} filters={<Filters/>}
+              sort={{field: 'createdTime', order: 'desc'}}>
+            <Datagrid rowClick="show">
+                #foreach($property in $properties)
+                    #if($property.name!='id')
+                        #if($property.type.name == 'java.util.Date')
+                            <DateField label={'${property.comment}'} source="${property.name}" showTime/>
+                        #else
+                            <TextField label={'${property.comment}'} source="${property.name}"/>
+                        #end
+                    #end
+                #end
+                <EditButton/>
+            </Datagrid>
+        </List>
+    )
+};

@@ -18,7 +18,7 @@ import java.util.List;
  * @author xiayx            
  */
 @Controller
-@RequestMapping(value = "${esc.d}{peacetrue.${module-name}.urls.base-path:/${module-name}s}")
+@RequestMapping(value = "${esc.d}{peacetrue.${module-name}.base-path:/${module-name}s}")
 public class ${ModuleName}Controller {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -26,25 +26,25 @@ public class ${ModuleName}Controller {
     private ${ModuleName}Service ${moduleName}Service;
 
     @ResponseBody
-    @PostMapping(value = "${esc.d}{peacetrue.${module-name}.urls.add:}")
+    @PostMapping
     public ${ModuleName}VO add(${ModuleName}Add params) {
         logger.info("新增信息[{}]", params);
         return ${moduleName}Service.add(params);
     }
 
     @ResponseBody
-    @GetMapping(value = "${esc.d}{peacetrue.${module-name}.urls.query:}", params = "page")
+    @GetMapping(params = "page")
     public Page<${ModuleName}VO> query(${ModuleName}Query params,
-                                              @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
+                                       @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
         logger.info("分页查询信息[{}]", params);
         return ${moduleName}Service.query(params, pageable);
     }
 
     @ResponseBody
-    @GetMapping(params = "id")
-    public List<${ModuleName}VO> get(Long[] id) {
-        logger.info("获取信息[{}]详情", Arrays.toString(id));
-        return ${moduleName}Service.query(new ${ModuleName}Query(id));
+    @GetMapping(value = "${esc.d}{peacetrue.${module-name}.urls.query:}")
+    public List<${ModuleName}VO> query(${ModuleName}Query params) {
+        logger.info("查询信息[{}]", params);
+        return ${moduleName}Service.query(params);
     }
 
     @ResponseBody
@@ -55,7 +55,7 @@ public class ${ModuleName}Controller {
     }
 
     @ResponseBody
-    @PatchMapping(value = "${esc.d}{peacetrue.${module-name}.urls.modify:}")
+    @PutMapping("/{id}")
     public int modify(${ModuleName}Modify params) {
         logger.info("修改信息[{}]", params);
         return ${moduleName}Service.modify(params);

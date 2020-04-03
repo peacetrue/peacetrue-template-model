@@ -11,15 +11,18 @@ import java.util.Date;
 
 public final class ${ModuleName}DynamicSqlSupport {
 
-    public static final ${ModuleName} ${uc.lc(${ModuleName})} = new ${ModuleName}();
+    public static final ${ModuleName} ${uc.lc(${ModuleName})} =new ${ModuleName}();
 
     #foreach($property in $properties)
-    public static final SqlColumn<$property.type.simpleName> $property.name = $uc.lc(${ModuleName}).$property.name;
+        public static final SqlColumn<$property.type.simpleName> $property.name = $uc.lc(${ModuleName}).$property.name;
     #end
 
-    public static final class ${ModuleName} extends SqlTable {
+    public static final class ${ModuleName} extends
+
+    SqlTable {
         #foreach($property in $properties)
-            public final SqlColumn<$property.type.simpleName> $property.name = column("${lc.lu($property.name)}", $javaTypeToJDBCType[$property.type.name]);
+            public final SqlColumn<$property.type.simpleName> $property.name =
+            column("${lc.lu($property.name)}", $javaTypeToJDBCType[$property.type.name]);
         #end
 
         public ${ModuleName}() {
