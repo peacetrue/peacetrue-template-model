@@ -1,0 +1,6 @@
+import ${DomainName}List from './src/modules/companys/list'
+import ${DomainName}Create from './src/modules/companys/create'
+import ${DomainName}Edit from './src/modules/companys/edit'
+import ${DomainName}Show from './src/modules/companys/show'
+
+export {${DomainName}List, ${DomainName}Create, ${DomainName}Edit, ${DomainName}Show}
