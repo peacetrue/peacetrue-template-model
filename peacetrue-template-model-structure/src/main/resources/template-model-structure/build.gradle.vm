@@ -26,7 +26,7 @@ peacetrueGenerate {
             'peacetrue.generator.target-path': "${esc.d}rootDir",
             'spring.datasource.schema'       : "file:${esc.d}rootDir/${project-name}-service-mybatis/src/main/resources/schema-h2.sql",
     ]
-    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-mybatis/src/main/resources/application-${domain-name}-service.properties"
+    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-mybatis/src/test/resources/application-${domain-name}-service-test.properties"
     context = [
             'project-name'     : "${project-name}",
             'basePackageName'  : "${basePackageName}",
