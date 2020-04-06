@@ -65,7 +65,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                 if (params.get${lc.uc($property.name)}() == null) params.set${lc.uc($property.name)}(new Range.Date());
             #end
         #end
-        if (pageable == null) pageable = new PageRequest(0, 10, new Sort(Sort.Direction.DESC, "createdTime"));
+        if (pageable == null) pageable = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "createdTime"));
         PageHelper.startPage(pageable.getPageNumber() + 1, pageable.getPageSize());
         List<${ModuleName}> entities = ${uc.lc(${ModuleName})}Mapper.selectByExample()
                 .where()
@@ -93,7 +93,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     public List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
-        return this.query(params, new PageRequest(0, Integer.MAX_VALUE), projection).getContent();
+        return this.query(params, PageRequest.of(0, Integer.MAX_VALUE), projection).getContent();
     }
 
     @Override
