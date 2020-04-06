@@ -1,19 +1,22 @@
 plugins {
-    id "org.springframework.boot" version "1.5.20.RELEASE"
+    id "org.springframework.boot" version "2.2.5.RELEASE"
 }
 
 description '${domainDescription}样章'
 
 dependencies {
-    compile 'ch.qos.logback:logback-classic'
-    compile 'com.github.peacetrue:peacetrue-spring'
-    compile project(":${project-name}-controller")
-    compile project(":${project-name}-service-mybatis")
-    compile project(path: ':${project-name}-service-mybatis', configuration: 'testArtifacts')
-    compile 'com.github.peacetrue:peacetrue-result-web'
-    compile 'com.github.peacetrue:peacetrue-result-exception-support'
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    compile 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'com.github.peacetrue.module:peacetrue-module-controller'
-    implementation 'com.github.peacetrue.module:peacetrue-module-service-mybatis:1.0-SNAPSHOT'
+    implementation 'com.github.peacetrue:peacetrue-spring'
+    implementation project(":${project-name}-controller")
+    implementation project(":${project-name}-service-mybatis")
+    implementation 'com.github.peacetrue:peacetrue-result-web'
+    implementation 'com.github.peacetrue:peacetrue-result-exception-support'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'mysql:mysql-connector-java'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard'
+    implementation 'org.springframework.cloud:spring-cloud-config-client'
+    implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
 }

@@ -103,7 +103,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                 .orElseThrow(() -> new EntityNotFoundException(${ModuleName}.class,"id", params.getId()));
     }
 
-    protected Optional<CompanyVO> getOptional(CompanyGet params) {
+    protected Optional<${ModuleName}VO> getOptional(${ModuleName}Get params) {
         return ${uc.lc(${ModuleName})}Mapper.selectByExample()
                 .where(id, SqlBuilder.isEqualTo(params.getId()))
                 .build().execute().stream()
