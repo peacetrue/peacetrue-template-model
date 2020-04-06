@@ -3,8 +3,8 @@ description '${domainDescription}服务接口'
 dependencies {
     api 'com.github.peacetrue:peacetrue-core'
     api 'com.github.peacetrue:peacetrue-result'
-    api 'com.github.peacetrue:spring-data-commons-page'
     api 'com.google.code.findbugs:jsr305'
     compileOnly 'javax.validation:validation-api'
     compileOnly 'com.github.peacetrue:peacetrue-validation'
+    compileOnly 'org.springframework.data:spring-data-commons'
 }

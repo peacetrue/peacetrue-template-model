@@ -30,10 +30,10 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'junit:junit'
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
-    testCompile 'com.github.pagehelper:pagehelper-spring-boot-starter'
-    testCompile 'com.h2database:h2'
-    testCompile 'ch.qos.logback:logback-classic'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-logging'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter'
+    testImplementation 'com.github.pagehelper:pagehelper-spring-boot-starter'
+    testImplementation 'com.h2database:h2'
 
 }
