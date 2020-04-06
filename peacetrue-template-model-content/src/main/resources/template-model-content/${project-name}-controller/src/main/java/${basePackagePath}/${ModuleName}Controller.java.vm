@@ -18,7 +18,7 @@ import java.util.List;
  * @author xiayx            
  */
 @RestController
-@RequestMapping(value = "/${module-name}s}")
+@RequestMapping(value = "/${module-name}s")
 public class ${ModuleName}Controller {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
