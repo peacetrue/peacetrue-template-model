@@ -5,7 +5,7 @@ plugins {
 
 allprojects { project ->
     group 'com.github.peacetrue.template'
-    version "1.3.1-SNAPSHOT"
+    version "1.3.2-SNAPSHOT"
     description "模型模板"
 
     apply plugin: "java"
