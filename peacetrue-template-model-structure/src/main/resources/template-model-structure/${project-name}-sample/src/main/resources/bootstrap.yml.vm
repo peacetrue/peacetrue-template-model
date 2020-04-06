@@ -1,0 +1,14 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8700/eureka
+
+spring:
+    application:
+        name: ${project-name}
+    cloud:
+        config:
+            label: master
+            discovery:
+                enabled: true
+                serviceId: config-center

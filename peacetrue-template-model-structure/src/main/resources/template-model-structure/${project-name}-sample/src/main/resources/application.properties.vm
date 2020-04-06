@@ -1,7 +1,0 @@
-server.port=8082
-logging.level.com.github=debug
-logging.level.org.springframework=info
-spring.jackson.date-format=yyyy-MM-dd HH:mm:ss
-spring.jackson.time-zone=Asia/Shanghai
-endpoints.enabled=true
-peacetrue.result.exclude-auto-convert-when-return=boolean
