@@ -7,7 +7,7 @@ buildscript {
 
     dependencies {
         classpath('com.github.peacetrue.generator:peacetrue-generator-plugin:1.1.0-SNAPSHOT')
-        classpath 'com.github.peacetrue.template:peacetrue-template-model-content:1.2.0-SNAPSHOT', {
+        classpath 'com.github.peacetrue.template:peacetrue-template-model-content:1.3.0-SNAPSHOT', {
             exclude group: 'ch.qos.logback'
         }
         classpath('com.h2database:h2:1.4.196')
