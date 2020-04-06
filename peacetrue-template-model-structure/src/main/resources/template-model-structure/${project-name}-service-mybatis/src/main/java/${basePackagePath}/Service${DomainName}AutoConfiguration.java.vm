@@ -19,7 +19,7 @@ import java.util.Objects;
 @EnableConfigurationProperties(Service${DomainName}Properties.class)
 @MapperScan(basePackageClasses = Service${DomainName}AutoConfiguration.class, annotationClass = Mapper.class)
 @ComponentScan(basePackageClasses = Service${DomainName}AutoConfiguration.class)
-@PropertySource("classpath:/application-${domain-name}-service.properties")
+@PropertySource("classpath:/application-${domain-name}-service.yml")
 public class Service${DomainName}AutoConfiguration {
 
     private Service${DomainName}Properties properties;

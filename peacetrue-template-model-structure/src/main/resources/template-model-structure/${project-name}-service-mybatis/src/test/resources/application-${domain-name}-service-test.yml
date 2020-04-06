@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    platform: h2
+    schema: classpath:schema-h2.sql
+    initialize: true
+  jpa:
+    generate-ddl: true
+logging:
+  level:
+    com:
+      github:
+        peacetrue: debug

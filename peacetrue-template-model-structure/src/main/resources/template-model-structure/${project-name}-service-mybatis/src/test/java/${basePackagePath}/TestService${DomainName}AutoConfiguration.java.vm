@@ -19,6 +19,6 @@ import org.springframework.context.annotation.PropertySource;
         PageHelperAutoConfiguration.class,
         Service${DomainName}AutoConfiguration.class,
 })
-@PropertySource("classpath:application-${domain-name}-service-test.properties")
+@PropertySource("classpath:application-${domain-name}-service-test.yml")
 public class TestService${DomainName}AutoConfiguration {
 }
