@@ -8,10 +8,13 @@ import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
 
 import java.util.List;
 import java.util.Map;
@@ -46,8 +49,23 @@ public class TemplateModelContentAutoConfiguration {
     }
 
     @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE)
     public UpperCamelContextHandler upperCamelContextHandler() {
-        return new UpperCamelContextHandler("ModuleName" , "DomainName");
+        return new UpperCamelContextHandler("ModuleName", "DomainName");
+    }
+
+    @Bean
+    @Order(Ordered.HIGHEST_PRECEDENCE + 1)
+    @ConditionalOnProperty(prefix = "peacetrue.template.model.content", name = "isAtomic", havingValue = "false")
+    public ContextHandler resetBasePackageNameToMultiple() {
+        return new ContextHandler() {
+            @Override
+            public void handle(Map<String, Object> map) {
+                String basePackageName = (String) map.get("basePackageName");
+                basePackageName = basePackageName.concat(".modules.").concat((String) map.get("modulename"));
+                map.put("basePackageName", basePackageName);
+            }
+        };
     }
 
     @Bean
@@ -60,8 +78,8 @@ public class TemplateModelContentAutoConfiguration {
         List<Map<String, Object>> contexts = modelSupplier.getModels()
                 .stream().map(model -> {
                     Map<String, Object> context = BeanUtils.map(model);
-                    context.put("ModuleName" , model.getName());
-                    context.put("fields" , properties.getFields());
+                    context.put("ModuleName", model.getName());
+                    context.put("fields", properties.getFields());
                     return context;
                 }).collect(Collectors.toList());
         return new ContextsSupplierImpl(contexts);

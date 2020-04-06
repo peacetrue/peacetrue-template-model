@@ -11,6 +11,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "peacetrue.template.model.content")
 public class TemplateModelContentProperties {
 
+    /** 是否原子性模块 */
+    private Boolean isAtomic = true;
     /** 字段名集合 */
     private Fields fields = new Fields();
 
