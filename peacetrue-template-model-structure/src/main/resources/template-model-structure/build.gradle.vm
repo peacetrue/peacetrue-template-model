@@ -55,6 +55,7 @@ allprojects { project ->
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR3"
             mavenBom "org.springframework.boot:spring-boot-dependencies:2.2.5.RELEASE"
             mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
         }
