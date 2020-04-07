@@ -4,11 +4,12 @@ spring:
     time-zone: Asia/Shanghai
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.104:3307/${domain-name}?autoreconnect=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    host: localhost
+    url: jdbc:mysql://$esc.d{spring.datasource.host}:3306/${domain-name}?autoreconnect=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 12345678
 server:
-  port: 9001
+  port: 8080
 management:
   endpoints:
     enabled-by-default: true

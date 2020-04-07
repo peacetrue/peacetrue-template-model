@@ -28,7 +28,7 @@ let httpClient = springHttpClient((url, options = {}) $esc.javascript('=>') {
         });
 });
 
-const dataProvider = springDataProvider('http://localhost:8082', httpClient);
+const dataProvider = springDataProvider('http://localhost:8080', httpClient);
 const App = () $esc.javascript('=>') (
     <Admin i18nProvider={i18nProvider} dataProvider={dataProvider}>
         <Resource options={{label: '$domainDescription'}} name="${domainName}s"

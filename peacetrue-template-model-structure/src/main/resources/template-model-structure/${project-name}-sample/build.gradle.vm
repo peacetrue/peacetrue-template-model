@@ -14,9 +14,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'mysql:mysql-connector-java'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard'
     implementation 'org.springframework.cloud:spring-cloud-config-client'
-    implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
-    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
+##    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+##    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix-dashboard'
+##    implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+##    implementation 'org.springframework.cloud:spring-cloud-starter-zipkin'
 }
