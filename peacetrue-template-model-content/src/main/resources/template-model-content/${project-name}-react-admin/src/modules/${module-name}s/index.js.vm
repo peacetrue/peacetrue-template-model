@@ -1,0 +1,13 @@
+import React from "react";
+import {Resource} from "react-admin";
+
+import {${ModuleName}List} from './list';
+import {${ModuleName}Create} from './create';
+import {${ModuleName}Edit} from './edit';
+import {${ModuleName}Show} from './show';
+
+let ${ModuleName} = {list: ${ModuleName}List, create: ${ModuleName}Create, edit: ${ModuleName}Edit, show: ${ModuleName}Show};
+export const ${ModuleName}Resource = props $esc.javascript('=>') (
+    <Resource options={{label: '${comment}'}} name="${module-name}s" {...${ModuleName}} {...props} />
+);
+export default ${ModuleName}

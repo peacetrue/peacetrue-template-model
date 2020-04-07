@@ -4,7 +4,7 @@
   "description": "${domainDescription}",
   "files": [
     "src/modules",
-    "index.js"
+    "index.js.vm"
   ],
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
