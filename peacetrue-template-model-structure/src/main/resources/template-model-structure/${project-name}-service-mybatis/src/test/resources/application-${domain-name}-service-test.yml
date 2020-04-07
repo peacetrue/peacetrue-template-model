@@ -2,7 +2,7 @@ spring:
   datasource:
     platform: h2
     schema: classpath:schema-h2.sql
-    initialize: true
+    initialization-mode: embedded
   jpa:
     generate-ddl: true
 logging:
