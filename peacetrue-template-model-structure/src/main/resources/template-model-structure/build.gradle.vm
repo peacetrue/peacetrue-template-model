@@ -42,8 +42,8 @@ allprojects { project ->
 
     apply plugin: "java"
     apply plugin: "java-library"
-    ##    sourceCompatibility = 8
-    ##    targetCompatibility = 8
+    sourceCompatibility = 11
+    targetCompatibility = 11
 
     repositories {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
