@@ -1,5 +1,2 @@
 FROM adoptopenjdk:11-jdk-hotspot
-VOLUME /tmp
 COPY build/libs/${project-name}-sample-1.0.0-SNAPSHOT.jar app.jar
-RUN bash -c "touch /app.jar"
-EXPOSE 9001

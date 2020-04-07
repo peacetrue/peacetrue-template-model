@@ -1,0 +1,20 @@
+version: '2'
+
+services:
+  ${project-name}:
+    container_name: ${project-name}
+    hostname: ${project-name}
+    build: ./
+    image: ${project-name}:latest
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - peacetrue-microservice
+    entrypoint: java -jar app.jar --spring.datasource.host=peacetrue-microservice-mysql --eureka.instance.hostname=${project-name} --eureka.client.serviceUrl.defaultZone=http://peacetrue-microservice-registry-center:8700/eureka --server.port=8080
+networks:
+  peacetrue-microservice:
+    external:
+      name: peacetrue-microservice
+# docker-compose up --build -d
