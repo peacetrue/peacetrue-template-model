@@ -16,6 +16,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -75,11 +76,23 @@ public class TemplateModelContentAutoConfiguration {
 
     @Bean
     public ContextsSupplier contextsSupplier(@Autowired ModelSupplier modelSupplier) {
+        TemplateModelContentProperties.Fields fields = properties.getFields();
+        List<String> idAuditFieldNames = Arrays.asList(
+                fields.getId(),
+                fields.getCreatorId(),
+                fields.getCreatedTime(),
+                fields.getModifierId(),
+                fields.getModifiedTime()
+        );
+
         List<Map<String, Object>> contexts = modelSupplier.getModels()
                 .stream().map(model -> {
                     Map<String, Object> context = BeanUtils.map(model);
+                    context.put("fields", fields);
                     context.put("ModuleName", model.getName());
-                    context.put("fields", properties.getFields());
+                    context.put("nonIdProperties", model.getProperties().stream().filter(property -> !property.getName().equals(fields.getId())).collect(Collectors.toList()));
+                    context.put("nonIdAuditProperties", model.getProperties().stream().filter(property -> !idAuditFieldNames.contains(property.getName())).collect(Collectors.toList()));
+                    context.put("idAuditFieldNames", idAuditFieldNames);
                     return context;
                 }).collect(Collectors.toList());
         return new ContextsSupplierImpl(contexts);

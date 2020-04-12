@@ -6,6 +6,8 @@ services:
     hostname: ${project-name}
     build: ./
     image: ${project-name}:latest
+    privileged: true
+    restart: always
     expose:
       - 8080
     ports:

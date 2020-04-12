@@ -3,7 +3,7 @@ import {Datagrid, DateInput, DateField, EditButton, Filter, List, TextField, Tex
 
 const Filters = (props) $esc.javascript('=>') (
     <Filter {...props}>
-        #foreach($property in $properties)
+        #foreach($property in $nonIdProperties)
             #if($property.type.name == 'java.lang.String')
                 <TextInput label={'${property.comment}'} source="${property.name}" allowEmpty alwaysOn/>
             #elseif($property.type.name == 'java.util.Date')
@@ -20,13 +20,11 @@ export const ${ModuleName}List = props $esc.javascript('=>') {
         <List {...props} title={`$esc.d{props.options.label}列表`} filters={<Filters/>}
               sort={{field: 'createdTime', order: 'desc'}}>
             <Datagrid rowClick="show">
-                #foreach($property in $properties)
-                    #if($property.name!='id')
-                        #if($property.type.name == 'java.util.Date')
-                            <DateField label={'${property.comment}'} source="${property.name}" showTime/>
-                        #else
-                            <TextField label={'${property.comment}'} source="${property.name}"/>
-                        #end
+                #foreach($property in $nonIdProperties)
+                    #if($property.type.name == 'java.util.Date')
+                        <DateField label={'${property.comment}'} source="${property.name}" showTime/>
+                    #else
+                        <TextField label={'${property.comment}'} source="${property.name}"/>
                     #end
                 #end
                 <EditButton/>

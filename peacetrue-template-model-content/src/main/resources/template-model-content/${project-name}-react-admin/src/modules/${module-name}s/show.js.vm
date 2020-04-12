@@ -6,13 +6,11 @@ export const ${ModuleName}Show = (props) $esc.javascript('=>') {
     return (
         <Show {...props} title={`${props.options.label}#${props.id}`}>
             <SimpleShowLayout>
-                #foreach($property in $properties)
-                    #if($property.name!='id')
-                        #if($property.type.name == 'java.util.Date')
-                            <DateField label={'$property.comment'} source="$property.name" showTime/>
-                        #else
-                            <TextField label={'$property.comment'} source="$property.name"/>
-                        #end
+                #foreach($property in $nonIdProperties)
+                    #if($property.type.name == 'java.util.Date')
+                        <DateField label={'$property.comment'} source="$property.name" showTime/>
+                    #else
+                        <TextField label={'$property.comment'} source="$property.name"/>
                     #end
                 #end
             </SimpleShowLayout>

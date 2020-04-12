@@ -10,6 +10,9 @@ CREATE TABLE demo
     modified_time DATETIME                          NOT NULL COMMENT '修改时间'
 );
 
+COMMENT ON TABLE demo is '示例';
+COMMENT ON COLUMN demo.id is '主键';
+
 insert into demo (code, name, creator_id, created_time, modifier_id, modified_time)
 values ('1', '1', 1, '2010-01-01 01:01:01', 1, '2010-01-01 01:01:01');
 

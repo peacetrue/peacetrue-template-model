@@ -6,13 +6,11 @@ export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
     return (
         <Edit {...props} title={`$esc.d{props.options.label}#$esc.d{props.id}`}>
             <SimpleForm>
-                #foreach($property in $properties)
-                    #if($property.name!='id')
-                        #if($property.type.name == 'java.util.Date')
-                            <DateTimeInput label={'$property.comment'} source="$property.name" validate={required()}/>
-                        #else
-                            <TextInput label={'$property.comment'} source="$property.name" validate={required()}/>
-                        #end
+                #foreach($property in $nonIdAuditProperties)
+                    #if($property.type.name == 'java.util.Date')
+                        <DateTimeInput label={'$property.comment'} source="$property.name" validate={required()}/>
+                    #else
+                        <TextInput label={'$property.comment'} source="$property.name" validate={required()}/>
                     #end
                 #end
             </SimpleForm>

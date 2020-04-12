@@ -43,7 +43,7 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_01_query() {
-        Page<${ModuleName}VO> vos = ${uc.lc(${ModuleName})}Service.query(new ${ModuleName}Query(), new PageRequest(0, 1));
+        Page<${ModuleName}VO> vos = ${uc.lc(${ModuleName})}Service.query(new ${ModuleName}Query(), PageRequest.of(0, 1));
         Assert.assertEquals(vos.getTotalElements(), 1);
     }
 

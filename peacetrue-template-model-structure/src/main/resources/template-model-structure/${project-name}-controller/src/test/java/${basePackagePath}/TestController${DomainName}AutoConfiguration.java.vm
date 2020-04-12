@@ -19,7 +19,7 @@ import org.springframework.context.annotation.PropertySource;
         Controller${DomainName}AutoConfiguration.class,
         SpringDataWebAutoConfiguration.class
 })
-@PropertySource("classpath:application-${domain-name}-controller-test.properties")
+@PropertySource("classpath:application-${domain-name}-controller-test.yml")
 public class TestController${DomainName}AutoConfiguration {
 
 }

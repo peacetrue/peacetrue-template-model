@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @Configuration
 @EnableConfigurationProperties(Controller${DomainName}Properties.class)
 @ComponentScan(basePackageClasses = Controller${DomainName}AutoConfiguration.class)
-@PropertySource("classpath:/application-${domain-name}-controller.properties")
+@PropertySource("classpath:/application-${domain-name}-controller.yml")
 public class Controller${DomainName}AutoConfiguration {
 
 }
