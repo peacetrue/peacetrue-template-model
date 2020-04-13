@@ -1,0 +1,11 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://peacetrue-microservice-registry-center:8700/eureka
+  instance:
+    hostname: ${project-name}-app-admin
+server:
+  port: 8080
+spring:
+  datasource:
+    host: peacetrue-microservice-mysql

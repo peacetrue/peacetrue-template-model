@@ -10,6 +10,9 @@ dependencies {
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test', {
+        exclude group: 'com.vaadin.external.google', module: 'android-json'
+    }
     testImplementation project(':${project-name}-service-mybatis')
     testImplementation project(path: ':${project-name}-service-mybatis', configuration: 'testArtifacts')
 }
