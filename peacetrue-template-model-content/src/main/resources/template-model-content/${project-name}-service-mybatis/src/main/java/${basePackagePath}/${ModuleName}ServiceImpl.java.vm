@@ -113,7 +113,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
 
     @Override
-    public int modify(${ModuleName}Modify params) {
+    public void modify(${ModuleName}Modify params) {
         logger.info("修改信息[{}]", params);
         ${ModuleName}VO vo = this.get(BeanUtils.map(params, ${ModuleName}Get.class));
         ${ModuleName} ${uc.lc(${ModuleName})} =new ${ModuleName}();
@@ -123,16 +123,14 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         int count = ${uc.lc(${ModuleName})}Mapper.updateByPrimaryKeySelective(${uc.lc(${ModuleName})});
         logger.debug("共影响[{}]条记录", count);
         eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
-        return count;
     }
 
     @Override
-    public int delete(${ModuleName}Delete params) {
+    public void delete(${ModuleName}Delete params) {
         logger.info("删除信息[{}]", params);
         ${ModuleName}VO vo = this.get(BeanUtils.map(params, ${ModuleName}Get.class));
         int count = ${uc.lc(${ModuleName})}Mapper.deleteByPrimaryKey(params.getId());
         logger.debug("共影响[{}]条记录", count);
         eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
-        return count;
     }
 }

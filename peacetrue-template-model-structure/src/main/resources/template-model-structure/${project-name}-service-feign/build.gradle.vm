@@ -1,0 +1,7 @@
+description '${domainDescription}feign客户端'
+
+dependencies {
+    api project(":${project-name}-service-api")
+    compileOnly 'org.springframework.data:spring-data-commons'
+    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign'
+}

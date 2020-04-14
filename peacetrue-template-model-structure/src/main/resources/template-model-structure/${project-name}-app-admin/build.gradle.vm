@@ -8,12 +8,12 @@ dependencies {
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation project(":${project-name}-controller")
     implementation project(":${project-name}-service-mybatis")
-    implementation 'com.github.peacetrue:peacetrue-result-web'
-    implementation 'com.github.peacetrue:peacetrue-result-exception-support'
+##    implementation 'com.github.peacetrue:peacetrue-result-web'
+##    implementation 'com.github.peacetrue:peacetrue-result-exception-support'
+    implementation 'mysql:mysql-connector-java'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-logging'
-    implementation 'mysql:mysql-connector-java'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.cloud:spring-cloud-config-client'
 ##    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'

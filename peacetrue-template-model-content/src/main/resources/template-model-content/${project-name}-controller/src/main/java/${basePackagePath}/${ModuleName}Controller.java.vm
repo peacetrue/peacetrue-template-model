@@ -1,7 +1,6 @@
 package ${basePackageName};
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +8,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.SortDefault;
+import org.springframework.http.MediaType;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,49 +19,76 @@ import java.util.List;
 /**
  * @author xiayx            
  */
+@Slf4j
 @RestController
 @RequestMapping(value = "/${module-name}s")
 public class ${ModuleName}Controller {
 
-    private Logger logger = LoggerFactory.getLogger(getClass());
     @Autowired
     private ${ModuleName}Service ${moduleName}Service;
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public ${ModuleName}VO add(${ModuleName}Add params) {
-        logger.info("新增信息[{}]", params);
+        log.info("新增信息[{}]", params);
+        return ${moduleName}Service.add(params);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ${ModuleName}VO add4json(@RequestBody ${ModuleName}Add params) {
+        log.info("新增信息[{}]", params);
         return ${moduleName}Service.add(params);
     }
 
     @GetMapping(params = "page")
     public Page<${ModuleName}VO> query(${ModuleName}Query params,
-                                       @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable) {
-        logger.info("分页查询信息[{}]", params);
-        return ${moduleName}Service.query(params, pageable);
+                                       @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable,
+                                       String... projection) {
+        log.info("分页查询信息[{}]", params);
+        return ${moduleName}Service.query(params, pageable,projection);
     }
 
-    @GetMapping(value = "${esc.d}{peacetrue.${module-name}.urls.query:}")
-    public List<${ModuleName}VO> query(${ModuleName}Query params) {
-        logger.info("查询信息[{}]", params);
-        return ${moduleName}Service.query(params);
+    @GetMapping
+    public List<${ModuleName}VO> query(${ModuleName}Query params,
+                                       @SortDefault(sort = {"createdTime"}, direction = Sort.Direction.DESC) Sort sort,
+                                       String... projection) {
+        log.info("查询信息[{}]", params);
+        return ${moduleName}Service.query(params,sort,projection);
     }
 
     @GetMapping("/{id}")
-    public ${ModuleName}VO get(@PathVariable Long id) {
-        logger.info("获取信息[{}]详情", id);
-        return ${moduleName}Service.get(new ${ModuleName}Get(id));
+    public ${ModuleName}VO get(@PathVariable Long id,String... projection) {
+        log.info("获取信息[{}]详情", id);
+        return ${moduleName}Service.get(new ${ModuleName}Get(id),projection);
     }
 
-    @PutMapping("/{id}")
+    @GetMapping("/get")
+    public ${ModuleName}VO get(${ModuleName}Get params, String... projection) {
+        log.info("获取信息[{}]详情", params);
+        return englishWordService.get(params, projection);
+    }
+
+    @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public int modify(${ModuleName}Modify params) {
-        logger.info("修改信息[{}]", params);
+        log.info("修改信息[{}]", params);
         return ${moduleName}Service.modify(params);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void modify4json(@RequestBody ${ModuleName}Modify params) {
+        log.info("修改信息[{}]", params);
+        englishWordService.modify(params);
     }
 
     @DeleteMapping("/{id}")
     public int delete(@PathVariable Long id) {
-        logger.info("删除信息[{}]", id);
+        log.info("删除信息[{}]", id);
         return ${moduleName}Service.delete(new ${ModuleName}Delete(id));
+    }
+
+    @GetMapping("/delete")
+    public void delete(${ModuleName}Delete params) {
+        log.info("删除信息[{}]", params);
+        englishWordService.delete(params);
     }
 
 }

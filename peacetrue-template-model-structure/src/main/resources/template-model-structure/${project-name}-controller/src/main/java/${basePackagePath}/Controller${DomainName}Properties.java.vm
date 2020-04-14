@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Getter
 @Setter
-@ConfigurationProperties(prefix = "peacetrue.${domainName}")
+@ConfigurationProperties(prefix = "peacetrue.${domain-name}")
 public class Controller${DomainName}Properties {
 
 }

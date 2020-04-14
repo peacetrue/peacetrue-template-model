@@ -7,10 +7,10 @@ eureka:
 
 spring:
     application:
-        name: ${project-name}
+        name: ${project-name}-app-admin
     cloud:
         config:
             label: master
             discovery:
                 enabled: true
-                serviceId: config-center
+                serviceId: peacetrue-microservice-config-center

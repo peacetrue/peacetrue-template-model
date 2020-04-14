@@ -3,6 +3,7 @@ package ${basePackageName};
 import com.github.peacetrue.result.exception.ResultException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.annotation.Nullable;
 
@@ -20,14 +21,19 @@ public interface ${ModuleName}Service {
     Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) throws ResultException;
 
     /** 全量查询 */
-    List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) throws ResultException;
+    List<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection) throws ResultException;
+
+    /** 全量查询 */
+    default List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) throws ResultException {
+        return query(params, (Sort) null, projection);
+    }
 
     /** 获取 */
     ${ModuleName}VO get(${ModuleName}Get params, String... projection) throws ResultException;
 
     /** 修改 */
-    int modify(${ModuleName}Modify params) throws ResultException;
+    void modify(${ModuleName}Modify params) throws ResultException;
 
     /** 删除 */
-    int delete(${ModuleName}Delete params) throws ResultException;
+    void delete(${ModuleName}Delete params) throws ResultException;
 }

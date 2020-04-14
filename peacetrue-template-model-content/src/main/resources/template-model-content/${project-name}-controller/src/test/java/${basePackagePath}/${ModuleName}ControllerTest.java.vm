@@ -100,7 +100,7 @@ public class ${ModuleName}ControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$").value(1));
+                .andExpect(jsonPath("$").value(null));
     }
 
     @Test
@@ -111,6 +111,6 @@ public class ${ModuleName}ControllerTest {
         )
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$").value(1));
+                .andExpect(jsonPath("$").value(null));
     }
 }

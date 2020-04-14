@@ -49,13 +49,13 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_02_get() {
-            ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
         Assert.assertNotNull(vo);
     }
 
     @Test
     public void test_03_add() {
-            ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
+        ${ModuleName}VO vo = ${uc.lc(${ModuleName})}Service.add(RECORD_ADD);
         ReflectionAssert.assertReflectionEquals(vo, ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(vo.getId())));
     }
 
@@ -79,7 +79,6 @@ public class ${ModuleName}ServiceImplTest {
 
     @Test
     public void test_05_delete() {
-        int count = ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(INIT_ID));
-        Assert.assertEquals(count, 1);
+        ${uc.lc(${ModuleName})}Service.delete(new ${ModuleName}Delete(INIT_ID));
     }
 }

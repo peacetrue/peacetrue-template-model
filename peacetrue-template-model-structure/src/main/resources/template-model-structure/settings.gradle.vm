@@ -1,5 +1,6 @@
 rootProject.name = "${project-name}"
 include("${project-name}-service-api")
 include("${project-name}-service-mybatis")
+include("${project-name}-service-feign")
 include("${project-name}-controller")
-include("${project-name}-sample")
+include("${project-name}-app-admin")
