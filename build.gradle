@@ -1,17 +1,20 @@
-plugins {
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
+buildscript {
+    repositories {
+        maven { url 'https://repo.spring.io/plugins-release' }
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1+"
+    }
 }
-
 
 allprojects { project ->
     group 'com.github.peacetrue.template'
-    version "1.3.3-SNAPSHOT"
+    version "1.3.4-SNAPSHOT"
     description "模型模板"
 
-    apply plugin: "java"
     apply plugin: "java-library"
-    sourceCompatibility = 8
-    targetCompatibility = 8
+    sourceCompatibility = 9
+    targetCompatibility = 9
 
     repositories {
         mavenLocal()
@@ -23,18 +26,19 @@ allprojects { project ->
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
+            mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
 //            mavenBom "org.springframework.boot:spring-boot-dependencies:2.1.8.RELEASE"
-//            mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
-            mavenBom "org.springframework.boot:spring-boot-dependencies:1.5.20.RELEASE"
-            mavenBom "com.github.peacetrue:peacetrue-dependencies:1.0.4-SNAPSHOT"
+//            mavenBom "org.springframework.boot:spring-boot-dependencies:1.5.20.RELEASE"
+//            mavenBom "com.github.peacetrue:peacetrue-dependencies:1.0.4-SNAPSHOT"
         }
+
         dependencies {
             dependency "com.github.peacetrue.generator:peacetrue-generator:1+"
-            dependency "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
             dependency "com.github.peacetrue.generator:peacetrue-generator-velocity:1+"
             dependency "com.github.peacetrue.generator:peacetrue-generator-context:1+"
-            dependency "com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT"
+            dependency "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
             dependency "com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT"
+            dependency "com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT"
         }
     }
 
