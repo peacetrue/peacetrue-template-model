@@ -7,7 +7,7 @@ eureka:
 
 spring:
     application:
-        name: ${project-name}-app-admin
+        name: ${project-name}-app
     cloud:
         config:
             label: master

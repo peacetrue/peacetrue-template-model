@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@FeignClient(name = "${project-name}-app-admin")
+@FeignClient(name = "${project-name}-app")
 public interface ${ModuleName}ServiceFeignClient extends ${ModuleName}Service {
 
     @Override

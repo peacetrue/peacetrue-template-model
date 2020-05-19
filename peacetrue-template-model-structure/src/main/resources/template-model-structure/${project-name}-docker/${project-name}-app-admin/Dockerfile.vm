@@ -1,2 +1,2 @@
 FROM adoptopenjdk:11-jdk-hotspot
-##COPY libs/${project-name}-app-admin-1.0.0-SNAPSHOT.jar app.jar
+##COPY libs/${project-name}-app-1.0.0-SNAPSHOT.jar app.jar

@@ -1,16 +1,16 @@
 version: '2'
 
 services:
-  ${project-name}-app-admin:
-    container_name: ${project-name}-app-admin
-    hostname: ${project-name}-app-admin
-    build: ${project-name}-app-admin
-    image: ${project-name}-app-admin:latest
+  ${project-name}-app:
+    container_name: ${project-name}-app
+    hostname: ${project-name}-app
+    build: ${project-name}-app
+    image: ${project-name}-app:latest
     privileged: true
     restart: always
     volumes:
-      - ${peacetrue.generator.targetPath}/${project-name}-app-admin/build/libs/${project-name}-app-admin-1.0.0-SNAPSHOT.jar:/app.jar
-      - ${peacetrue.generator.targetPath}/${project-name}-docker/${project-name}-app-admin/libs/application-default.yml:/application-default.yml
+      - ${peacetrue.generator.targetPath}/${project-name}-app/build/libs/${project-name}-app-1.0.0-SNAPSHOT.jar:/app.jar
+      - ${peacetrue.generator.targetPath}/${project-name}-docker/${project-name}-app/libs/application-default.yml:/application-default.yml
     expose:
       - 8080
     ports:
