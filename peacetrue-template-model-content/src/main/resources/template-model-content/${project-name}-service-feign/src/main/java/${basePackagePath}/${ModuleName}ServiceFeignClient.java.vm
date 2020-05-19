@@ -24,7 +24,7 @@ public interface ${ModuleName}ServiceFeignClient extends ${ModuleName}Service {
     Page<${ModuleName}VO> query(@Nullable @SpringQueryMap ${ModuleName}Query params, @Nullable Pageable pageable, @SpringQueryMap String... projection) throws ResultException;
 
     @Override
-    @GetMapping(value = "/${module-name}s")
+    @GetMapping(value = "/${module-name}s", params = "sort")
     List<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, Sort sort, @SpringQueryMap String... projection) throws ResultException;
 
     @Override

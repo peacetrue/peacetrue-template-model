@@ -13,8 +13,8 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    testCompile project(path: ':peacetrue-template-model-structure', configuration: 'testArtifacts')
-    testCompile 'org.springframework.boot:spring-boot-starter-test'
-    testCompile 'org.springframework.boot:spring-boot-starter-logging'
-    testCompile 'com.h2database:h2:1.4.196'
+    testImplementation project(path: ':peacetrue-template-model-structure', configuration: 'testArtifacts')
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-logging'
+    testImplementation 'com.h2database:h2:1.4.196'
 }

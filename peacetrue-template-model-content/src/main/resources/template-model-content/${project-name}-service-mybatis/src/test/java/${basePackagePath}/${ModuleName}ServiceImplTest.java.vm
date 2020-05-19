@@ -65,8 +65,7 @@ public class ${ModuleName}ServiceImplTest {
             ${ModuleName}Modify modify = EnhancedRandom.random(${ModuleName}Modify.class);
         modify.setId(vo.getId());
         modify.setOperatorId(EnhancedRandom.random(${operatorIdType}. class));
-        int count = ${uc.lc(${ModuleName})}Service.modify(modify);
-        Assert.assertEquals(count, 1);
+        ${uc.lc(${ModuleName})}Service.modify(modify);
         vo = ${uc.lc(${ModuleName})}Service.get(new ${ModuleName}Get(INIT_ID));
         Map<String, Object> modifyMap = BeanUtils.map(modify);
         Map<String, Object> voMap = BeanUtils.map(vo);

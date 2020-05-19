@@ -92,15 +92,23 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     @Override
+    public List<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection) {
+        PageRequest pageable = sort == null
+                ? PageRequest.of(0, Integer.MAX_VALUE)
+                : PageRequest.of(0, Integer.MAX_VALUE, sort);
+        return this.query(params, pageable, projection).getContent();
+    }
+
+    @Override
     public List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
-        return this.query(params, PageRequest.of(0, Integer.MAX_VALUE), projection).getContent();
+        return this.query(params, (Sort) null, projection);
     }
 
     @Override
     public  ${ModuleName}VO get(${ModuleName}Get params, String... projection) {
         logger.info("获取符合条件[{}]的信息", params);
         return this.getOptional(params)
-                .orElseThrow(() -> new EntityNotFoundException(${ModuleName}.class,"id", params.getId()));
+                .orElseThrow(() -> new EntityNotFoundException(${ModuleName}.class, "id", params.getId()));
     }
 
     protected Optional<${ModuleName}VO> getOptional(${ModuleName}Get params) {
@@ -110,7 +118,6 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                 .reduce((l, r) -> r)
                 .map(${uc.lc(${ModuleName})}->BeanUtils.map(${uc.lc(${ModuleName})}, ${ModuleName}VO.class));
     }
-
 
     @Override
     public void modify(${ModuleName}Modify params) {
