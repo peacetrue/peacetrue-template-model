@@ -17,7 +17,7 @@ import java.util.List;
 
 
 /**
- * @author xiayx            
+ * @author xiayx
  */
 @Slf4j
 @RestController
@@ -64,7 +64,7 @@ public class ${ModuleName}Controller {
     @GetMapping("/get")
     public ${ModuleName}VO get(${ModuleName}Get params, String... projection) {
         log.info("获取信息[{}]详情", params);
-        return englishWordService.get(params, projection);
+        return ${moduleName}Service.get(params, projection);
     }
 
     @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
@@ -76,7 +76,7 @@ public class ${ModuleName}Controller {
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public void modify4json(@RequestBody ${ModuleName}Modify params) {
         log.info("修改信息[{}]", params);
-        englishWordService.modify(params);
+        ${moduleName}Service.modify(params);
     }
 
     @DeleteMapping("/{id}")
@@ -88,7 +88,7 @@ public class ${ModuleName}Controller {
     @GetMapping("/delete")
     public void delete(${ModuleName}Delete params) {
         log.info("删除信息[{}]", params);
-        englishWordService.delete(params);
+        ${moduleName}Service.delete(params);
     }
 
 }
