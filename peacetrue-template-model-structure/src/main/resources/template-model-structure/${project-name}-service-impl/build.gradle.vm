@@ -1,0 +1,19 @@
+description '${domainDescription}服务实现'
+
+dependencies {
+
+    api project(":${project-name}-service-api")
+    api 'org.slf4j:slf4j-api'
+    implementation 'com.github.peacetrue:peacetrue-spring'
+    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    implementation "org.springframework.boot:spring-boot-autoconfigure"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    testImplementation 'io.projectreactor:reactor-test'
+    testImplementation 'io.r2dbc:r2dbc-h2'
+    testImplementation 'com.h2database:h2'
+}

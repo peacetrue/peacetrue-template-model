@@ -8,7 +8,7 @@ buildscript {
 
     dependencies {
         classpath('com.github.peacetrue.generator:peacetrue-generator-plugin:1.1.0-SNAPSHOT')
-        classpath 'com.github.peacetrue.template:peacetrue-template-model-content:1.3.4-SNAPSHOT', {
+        classpath 'com.github.peacetrue.template:peacetrue-template-model-content:3.0.0-SNAPSHOT', {
             exclude group: 'ch.qos.logback'
         }
         classpath('com.h2database:h2:1.4.196')
@@ -20,9 +20,9 @@ apply plugin: 'com.github.peacetrue.generator'
 peacetrueGenerate {
     properties = [
             'peacetrue.generator.target-path': "${esc.d}rootDir",
-            'spring.datasource.schema'       : "file:${esc.d}rootDir/${project-name}-service-mybatis/src/main/resources/schema-h2.sql",
+            'spring.datasource.schema'       : "file:${esc.d}rootDir/${project-name}-service-impl/src/main/resources/schema-h2.sql",
     ]
-    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-mybatis/src/test/resources/application-${domain-name}-service-test.yml"
+    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-impl/src/test/resources/application-${domain-name}-service-test.yml"
     context = [
             'project-name'     : "${project-name}",
             'basePackageName'  : "${basePackageName}",
@@ -52,8 +52,7 @@ allprojects { project ->
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
-            mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
-            mavenBom "org.springframework.cloud:spring-cloud-dependencies:Hoxton.SR4"
+            mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
         }
     }
 
@@ -62,11 +61,15 @@ allprojects { project ->
         annotationProcessor "org.projectlombok:lombok"
         implementation "com.google.code.findbugs:jsr305"
 
-        testImplementation "junit:junit"
         testCompileOnly "org.projectlombok:lombok"
         testAnnotationProcessor "org.projectlombok:lombok"
-        testImplementation "ch.qos.logback:logback-classic"
-        testImplementation 'io.github.benas:random-beans'
+        testImplementation 'io.projectreactor:reactor-test'
+        testImplementation 'org.unitils:unitils-core'
+        testImplementation 'org.jeasy:easy-random-core'
+        testImplementation 'org.yaml:snakeyaml'
+        testImplementation 'org.jeasy:easy-random-bean-validation', {
+            exclude('group': 'org.yaml')
+        }
     }
 
 }

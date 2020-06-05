@@ -69,10 +69,12 @@
 #end
 
 ## 列出属性，并转换日期为范围
-#macro( listPropertiesDate $properties)
+#macro( listQuery $properties)
     #foreach($property in $properties)
     /** $property.comment */
-        #if($property.type.name=="java.util.Date")
+        #if($property.name=="id")
+        private $property.type.simpleName[] $property.name;
+        #elseif($property.type.name=="java.util.Date")
         private Range.Date $property.name;
         #else
         private $property.type.simpleName $property.name;

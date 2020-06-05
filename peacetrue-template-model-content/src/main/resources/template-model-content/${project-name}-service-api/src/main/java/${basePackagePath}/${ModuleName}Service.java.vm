@@ -1,39 +1,41 @@
 package ${basePackageName};
 
-import com.github.peacetrue.result.exception.ResultException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.Nullable;
 
-import java.util.List;
-
 /**
+ * ${domainDescription}服务接口
+ *
  * @author xiayx
  */
 public interface ${ModuleName}Service {
 
     /** 新增 */
-    ${ModuleName}VO add(${ModuleName}Add params) throws ResultException;
+    Mono<${ModuleName}VO> add(${ModuleName}Add params);
 
     /** 分页查询 */
-    Page<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) throws ResultException;
+    Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection);
 
     /** 全量查询 */
-    List<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection) throws ResultException;
+    Flux<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection);
 
     /** 全量查询 */
-    default List<${ModuleName}VO> query(${ModuleName}Query params, String... projection) throws ResultException {
-        return query(params, (Sort) null, projection);
+    default Flux<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
+        return this.query(params, (Sort) null, projection);
     }
 
     /** 获取 */
-    ${ModuleName}VO get(${ModuleName}Get params, String... projection) throws ResultException;
+    Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection);
 
     /** 修改 */
-    void modify(${ModuleName}Modify params) throws ResultException;
+    Mono<Integer> modify(${ModuleName}Modify params);
 
     /** 删除 */
-    void delete(${ModuleName}Delete params) throws ResultException;
+    Mono<Integer> delete(${ModuleName}Delete params);
+
 }

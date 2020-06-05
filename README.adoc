@@ -12,6 +12,10 @@ v1.0, 2020-01-12: SNAPSHOT
 
 //查看 http://peacetrue.github.io/public/peacetrue-template-model/index.html[详情^]
 
+根据模版快速生成项目。
+
+模版包括结构模版和内容模版，结构模版用于生成项目的文件结构，内容模版用于生成项目的模块文件。
+
 == V1
 
 单模块
@@ -27,6 +31,10 @@ react-admin ui
 == V2.0.0
 
 react-admin ui
+
+== V3.0.0
+
+采用响应式编程。
 
 == 模型结构
 
@@ -44,5 +52,4 @@ react-admin ui
 
 == 模型内容
 
-== 本地
 

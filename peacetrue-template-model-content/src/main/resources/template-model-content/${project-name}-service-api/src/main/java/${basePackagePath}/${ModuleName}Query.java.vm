@@ -25,15 +25,10 @@ public class ${ModuleName}Query extends OperatorCapableImpl<$operatorIdType> {
     private static final long serialVersionUID = 0L;
 
     /** 主键集合 */
-    private ${id.type.simpleName}[] ${id.name}s;
-    #listPropertiesDate($properties)
+    #listQuery($properties)
 
-    public ${ModuleName}Query(${id.type.simpleName} id) {
-        this.id = id;
-    }
-
-    public ${ModuleName}Query(${id.type.simpleName}[]ids) {
-        this.ids = ids;
+    public ${ModuleName}Query(${id.type.simpleName}[] id) {
+        this.$id.name = id;
     }
 
 

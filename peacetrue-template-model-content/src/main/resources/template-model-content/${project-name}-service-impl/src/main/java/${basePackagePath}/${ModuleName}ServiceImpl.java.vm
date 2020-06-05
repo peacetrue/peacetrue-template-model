@@ -1,0 +1,137 @@
+package ${basePackageName};
+
+import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
+import com.github.peacetrue.spring.data.relational.core.query.QueryUtils;
+import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
+import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.util.StreamUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.PayloadApplicationEvent;
+import org.springframework.data.domain.*;
+import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.relational.core.query.Criteria;
+import org.springframework.data.relational.core.query.Query;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+import reactor.util.function.Tuple2;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Collections;
+
+/**
+ * ${domainDescription}服务实现
+ *
+ * @author xiayx
+ */
+@Slf4j
+@Service
+public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
+
+    @Autowired
+    private R2dbcEntityTemplate entityTemplate;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+
+    public static Criteria buildCriteria(${ModuleName}Query params) {
+        return CriteriaUtils.and(
+                #foreach($property in $properties)
+                    #if($property.name == 'id')
+                            CriteriaUtils.nullableCriteria(CriteriaUtils.smartIn("id"), params::get${lc.uc($property.name)}),
+                    #elseif($property.type.simpleName == 'Integer'||$property.type.simpleName == 'Long')
+                            CriteriaUtils.nullableCriteria(Criteria.where("parentId")::is, params::get${lc.uc($property.name)}),
+                    #elseif($property.type.simpleName == 'String')
+                            CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::like, value -> "%" + value + "%", params::get${lc.uc($property.name)}),
+                    #elseif($property.type.simpleName == 'Date')
+                            CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::greaterThanOrEquals, params.getCreatedTime()::getLowerBound),
+                            CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::lessThanOrEquals, value -> DateUtils.ceiling(value, Calendar.SECOND), params.getCreatedTime()::getUpperBound)
+                    #end
+                #end
+        );
+    }
+
+    @Override
+    @Transactional
+    public Mono<${ModuleName}VO> add(${ModuleName}Add params) {
+        log.info("新增${domainDescription}信息[{}]", params);
+        ${ModuleName} entity = BeanUtils.map(params, ${ModuleName}.class);
+        return entityTemplate.insert(entity)
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
+        log.info("分页查询${domainDescription}信息[{}]", params);
+        if (params == null) params = ${ModuleName}Query.DEFAULT;
+        Pageable finalPageable = pageable == null ? PageRequest.of(0, 10) : pageable;
+        Criteria where = buildCriteria(params);
+
+        return entityTemplate.count(Query.query(where), ${ModuleName}.class)
+                .flatMap(total -> total == 0L ? Mono.empty() : Mono.just(total))
+                .<Page<${ModuleName}VO>>flatMap(total -> {
+                    Query query = Query.query(where).with(finalPageable).sort(finalPageable.getSortOr(Sort.by("createdTime").descending()));
+                    return entityTemplate.select(query, ${ModuleName}.class)
+                            .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                            .reduce(new ArrayList<>(), StreamUtils.reduceToCollection())
+                            .map(item -> new PageImpl<>(item, finalPageable, total));
+                })
+                .switchIfEmpty(Mono.just(new PageImpl<>(Collections.emptyList())));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Flux<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Sort sort, String... projection) {
+        log.info("全量查询${domainDescription}信息[{}]", params);
+        if (params == null) params = ${ModuleName}Query.DEFAULT;
+        if (sort == null) sort = Sort.by("createdTime").descending();
+        Criteria where = buildCriteria(params);
+        Query query = Query.query(where).sort(sort).limit(100);
+        return entityTemplate.select(query, ${ModuleName}.class)
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection) {
+        log.info("获取${domainDescription}信息[{}]", params);
+//        Criteria where = CriteriaUtils.and(
+//                CriteriaUtils.nullableId(params::getId),
+//        );
+        Criteria where = QueryUtils.id(params::getId);
+        return entityTemplate.selectOne(Query.query(where), ${ModuleName}.class)
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
+    }
+
+    @Override
+    @Transactional
+    public Mono<Integer> modify(${ModuleName}Modify params) {
+        log.info("修改${domainDescription}信息[{}]", params);
+        Query idQuery = QueryUtils.id(params::getId);
+        return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .zipWhen(region -> entityTemplate.update(idQuery, UpdateUtils.selectiveUpdateFromExample(BeanUtils.map(params, ${ModuleName}.class)), ${ModuleName}.class))
+                .doOnNext(tuple2 -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(tuple2.getT1(), params)))
+                .map(Tuple2::getT2)
+                .switchIfEmpty(Mono.just(0));
+    }
+
+    @Override
+    @Transactional
+    public Mono<Integer> delete(${ModuleName}Delete params) {
+        log.info("删除${domainDescription}信息[{}]", params);
+        Query idQuery = QueryUtils.id(params::getId);
+        return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .zipWhen(region -> entityTemplate.delete(idQuery, ${ModuleName}.class))
+                .doOnNext(tuple2 -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(tuple2.getT1(), params)))
+                .map(Tuple2::getT2)
+                .switchIfEmpty(Mono.just(0));
+    }
+
+}

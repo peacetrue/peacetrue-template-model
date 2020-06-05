@@ -5,18 +5,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.SortDefault;
 import org.springframework.http.MediaType;
-
-import java.util.Arrays;
-import java.util.List;
-
+import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 /**
+ * ${domainDescription}控制器
+ *
  * @author xiayx
  */
 @Slf4j
@@ -28,67 +24,70 @@ public class ${ModuleName}Controller {
     private ${ModuleName}Service ${moduleName}Service;
 
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public ${ModuleName}VO add(${ModuleName}Add params) {
-        log.info("新增信息[{}]", params);
+    public Mono<${ModuleName}VO> addByForm(${ModuleName}Add params) {
+        log.info("新增${domainDescription}信息(请求方法+表单参数)[{}]", params);
         return ${moduleName}Service.add(params);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ${ModuleName}VO add4json(@RequestBody ${ModuleName}Add params) {
-        log.info("新增信息[{}]", params);
+    public Mono<${ModuleName}VO> addByJson(@RequestBody ${ModuleName}Add params) {
+        log.info("新增${domainDescription}信息(请求方法+JSON参数)[{}]", params);
         return ${moduleName}Service.add(params);
     }
 
     @GetMapping(params = "page")
-    public Page<${ModuleName}VO> query(${ModuleName}Query params,
-                                       @PageableDefault(sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable,
-                                       String... projection) {
-        log.info("分页查询信息[{}]", params);
-        return ${moduleName}Service.query(params, pageable,projection);
+    public Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, Pageable pageable, String... projection) {
+        log.info("分页查询${domainDescription}信息(请求方法+参数变量)[{}]", params);
+        return ${moduleName}Service.query(params, pageable, projection);
     }
 
     @GetMapping
-    public List<${ModuleName}VO> query(${ModuleName}Query params,
-                                       @SortDefault(sort = {"createdTime"}, direction = Sort.Direction.DESC) Sort sort,
-                                       String... projection) {
-        log.info("查询信息[{}]", params);
-        return ${moduleName}Service.query(params,sort,projection);
+    public Flux<${ModuleName}VO> query(${ModuleName}Query params, Sort sort, String... projection) {
+        log.info("全量查询${domainDescription}信息(请求方法+参数变量)[{}]", params);
+        return ${moduleName}Service.query(params, sort, projection);
     }
 
     @GetMapping("/{id}")
-    public ${ModuleName}VO get(@PathVariable Long id,String... projection) {
-        log.info("获取信息[{}]详情", id);
-        return ${moduleName}Service.get(new ${ModuleName}Get(id),projection);
+    public Mono<${ModuleName}VO> getByUrlPathVariable(@PathVariable Long id, String... projection) {
+        log.info("获取${domainDescription}信息(请求方法+路径变量)详情[{}]", id);
+        return ${moduleName}Service.get(new ${ModuleName}Get(id), projection);
     }
 
-    @GetMapping("/get")
-    public ${ModuleName}VO get(${ModuleName}Get params, String... projection) {
-        log.info("获取信息[{}]详情", params);
+    @RequestMapping("/get")
+    public Mono<${ModuleName}VO> getByPath(${ModuleName}Get params, String... projection) {
+        log.info("获取${domainDescription}信息(请求路径+参数变量)详情[{}]", params);
         return ${moduleName}Service.get(params, projection);
     }
 
-    @PutMapping(value="/{id}", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
-    public int modify(${ModuleName}Modify params) {
-        log.info("修改信息[{}]", params);
+    @PutMapping(value = {"", "/*"}, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public Mono<Integer> modifyByForm(${ModuleName}Modify params) {
+        log.info("修改${domainDescription}信息(请求方法+表单参数)[{}]", params);
         return ${moduleName}Service.modify(params);
     }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void modify4json(@RequestBody ${ModuleName}Modify params) {
-        log.info("修改信息[{}]", params);
-        ${moduleName}Service.modify(params);
+    public Mono<Integer> modifyByJson(@RequestBody ${ModuleName}Modify params) {
+        log.info("修改${domainDescription}信息(请求方法+JSON参数)[{}]", params);
+        return ${moduleName}Service.modify(params);
     }
 
     @DeleteMapping("/{id}")
-    public int delete(@PathVariable Long id) {
-        log.info("删除信息[{}]", id);
+    public Mono<Integer> deleteByUrlPathVariable(@PathVariable Long id) {
+        log.info("删除${domainDescription}信息(请求方法+URL路径变量)[{}]", id);
         return ${moduleName}Service.delete(new ${ModuleName}Delete(id));
     }
 
-    @GetMapping("/delete")
-    public void delete(${ModuleName}Delete params) {
-        log.info("删除信息[{}]", params);
-        ${moduleName}Service.delete(params);
+    @DeleteMapping(params = "id")
+    public Mono<Integer> deleteByUrlParamVariable(${ModuleName}Delete params) {
+        log.info("删除${domainDescription}信息(请求方法+URL参数变量)[{}]", params);
+        return ${moduleName}Service.delete(params);
     }
+
+    @RequestMapping(path = "/delete")
+    public Mono<Integer> deleteByPath(${ModuleName}Delete params) {
+        log.info("删除${domainDescription}信息(请求路径+URL参数变量)[{}]", params);
+        return ${moduleName}Service.delete(params);
+    }
+
 
 }

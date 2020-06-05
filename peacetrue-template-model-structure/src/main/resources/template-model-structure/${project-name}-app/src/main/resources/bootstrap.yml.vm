@@ -1,16 +1,15 @@
-eureka:
-  instance:
-    hostname: localhost
-  client:
-    serviceUrl:
-      defaultZone: http://localhost:8700/eureka
+spring:
+  application:
+    name: ${project-name}
+  cloud:
+    config:
+      uri: http://localhost:8888
+      fail-fast: true
+
+---
 
 spring:
-    application:
-        name: ${project-name}-app
-    cloud:
-        config:
-            label: master
-            discovery:
-                enabled: true
-                serviceId: peacetrue-microservice-config-center
+  profiles: prod
+  cloud:
+    config:
+      uri: https://peacetrue:yangzx0O0@peacetrue.cn:8888
