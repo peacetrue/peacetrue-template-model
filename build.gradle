@@ -29,14 +29,14 @@ allprojects { project ->
             mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
         }
 
-//        dependencies {
-//            dependency "com.github.peacetrue.generator:peacetrue-generator:1+"
-//            dependency "com.github.peacetrue.generator:peacetrue-generator-velocity:1+"
-//            dependency "com.github.peacetrue.generator:peacetrue-generator-context:1+"
-//            dependency "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
-//            dependency "com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT"
-//            dependency "com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT"
-//        }
+        dependencies {
+            dependency "com.github.peacetrue.generator:peacetrue-generator:1+"
+            dependency "com.github.peacetrue.generator:peacetrue-generator-velocity:1+"
+            dependency "com.github.peacetrue.generator:peacetrue-generator-context:1+"
+            dependency "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
+            dependency "com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT"
+            dependency "com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT"
+        }
     }
 
     dependencies {
@@ -48,6 +48,11 @@ allprojects { project ->
         testCompileOnly "org.projectlombok:lombok"
         testAnnotationProcessor "org.projectlombok:lombok"
     }
+
+    test {
+        useJUnitPlatform()
+    }
+
 }
 
 

@@ -72,4 +72,8 @@ allprojects { project ->
         }
     }
 
+    test {
+        useJUnitPlatform()
+    }
+
 }

@@ -6,6 +6,7 @@ import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
 import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.util.StreamUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.PayloadApplicationEvent;
@@ -20,11 +21,14 @@ import reactor.core.publisher.Mono;
 import reactor.util.function.Tuple2;
 
 import javax.annotation.Nullable;
+import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.time.LocalDateTime
 
 /**
- * ${domainDescription}服务实现
+ * ${comment}服务实现
  *
  * @author xiayx
  */
@@ -41,14 +45,14 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         return CriteriaUtils.and(
                 #foreach($property in $properties)
                     #if($property.name == 'id')
-                            CriteriaUtils.nullableCriteria(CriteriaUtils.smartIn("id"), params::get${lc.uc($property.name)}),
+                    CriteriaUtils.nullableCriteria(CriteriaUtils.smartIn("id"), params::get${lc.uc($property.name)})#if($foreach.hasNext),#end
                     #elseif($property.type.simpleName == 'Integer'||$property.type.simpleName == 'Long')
-                            CriteriaUtils.nullableCriteria(Criteria.where("parentId")::is, params::get${lc.uc($property.name)}),
+                    CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::is, params::get${lc.uc($property.name)})#if($foreach.hasNext),#end
                     #elseif($property.type.simpleName == 'String')
-                            CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::like, value -> "%" + value + "%", params::get${lc.uc($property.name)}),
+                    CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::like, value -> "%" + value + "%", params::get${lc.uc($property.name)})#if($foreach.hasNext),#end
                     #elseif($property.type.simpleName == 'Date')
-                            CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::greaterThanOrEquals, params.getCreatedTime()::getLowerBound),
-                            CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::lessThanOrEquals, value -> DateUtils.ceiling(value, Calendar.SECOND), params.getCreatedTime()::getUpperBound)
+                    CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::greaterThanOrEquals, params.getCreatedTime()::getLowerBound),
+                    CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::lessThanOrEquals, value -> DateUtils.ceiling(value, Calendar.SECOND), params.getCreatedTime()::getUpperBound)#if($foreach.hasNext),#end
                     #end
                 #end
         );
@@ -57,8 +61,10 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional
     public Mono<${ModuleName}VO> add(${ModuleName}Add params) {
-        log.info("新增${domainDescription}信息[{}]", params);
+        log.info("新增${comment}信息[{}]", params);
         ${ModuleName} entity = BeanUtils.map(params, ${ModuleName}.class);
+        entity.setCreatorId(params.getOperatorId());
+        entity.setCreatedTime(new Date());
         return entityTemplate.insert(entity)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)));
@@ -67,7 +73,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional(readOnly = true)
     public Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
-        log.info("分页查询${domainDescription}信息[{}]", params);
+        log.info("分页查询${comment}信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
         Pageable finalPageable = pageable == null ? PageRequest.of(0, 10) : pageable;
         Criteria where = buildCriteria(params);
@@ -87,7 +93,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional(readOnly = true)
     public Flux<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Sort sort, String... projection) {
-        log.info("全量查询${domainDescription}信息[{}]", params);
+        log.info("全量查询${comment}信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
         if (sort == null) sort = Sort.by("createdTime").descending();
         Criteria where = buildCriteria(params);
@@ -99,11 +105,11 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional(readOnly = true)
     public Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection) {
-        log.info("获取${domainDescription}信息[{}]", params);
+        log.info("获取${comment}信息[{}]", params);
 //        Criteria where = CriteriaUtils.and(
 //                CriteriaUtils.nullableId(params::getId),
 //        );
-        Criteria where = QueryUtils.id(params::getId);
+        Criteria where = CriteriaUtils.id(params::getId);
         return entityTemplate.selectOne(Query.query(where), ${ModuleName}.class)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
     }
@@ -111,7 +117,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional
     public Mono<Integer> modify(${ModuleName}Modify params) {
-        log.info("修改${domainDescription}信息[{}]", params);
+        log.info("修改${comment}信息[{}]", params);
         Query idQuery = QueryUtils.id(params::getId);
         return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
@@ -124,7 +130,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional
     public Mono<Integer> delete(${ModuleName}Delete params) {
-        log.info("删除${domainDescription}信息[{}]", params);
+        log.info("删除${comment}信息[{}]", params);
         Query idQuery = QueryUtils.id(params::getId);
         return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))

@@ -12,4 +12,4 @@ spring:
   profiles: prod
   cloud:
     config:
-      uri: https://peacetrue:yangzx0O0@peacetrue.cn:8888
+      uri: https://${MICROSERVICE_SECURITY_USERNAME}:${MICROSERVICE_SECURITY_PASSWORD}@peacetrue.cn:8888

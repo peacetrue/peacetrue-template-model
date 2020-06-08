@@ -26,14 +26,8 @@ import reactor.test.StepVerifier;
  **/
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {
-        R2dbcAutoConfiguration.class,
-        R2dbcDataAutoConfiguration.class,
-        R2dbcRepositoriesAutoConfiguration.class,
-        R2dbcTransactionManagerAutoConfiguration.class,
-        ${ModuleName}ServiceImplTestConfiguration.class
+    TestService${DomainName}AutoConfiguration.class
 })
-@ActiveProfiles("region-service-test")
-@EnableAutoConfiguration
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ${ModuleName}ServiceImplTest {
 
@@ -42,12 +36,11 @@ class ${ModuleName}ServiceImplTest {
     private final EasyRandom easyRandom = new EasyRandom();
     private static ${ModuleName}VO vo;
 
-    //TODO rollback invalid
     @Test
-    @Rollback
     @Order(10)
-    void test001Add() {
+    void test001add() {
         ${ModuleName}Add params = easyRandom.nextObject(${ModuleName}Add.class);
+        params.setOperatorId(easyRandom.nextObject(${operatorIdType}.class));
         service.add(params)
                 .as(StepVerifier::create)
                 .assertNext(data -> {
@@ -59,7 +52,7 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(20)
-    void test002Query() {
+    void test002query() {
         ${ModuleName}Query params = BeanUtils.map(vo, ${ModuleName}Query.class);
         service.query(params, PageRequest.of(0, 10))
                 .as(StepVerifier::create)
@@ -69,7 +62,7 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(30)
-    void test003Query() {
+    void test003query() {
         ${ModuleName}Query params = BeanUtils.map(vo, ${ModuleName}Query.class);
         service.query(params)
                 .as(StepVerifier::create)

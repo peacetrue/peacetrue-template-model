@@ -7,7 +7,7 @@ export const ${ModuleName}Create = (props) $esc.javascript('=>') {
         <Create {...props} title={`新建$esc.d{props.options.label}`}>
             <SimpleForm>
                 #foreach($property in $nonIdAuditProperties)
-                    #if($property.type.name == 'java.util.Date')
+                    #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
                         <DateTimeInput label={'$property.comment'} source="$property.name" showTime validate={required()}/>
                     #else
                         <TextInput label={'$property.comment'} source="$property.name" validate={required()}/>

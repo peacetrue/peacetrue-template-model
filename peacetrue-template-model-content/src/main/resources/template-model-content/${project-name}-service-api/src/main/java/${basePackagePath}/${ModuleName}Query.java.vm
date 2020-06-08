@@ -24,7 +24,6 @@ public class ${ModuleName}Query extends OperatorCapableImpl<$operatorIdType> {
 
     private static final long serialVersionUID = 0L;
 
-    /** 主键集合 */
     #listQuery($properties)
 
     public ${ModuleName}Query(${id.type.simpleName}[] id) {

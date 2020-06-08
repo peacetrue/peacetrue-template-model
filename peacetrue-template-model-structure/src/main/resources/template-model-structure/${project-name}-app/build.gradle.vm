@@ -9,7 +9,7 @@ buildscript {
 }
 
 apply plugin: 'org.springframework.boot'
-description '${domainDescription}'
+description '${domainDescription}应用'
 
 dependencies {
 

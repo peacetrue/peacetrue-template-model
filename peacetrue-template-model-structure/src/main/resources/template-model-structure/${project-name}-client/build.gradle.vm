@@ -1,4 +1,4 @@
-description '${domainDescription}feign客户端'
+description '${domainDescription}客户端'
 
 dependencies {
     api project(":${project-name}-service-api")

@@ -8,6 +8,7 @@ import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ import java.util.stream.Collectors;
  * @author xiayx
  */
 @Configuration
+@Order(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore({
         GeneratorAutoConfiguration.class,
         VelocityGeneratorAutoConfiguration.class
@@ -75,6 +77,7 @@ public class TemplateModelContentAutoConfiguration {
     }
 
     @Bean
+    @ConditionalOnMissingBean
     public ContextsSupplier contextsSupplier(@Autowired ModelSupplier modelSupplier) {
         TemplateModelContentProperties.Fields fields = properties.getFields();
         List<String> idAuditFieldNames = Arrays.asList(

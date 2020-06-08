@@ -73,9 +73,11 @@
     #foreach($property in $properties)
     /** $property.comment */
         #if($property.name=="id")
-        private $property.type.simpleName[] $property.name;
+        private $property.type.simpleName [] $property.name;
         #elseif($property.type.name=="java.util.Date")
         private Range.Date $property.name;
+        #elseif($property.type.name=="java.time.LocalDateTime")
+        private Range.LocalDateTime $property.name;
         #else
         private $property.type.simpleName $property.name;
         #end

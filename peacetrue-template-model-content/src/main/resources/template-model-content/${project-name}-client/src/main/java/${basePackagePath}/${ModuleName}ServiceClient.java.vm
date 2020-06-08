@@ -1,6 +1,5 @@
 package ${basePackageName};
 
-import com.github.peacetrue.result.exception.ResultException;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
@@ -12,34 +11,32 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.annotation.Nullable;
 import java.util.List;
 
+/**
+ * ${comment}客户端
+ *
+ * @author xiayx
+ */
 @FeignClient(name = "${project-name}")
 public interface ${ModuleName}ServiceClient {
 
-    @Override
     @PostMapping(value = "/${module-name}s")
     ${ModuleName}VO add(${ModuleName}Add params);
 
-    @Override
     @GetMapping(value = "/${module-name}s", params = "page")
     Page<${ModuleName}VO> query(@Nullable @SpringQueryMap ${ModuleName}Query params, @Nullable Pageable pageable, @SpringQueryMap String... projection) ;
 
-    @Override
     @GetMapping(value = "/${module-name}s", params = "sort")
     List<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, Sort sort, @SpringQueryMap String... projection) ;
 
-    @Override
     @GetMapping(value = "/${module-name}s")
     List<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, @SpringQueryMap String... projection) ;
 
-    @Override
     @GetMapping(value = "/${module-name}s/get")
     ${ModuleName}VO get(@SpringQueryMap ${ModuleName}Get params, @SpringQueryMap String... projection) ;
 
-    @Override
     @PostMapping(value = "/${module-name}s")
     Integer modify(${ModuleName}Modify params) ;
 
-    @Override
     @GetMapping(value = "/${module-name}s/delete")
     Integer delete(@SpringQueryMap ${ModuleName}Delete params);
 

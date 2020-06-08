@@ -3,6 +3,7 @@ package ${basePackageName};
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
@@ -12,7 +13,14 @@ import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePop
  * @author xiayx
  */
 @Configuration(proxyBeanMethods = false)
-@PropertySource("classpath:application-${domain-name}-service-test.yml")
+@ImportAutoConfiguration({
+        R2dbcAutoConfiguration.class,
+        R2dbcDataAutoConfiguration.class,
+        R2dbcRepositoriesAutoConfiguration.class,
+        R2dbcTransactionManagerAutoConfiguration.class,
+})
+@ActiveProfiles("${domain-name}-service-test")
+@EnableAutoConfiguration
 public class TestService${DomainName}AutoConfiguration {
 
     @Autowired

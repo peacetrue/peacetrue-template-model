@@ -6,7 +6,7 @@ const Filters = (props) $esc.javascript('=>') (
         #foreach($property in $nonIdProperties)
             #if($property.type.name == 'java.lang.String')
                 <TextInput label={'${property.comment}'} source="${property.name}" allowEmpty alwaysOn/>
-            #elseif($property.type.name == 'java.util.Date')
+            #elseif($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
                 <DateInput label={'${property.comment}起始值'} source="${property.name}.lowerBound" allowEmpty alwaysOn/>
                 <DateInput label={'${property.comment}结束值'} source="${property.name}.upperBound" allowEmpty alwaysOn/>
             #end
@@ -21,7 +21,7 @@ export const ${ModuleName}List = props $esc.javascript('=>') {
               sort={{field: 'createdTime', order: 'desc'}}>
             <Datagrid rowClick="show">
                 #foreach($property in $nonIdProperties)
-                    #if($property.type.name == 'java.util.Date')
+                    #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
                         <DateField label={'${property.comment}'} source="${property.name}" showTime/>
                     #else
                         <TextField label={'${property.comment}'} source="${property.name}"/>

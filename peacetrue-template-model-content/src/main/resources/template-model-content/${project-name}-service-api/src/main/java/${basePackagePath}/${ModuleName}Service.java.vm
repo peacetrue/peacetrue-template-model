@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 import javax.annotation.Nullable;
 
 /**
- * ${domainDescription}服务接口
+ * ${comment}服务接口
  *
  * @author xiayx
  */

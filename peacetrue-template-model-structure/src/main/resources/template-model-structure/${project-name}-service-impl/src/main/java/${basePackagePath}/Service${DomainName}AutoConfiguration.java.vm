@@ -1,6 +1,7 @@
 package ${basePackageName};
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,7 +17,6 @@ import java.util.Objects;
  */
 @Configuration
 @EnableConfigurationProperties(Service${DomainName}Properties.class)
-@MapperScan(basePackageClasses = Service${DomainName}AutoConfiguration.class, annotationClass = Mapper.class)
 @ComponentScan(basePackageClasses = Service${DomainName}AutoConfiguration.class)
 @PropertySource("classpath:/application-${domain-name}-service.yml")
 public class Service${DomainName}AutoConfiguration {
