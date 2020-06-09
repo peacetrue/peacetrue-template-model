@@ -50,9 +50,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                     CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::is, params::get${lc.uc($property.name)})#if($foreach.hasNext),#end
                     #elseif($property.type.simpleName == 'String')
                     CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::like, value -> "%" + value + "%", params::get${lc.uc($property.name)})#if($foreach.hasNext),#end
-                    #elseif($property.type.simpleName == 'Date')
+                    #elseif($property.type.simpleName == 'Date' || $property.type.simpleName == 'LocalDateTime')
                     CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::greaterThanOrEquals, params.getCreatedTime()::getLowerBound),
-                    CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::lessThanOrEquals, value -> DateUtils.ceiling(value, Calendar.SECOND), params.getCreatedTime()::getUpperBound)#if($foreach.hasNext),#end
+                    CriteriaUtils.nullableCriteria(Criteria.where("$property.name")::lessThanOrEquals, params.getCreatedTime()::getUpperBound)#if($foreach.hasNext),#end
                     #end
                 #end
         );

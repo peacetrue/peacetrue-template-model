@@ -1,9 +1,18 @@
 #!/bin/bash
 
-echo "1. gradle bootJar"
-gradle bootJar
+env=${1}
+if [ -n "$env" ]; then
+  echo "0. set MICROSERVICE_ENV=$env"
+  export "MICROSERVICE_ENV=$env"
+else
+  echo "0. use default MICROSERVICE_ENV=$MICROSERVICE_ENV"
+fi
 
-cd peacetrue-${project-name}-docker
+echo "1. gradle bootJar"
+./gradlew clear
+./gradlew bootJar
+
+cd ${project-name}-docker || exit
 
 echo "2. docker-compose down"
 docker-compose down

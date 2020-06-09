@@ -15,10 +15,11 @@ import org.springframework.context.annotation.PropertySource;
         TestService${DomainName}AutoConfiguration.class,
         WebMvcAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
-        Controller${DomainName}AutoConfiguration.class,
-        SpringDataWebAutoConfiguration.class
+        ControllerRegionAutoConfiguration.class,
+        SpringDataWebAutoConfiguration.class,
 })
-@PropertySource("classpath:application-${domain-name}-controller-test.yml")
+@EnableAutoConfiguration
+@ActiveProfiles("${domain-name}-controller-test")
 public class TestController${DomainName}AutoConfiguration {
 
 }

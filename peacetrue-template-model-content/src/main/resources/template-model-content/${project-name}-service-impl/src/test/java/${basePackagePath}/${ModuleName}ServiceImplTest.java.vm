@@ -3,18 +3,9 @@ package ${basePackageName};
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.jeasy.random.EasyRandom;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcRepositoriesAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 
 #setOperatorIdType($properties)
@@ -24,24 +15,27 @@ import reactor.test.StepVerifier;
  * @author : xiayx
  * @since : 2020-05-22 16:43
  **/
-@ExtendWith(SpringExtension.class)
-@SpringBootTest(classes = {
-    TestService${DomainName}AutoConfiguration.class
-})
+@SpringBootTest(classes = TestService${DomainName}AutoConfiguration.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ${ModuleName}ServiceImplTest {
 
+    public static final EasyRandom EASY_RANDOM = new EasyRandom();
+    public static final ${ModuleName}Modify MODIFY = EASY_RANDOM.nextObject(${ModuleName}Modify.class);
+    public static final ${ModuleName}Add ADD = EASY_RANDOM.nextObject(${ModuleName}Add.class);
+    public static ${ModuleName}VO vo;
+
+    static {
+        ADD.setOperatorId(EASY_RANDOM.nextObject($operatorIdType.class));
+        MODIFY.setOperatorId(EASY_RANDOM.nextObject($operatorIdType.class));
+    }
+
     @Autowired
     private ${ModuleName}ServiceImpl service;
-    private final EasyRandom easyRandom = new EasyRandom();
-    private static ${ModuleName}VO vo;
 
     @Test
     @Order(10)
-    void test001add() {
-        ${ModuleName}Add params = easyRandom.nextObject(${ModuleName}Add.class);
-        params.setOperatorId(easyRandom.nextObject(${operatorIdType}.class));
-        service.add(params)
+    void add() {
+        service.add(ADD)
                 .as(StepVerifier::create)
                 .assertNext(data -> {
                     Assertions.assertEquals(data.getCode(), params.getCode());
@@ -52,7 +46,7 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(20)
-    void test002query() {
+    void queryForPage() {
         ${ModuleName}Query params = BeanUtils.map(vo, ${ModuleName}Query.class);
         service.query(params, PageRequest.of(0, 10))
                 .as(StepVerifier::create)
@@ -62,7 +56,7 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(30)
-    void test003query() {
+    void queryForList() {
         ${ModuleName}Query params = BeanUtils.map(vo, ${ModuleName}Query.class);
         service.query(params)
                 .as(StepVerifier::create)
@@ -72,7 +66,7 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(40)
-    void test004get() {
+    void get() {
         ${ModuleName}Get params = BeanUtils.map(vo, ${ModuleName}Get.class);
         service.get(params)
                 .as(StepVerifier::create)
@@ -82,8 +76,8 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(50)
-    void test005modify() {
-        ${ModuleName}Modify params = easyRandom.nextObject(${ModuleName}Modify.class);
+    void modify() {
+        ${ModuleName}Modify params = MODIFY;
         params.setId(vo.getId());
         service.modify(params)
                 .as(StepVerifier::create)
@@ -93,9 +87,8 @@ class ${ModuleName}ServiceImplTest {
 
     @Test
     @Order(60)
-    void test006delete() {
-        ${ModuleName}Delete params = easyRandom.nextObject(${ModuleName}Delete.class);
-        params.setId(vo.getId());
+    void delete() {
+        ${ModuleName}Delete params = new ${ModuleName}Delete(vo.getId());
         service.delete(params)
                 .as(StepVerifier::create)
                 .expectNext(1)

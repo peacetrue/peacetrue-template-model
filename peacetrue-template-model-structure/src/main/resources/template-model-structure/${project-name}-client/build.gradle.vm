@@ -2,6 +2,6 @@ description '${domainDescription}客户端'
 
 dependencies {
     api project(":${project-name}-service-api")
-    compileOnly 'org.springframework.data:spring-data-commons'
-    compileOnly 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    api 'org.springframework.data:spring-data-commons'
+    api 'org.springframework.cloud:spring-cloud-starter-openfeign'
 }

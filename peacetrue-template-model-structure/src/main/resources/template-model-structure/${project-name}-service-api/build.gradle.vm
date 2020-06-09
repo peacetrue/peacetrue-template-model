@@ -4,8 +4,8 @@ dependencies {
     api 'com.github.peacetrue:peacetrue-core'
     api 'com.google.code.findbugs:jsr305'
     api 'io.projectreactor:reactor-core'
+    api 'org.springframework.data:spring-data-commons'
 
     compileOnly 'javax.validation:validation-api'
     compileOnly 'com.github.peacetrue:peacetrue-validation'
-    compileOnly 'org.springframework.data:spring-data-commons'
 }

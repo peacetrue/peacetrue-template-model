@@ -2,12 +2,18 @@ package ${basePackageName};
 
 import io.r2dbc.spi.ConnectionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcRepositoriesAutoConfiguration;
+import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePopulator;
+import org.springframework.test.context.ActiveProfiles;
 
 /**
  * @author xiayx
@@ -19,8 +25,8 @@ import org.springframework.data.r2dbc.connectionfactory.init.ResourceDatabasePop
         R2dbcRepositoriesAutoConfiguration.class,
         R2dbcTransactionManagerAutoConfiguration.class,
 })
-@ActiveProfiles("${domain-name}-service-test")
 @EnableAutoConfiguration
+@ActiveProfiles("${domain-name}-service-test")
 public class TestService${DomainName}AutoConfiguration {
 
     @Autowired

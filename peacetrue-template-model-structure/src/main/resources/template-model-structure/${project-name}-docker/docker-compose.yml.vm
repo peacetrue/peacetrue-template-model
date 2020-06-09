@@ -1,25 +1,31 @@
 version: '2'
 
-services:
-  ${project-name}-app:
-    container_name: ${project-name}-app
-    hostname: ${project-name}-app
-    build: ${project-name}-app
-    image: ${project-name}-app:latest
-    privileged: true
-    restart: always
-    volumes:
-      - ${peacetrue.generator.targetPath}/${project-name}-app/build/libs/${project-name}-app-1.0.0-SNAPSHOT.jar:/app.jar
-      - ${peacetrue.generator.targetPath}/${project-name}-docker/${project-name}-app/libs/application-default.yml:/application-default.yml
-    expose:
-      - 8080
-    ports:
-      - "8080:8080"
-    networks:
-      - peacetrue-microservice
-    entrypoint: java -jar app.jar
 networks:
   peacetrue-microservice:
     external:
       name: peacetrue-microservice
+
+services:
+  ${project-name}:
+    environment:
+      MICROSERVICE_SECURITY_PASSWORD: $esc.d{MICROSERVICE_SECURITY_PASSWORD}
+      MICROSERVICE_SSL_PASSWORD: $esc.d{MICROSERVICE_SSL_PASSWORD}
+    container_name: ${project-name}
+    hostname: ${project-name}
+    #    build: ${project-name}
+    image: peacetrueopenjdk:latest
+    privileged: true
+#    restart: unless-stopped
+    volumes:
+      - ../${project-name}-app/build/libs/${project-name}-app-1.0.0-SNAPSHOT.jar:/app.jar
+      - ./logs:/logs
+    expose:
+      - ${PORT}
+    ports:
+      - ${PORT}:${PORT}
+    networks:
+      - peacetrue-microservice
+    entrypoint: java -jar app.jar $esc.d{JAR_ENV}
+# docker-compose down
 # docker-compose up --build -d
+# docker-compose config
