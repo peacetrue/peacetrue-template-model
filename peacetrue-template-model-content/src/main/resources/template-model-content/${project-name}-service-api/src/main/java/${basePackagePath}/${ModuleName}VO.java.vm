@@ -1,6 +1,6 @@
 package ${basePackageName};
 
-import lombok.*;
+import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -9,9 +9,7 @@ import java.util.Date;
 /**
  * @author xiayx
  */
-@Getter
-@Setter
-@ToString
+@Data
 public class ${ModuleName}VO implements Serializable {
 
     private static final long serialVersionUID = 0L;

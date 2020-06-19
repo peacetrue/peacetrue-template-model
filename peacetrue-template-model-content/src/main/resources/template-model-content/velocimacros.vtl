@@ -12,6 +12,9 @@
     #foreach($property in $properties)
         #if(!$ignored || !$ignored.contains($property.name))
         /** $property.comment */
+        #if($property.name == 'id')
+        @Id
+        #end
         private $property.type.simpleName $property.name;
         #end
     #end
@@ -22,7 +25,7 @@
     ##默认值，如果没有表创建者
     #set($operatorIdType = 'String')
     #foreach($property in $properties)
-        #if($property.name == $fields.creatorId)
+        #if($property.name == 'creatorId')
             #set($operatorIdType = $property.type.simpleName)
         #end
     #end

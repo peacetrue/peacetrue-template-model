@@ -25,8 +25,8 @@ class ${ModuleName}ServiceImplTest {
     public static ${ModuleName}VO vo;
 
     static {
-        ADD.setOperatorId(EASY_RANDOM.nextObject($operatorIdType.class));
-        MODIFY.setOperatorId(EASY_RANDOM.nextObject($operatorIdType.class));
+        ADD.setOperatorId(EASY_RANDOM.nextObject(${operatorIdType}.class));
+        MODIFY.setOperatorId(EASY_RANDOM.nextObject(${operatorIdType}.class));
     }
 
     @Autowired
@@ -38,7 +38,7 @@ class ${ModuleName}ServiceImplTest {
         service.add(ADD)
                 .as(StepVerifier::create)
                 .assertNext(data -> {
-                    Assertions.assertEquals(data.getCode(), params.getCode());
+                    Assertions.assertEquals(data.getCreatorId(), ADD.getOperatorId());
                     vo = data;
                 })
                 .verifyComplete();

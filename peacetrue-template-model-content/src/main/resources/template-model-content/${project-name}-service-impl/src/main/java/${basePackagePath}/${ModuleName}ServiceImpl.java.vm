@@ -1,5 +1,6 @@
 package ${basePackageName};
 
+import com.github.peacetrue.core.Range;
 import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
 import com.github.peacetrue.spring.data.relational.core.query.QueryUtils;
 import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
@@ -25,7 +26,7 @@ import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.time.LocalDateTime
+import java.time.LocalDateTime;
 
 /**
  * ${comment}服务实现
@@ -75,6 +76,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     public Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
         log.info("分页查询${comment}信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
+        if (params.getCreatedTime() == null) params.setCreatedTime(Range.Date.DEFAULT);
         Pageable finalPageable = pageable == null ? PageRequest.of(0, 10) : pageable;
         Criteria where = buildCriteria(params);
 
@@ -95,6 +97,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     public Flux<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Sort sort, String... projection) {
         log.info("全量查询${comment}信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
+        if (params.getCreatedTime() == null) params.setCreatedTime(Range.Date.DEFAULT);
         if (sort == null) sort = Sort.by("createdTime").descending();
         Criteria where = buildCriteria(params);
         Query query = Query.query(where).sort(sort).limit(100);

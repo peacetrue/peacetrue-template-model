@@ -1,0 +1,15 @@
+#!/bin/bash
+
+env=${1-default}
+
+./kill.sh
+
+./gradlew clean
+./gradlew bootJar
+
+module="${project-name}-app"
+cd "${esc.d}module" || exit
+echo "run jar ${esc.d}module at ${esc.d}(pwd)"
+java -jar "build/libs/${esc.d}module-1.0.0-SNAPSHOT.jar" --spring.profiles.active="${esc.d}env,log" &
+
+#  chmod 777 docker.sh gradlew gradlew.bat kill.sh restart.sh
