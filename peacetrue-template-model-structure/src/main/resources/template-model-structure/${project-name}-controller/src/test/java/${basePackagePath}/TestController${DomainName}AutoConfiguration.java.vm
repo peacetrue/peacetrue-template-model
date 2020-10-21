@@ -16,7 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
         TestService${DomainName}AutoConfiguration.class,
         WebMvcAutoConfiguration.class,
         HttpMessageConvertersAutoConfiguration.class,
-        ControllerRegionAutoConfiguration.class,
+        Controller${DomainName}AutoConfiguration.class,
         SpringDataWebAutoConfiguration.class,
 })
 @EnableAutoConfiguration

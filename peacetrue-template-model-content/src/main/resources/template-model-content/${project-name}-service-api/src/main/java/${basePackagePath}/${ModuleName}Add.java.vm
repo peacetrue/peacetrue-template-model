@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 #listImport($properties)
-#setOperatorIdType($properties)
+
 
 /**
  * @author xiayx
@@ -17,10 +17,15 @@ import javax.validation.constraints.Size;
 @Getter
 @Setter
 @ToString
-public class ${ModuleName}Add extends OperatorCapableImpl<$operatorIdType> {
+public class ${ModuleName}Add extends OperatorCapableImpl<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 
-    #listPropertiesOutIdAudit($properties)
+    #foreach($property in $nonIdAuditProperties)
+        /** $property.comment */
+        #if(!$property.nullable)@NotNull#end
+        #if($property.type.simpleName=='String')@Size(min = 1, max = $property.size)#end
+        private $property.type.simpleName $property.name;
+    #end
 
 }

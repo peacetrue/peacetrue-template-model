@@ -7,8 +7,8 @@ import lombok.*;
 import java.io.Serializable;
 
 #listImport($properties)
-#setId($properties)
-#setOperatorIdType($properties)
+
+
 
 /**
  * @author xiayx
@@ -18,17 +18,18 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Query extends OperatorCapableImpl<$operatorIdType> {
+public class ${ModuleName}Query extends OperatorCapableImpl<$creatorId.type.simpleName> {
 
     public static final ${ModuleName}Query DEFAULT = new ${ModuleName}Query();
 
     private static final long serialVersionUID = 0L;
 
-    #listQuery($properties)
+    /** $id.comment */
+    private $id.type.simpleName [] $id.name;
+    #listQuery($nonIdProperties)
 
-    public ${ModuleName}Query(${id.type.simpleName}[] id) {
-        this.$id.name = id;
+    public ${ModuleName}Query(${id.type.simpleName}[] ${id.name}) {
+        this.${id.name} = ${id.name};
     }
-
 
 }

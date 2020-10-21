@@ -2,9 +2,11 @@ package ${basePackageName};
 
 import com.github.peacetrue.core.OperatorCapableImpl;
 import lombok.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 #listImport($properties)
-#setOperatorIdType($properties)
+
 
 
 /**
@@ -15,10 +17,19 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Modify extends OperatorCapableImpl<$operatorIdType> {
+public class ${ModuleName}Modify extends OperatorCapableImpl<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 
-    #listPropertiesOutAudit($properties)
+    #foreach($property in $nonAuditProperties)
+        /** $property.comment */
+        #if(!$property.nullable)
+            @NotNull
+        #end
+        #if($property.type.simpleName=='String')
+            @Size(min = 1, max = $property.size)
+        #end
+        private $property.type.simpleName $property.name;
+    #end
 
 }

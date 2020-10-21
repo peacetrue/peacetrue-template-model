@@ -17,6 +17,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     runtimeOnly 'dev.miku:r2dbc-mysql'
     runtimeOnly 'mysql:mysql-connector-java'
+    implementation 'com.github.peacetrue:peacetrue-operator'
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation project(":${project-name}-controller")
     implementation project(":${project-name}-service-impl")

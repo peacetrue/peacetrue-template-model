@@ -25,6 +25,9 @@ public class ${ModuleName} implements Serializable{
 
     private static final long serialVersionUID = 0L;
 
-    #listProperties($properties)
+    /** $id.comment */
+    @Id
+    private $id.type.simpleName $id.name;
+    #listProperties($nonIdProperties)
 
 }

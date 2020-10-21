@@ -6,9 +6,6 @@ import lombok.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-#setId($properties)
-#setOperatorIdType($properties)
-
 /**
  * @author xiayx
  */
@@ -17,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Delete extends OperatorCapableImpl<$operatorIdType> {
+public class ${ModuleName}Delete extends OperatorCapableImpl<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 

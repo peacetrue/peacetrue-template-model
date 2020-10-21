@@ -3,5 +3,5 @@ description '${domainDescription}客户端'
 dependencies {
     api project(":${project-name}-service-api")
     api 'org.springframework.data:spring-data-commons'
-    api 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    api 'com.playtika.reactivefeign:feign-reactor-spring-configuration'
 }

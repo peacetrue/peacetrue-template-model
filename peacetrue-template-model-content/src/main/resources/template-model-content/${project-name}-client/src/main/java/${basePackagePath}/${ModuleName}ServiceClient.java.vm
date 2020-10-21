@@ -1,43 +1,46 @@
 package ${basePackageName};
 
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import reactivefeign.spring.config.ReactiveFeignClient;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 /**
  * ${comment}客户端
  *
  * @author xiayx
  */
-@FeignClient(name = "${project-name}")
+@ReactiveFeignClient(name = "${project-name}", url = "${esc.d}{peacetrue.${ModuleName}.url:${esc.d}{peacetrue.server.url:}}")
 public interface ${ModuleName}ServiceClient {
 
     @PostMapping(value = "/${module-name}s")
-    ${ModuleName}VO add(${ModuleName}Add params);
+    Mono<${ModuleName}VO> add(${ModuleName}Add params);
 
     @GetMapping(value = "/${module-name}s", params = "page")
-    Page<${ModuleName}VO> query(@Nullable @SpringQueryMap ${ModuleName}Query params, @Nullable Pageable pageable, @SpringQueryMap String... projection) ;
+    Mono<Page<${ModuleName}VO>> query(@Nullable @SpringQueryMap ${ModuleName}Query params, @Nullable Pageable pageable, @SpringQueryMap String... projection) ;
 
     @GetMapping(value = "/${module-name}s", params = "sort")
-    List<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, Sort sort, @SpringQueryMap String... projection) ;
+    Flux<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, Sort sort, @SpringQueryMap String... projection) ;
 
     @GetMapping(value = "/${module-name}s")
-    List<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, @SpringQueryMap String... projection) ;
+    Flux<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, @SpringQueryMap String... projection) ;
 
     @GetMapping(value = "/${module-name}s/get")
-    ${ModuleName}VO get(@SpringQueryMap ${ModuleName}Get params, @SpringQueryMap String... projection) ;
+    Mono<${ModuleName}VO> get(@SpringQueryMap ${ModuleName}Get params, @SpringQueryMap String... projection) ;
 
-    @PostMapping(value = "/${module-name}s")
-    Integer modify(${ModuleName}Modify params) ;
+    @PutMapping(value = "/${module-name}s")
+    Mono<Integer> modify(${ModuleName}Modify params) ;
 
-    @GetMapping(value = "/${module-name}s/delete")
-    Integer delete(@SpringQueryMap ${ModuleName}Delete params);
+    @DeleteMapping(value = "/${module-name}s/delete")
+    Mono<Integer> delete(@SpringQueryMap ${ModuleName}Delete params);
 
 }

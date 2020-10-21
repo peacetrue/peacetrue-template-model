@@ -47,10 +47,10 @@ public class ${ModuleName}Controller {
         return ${moduleName}Service.query(params, sort, projection);
     }
 
-    @GetMapping("/{id}")
-    public Mono<${ModuleName}VO> getByUrlPathVariable(@PathVariable Long id, String... projection) {
-        log.info("获取${comment}信息(请求方法+路径变量)详情[{}]", id);
-        return ${moduleName}Service.get(new ${ModuleName}Get(id), projection);
+    @GetMapping("/{${id.name}}")
+    public Mono<${ModuleName}VO> getByUrlPathVariable(@PathVariable ${id.type.simpleName} ${id.name}, String... projection) {
+        log.info("获取${comment}信息(请求方法+路径变量)详情[{}]", ${id.name});
+        return ${moduleName}Service.get(new ${ModuleName}Get(${id.name}), projection);
     }
 
     @RequestMapping("/get")
@@ -71,13 +71,13 @@ public class ${ModuleName}Controller {
         return ${moduleName}Service.modify(params);
     }
 
-    @DeleteMapping("/{id}")
-    public Mono<Integer> deleteByUrlPathVariable(@PathVariable Long id) {
-        log.info("删除${comment}信息(请求方法+URL路径变量)[{}]", id);
-        return ${moduleName}Service.delete(new ${ModuleName}Delete(id));
+    @DeleteMapping("/{${id.name}}")
+    public Mono<Integer> deleteByUrlPathVariable(@PathVariable ${id.type.simpleName} ${id.name}) {
+        log.info("删除${comment}信息(请求方法+URL路径变量)[{}]", ${id.name});
+        return ${moduleName}Service.delete(new ${ModuleName}Delete(${id.name}));
     }
 
-    @DeleteMapping(params = "id")
+    @DeleteMapping(params = "${id.name}")
     public Mono<Integer> deleteByUrlParamVariable(${ModuleName}Delete params) {
         log.info("删除${comment}信息(请求方法+URL参数变量)[{}]", params);
         return ${moduleName}Service.delete(params);

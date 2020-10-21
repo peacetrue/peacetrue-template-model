@@ -63,7 +63,7 @@ public class ${ModuleName}ControllerTest {
     @Order(40)
     public void get() {
         this.client.get()
-                .uri("/${module-name}s/{0}", ${ModuleName}ServiceImplTest.vo.getId())
+                .uri("/${module-name}s/{0}", ${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()
@@ -76,9 +76,9 @@ public class ${ModuleName}ControllerTest {
     @Order(50)
     public void modify() {
         ${ModuleName}Modify modify = ${ModuleName}ServiceImplTest.MODIFY;
-        modify.setId(${ModuleName}ServiceImplTest.vo.getId());
+        modify.set${lc.uc($id.name)}(${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}());
         this.client.put()
-                .uri("/${module-name}s/{id}", ${ModuleName}ServiceImplTest.vo.getId())
+                .uri("/${module-name}s/{id}", ${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}())
                 .bodyValue(modify)
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
@@ -91,7 +91,7 @@ public class ${ModuleName}ControllerTest {
     @Order(60)
     public void delete() {
         this.client.delete()
-                .uri("/${module-name}s/{0}", ${ModuleName}ServiceImplTest.vo.getId())
+                .uri("/${module-name}s/{0}", ${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}())
                 .accept(MediaType.APPLICATION_JSON)
                 .exchange()
                 .expectStatus().isOk()

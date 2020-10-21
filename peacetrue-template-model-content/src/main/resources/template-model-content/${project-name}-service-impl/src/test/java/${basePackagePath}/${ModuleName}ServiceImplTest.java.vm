@@ -8,8 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import reactor.test.StepVerifier;
 
-#setOperatorIdType($properties)
-#setId($properties)
+
+
 
 /**
  * @author : xiayx
@@ -20,13 +20,13 @@ import reactor.test.StepVerifier;
 class ${ModuleName}ServiceImplTest {
 
     public static final EasyRandom EASY_RANDOM = new EasyRandom();
-    public static final ${ModuleName}Modify MODIFY = EASY_RANDOM.nextObject(${ModuleName}Modify.class);
     public static final ${ModuleName}Add ADD = EASY_RANDOM.nextObject(${ModuleName}Add.class);
+    public static final ${ModuleName}Modify MODIFY = EASY_RANDOM.nextObject(${ModuleName}Modify.class);
     public static ${ModuleName}VO vo;
 
     static {
-        ADD.setOperatorId(EASY_RANDOM.nextObject(${operatorIdType}.class));
-        MODIFY.setOperatorId(EASY_RANDOM.nextObject(${operatorIdType}.class));
+        ADD.setOperatorId(EASY_RANDOM.nextObject(${creatorId.type.simpleName}.class));
+        MODIFY.setOperatorId(EASY_RANDOM.nextObject(${creatorId.type.simpleName}.class));
     }
 
     @Autowired
@@ -70,7 +70,7 @@ class ${ModuleName}ServiceImplTest {
         ${ModuleName}Get params = BeanUtils.map(vo, ${ModuleName}Get.class);
         service.get(params)
                 .as(StepVerifier::create)
-                .assertNext(item -> Assertions.assertEquals(vo.getId(), item.getId()))
+                .assertNext(item -> Assertions.assertEquals(vo.get${lc.uc($id.name)}(), item.get${lc.uc($id.name)}()))
                 .verifyComplete();
     }
 
@@ -78,7 +78,7 @@ class ${ModuleName}ServiceImplTest {
     @Order(50)
     void modify() {
         ${ModuleName}Modify params = MODIFY;
-        params.setId(vo.getId());
+        params.set${lc.uc($id.name)}(vo.get${lc.uc($id.name)}());
         service.modify(params)
                 .as(StepVerifier::create)
                 .expectNext(1)
@@ -88,7 +88,7 @@ class ${ModuleName}ServiceImplTest {
     @Test
     @Order(60)
     void delete() {
-        ${ModuleName}Delete params = new ${ModuleName}Delete(vo.getId());
+        ${ModuleName}Delete params = new ${ModuleName}Delete(vo.get${lc.uc($id.name)}());
         service.delete(params)
                 .as(StepVerifier::create)
                 .expectNext(1)

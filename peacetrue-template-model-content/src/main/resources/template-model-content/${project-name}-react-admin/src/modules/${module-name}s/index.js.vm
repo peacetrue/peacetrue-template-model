@@ -6,8 +6,6 @@ import {${ModuleName}Create} from './create';
 import {${ModuleName}Edit} from './edit';
 import {${ModuleName}Show} from './show';
 
-let ${ModuleName} = {list: ${ModuleName}List, create: ${ModuleName}Create, edit: ${ModuleName}Edit, show: ${ModuleName}Show};
-export const ${ModuleName}Resource = props $esc.javascript('=>') (
-    <Resource options={{label: '${comment}'}} name="${module-name}s" {...${ModuleName}} />
-);
-export default ${ModuleName};
+export const ${ModuleName} = {list: ${ModuleName}List, create: ${ModuleName}Create, edit: ${ModuleName}Edit, show: ${ModuleName}Show};
+const ${ModuleName}Resource = <Resource options={{label: '${comment}'}} name="${module-name}s" {...${ModuleName}} />;
+export default ${ModuleName}Resource;
