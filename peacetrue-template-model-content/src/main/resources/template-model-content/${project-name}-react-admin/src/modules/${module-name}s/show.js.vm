@@ -8,9 +8,9 @@ export const ${ModuleName}Show = (props) $esc.javascript('=>') {
             <SimpleShowLayout>
                 #foreach($property in $nonIdProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateField label={'$property.comment'} source="$property.name" showTime/>
+                        <DateField label={'$property.nationalName'} source="$property.name" showTime/>
                     #else
-                        <TextField label={'$property.comment'} source="$property.name"/>
+                        <TextField label={'$property.nationalName'} source="$property.name"/>
                     #end
                 #end
             </SimpleShowLayout>

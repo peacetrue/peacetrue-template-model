@@ -2,13 +2,11 @@ package ${basePackageName};
 
 import com.github.peacetrue.core.Range;
 import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
-import com.github.peacetrue.spring.data.relational.core.query.QueryUtils;
 import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
 import com.github.peacetrue.util.DateUtils;
 import com.github.peacetrue.spring.util.BeanUtils;
 import com.github.peacetrue.util.StreamUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.PayloadApplicationEvent;
@@ -31,7 +29,7 @@ import java.util.Date;
 import java.time.LocalDateTime;
 
 /**
- * ${comment}服务实现
+ * ${nationalName}服务实现
  *
  * @author xiayx
  */
@@ -64,7 +62,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional
     public Mono<${ModuleName}VO> add(${ModuleName}Add params) {
-        log.info("新增${comment}信息[{}]", params);
+        log.info("新增${nationalName}信息[{}]", params);
         ${ModuleName} entity = BeanUtils.map(params, ${ModuleName}.class);
         #if($creatorId)
             entity.setCreatorId(params.getOperatorId());
@@ -82,7 +80,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional(readOnly = true)
     public Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
-        log.info("分页查询${comment}信息[{}]", params);
+        log.info("分页查询${nationalName}信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
         if (params.getCreatedTime() == null) params.setCreatedTime(Range.LocalDateTime.DEFAULT);
         #if($modifierId)
@@ -106,7 +104,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional(readOnly = true)
     public Flux<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Sort sort, String... projection) {
-        log.info("全量查询${comment}信息[{}]", params);
+        log.info("全量查询${nationalName}信息[{}]", params);
         if (params == null) params = ${ModuleName}Query.DEFAULT;
         if (params.getCreatedTime() == null) params.setCreatedTime(Range.LocalDateTime.DEFAULT);
         #if($modifierId)
@@ -122,7 +120,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional(readOnly = true)
     public Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection) {
-        log.info("获取${comment}信息[{}]", params);
+        log.info("获取${nationalName}信息[{}]", params);
 //        Criteria where = CriteriaUtils.and(
 //                CriteriaUtils.nullableCriteria(Criteria.where("$id.name")::is, params::get${lc.uc($id.name)}),
 //        );
@@ -134,7 +132,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional
     public Mono<Integer> modify(${ModuleName}Modify params) {
-        log.info("修改${comment}信息[{}]", params);
+        log.info("修改${nationalName}信息[{}]", params);
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         Query idQuery = Query.query(where);
         return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
@@ -156,7 +154,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Override
     @Transactional
     public Mono<Integer> delete(${ModuleName}Delete params) {
-        log.info("删除${comment}信息[{}]", params);
+        log.info("删除${nationalName}信息[{}]", params);
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         Query idQuery = Query.query(where);
         return entityTemplate.selectOne(idQuery, ${ModuleName}.class)

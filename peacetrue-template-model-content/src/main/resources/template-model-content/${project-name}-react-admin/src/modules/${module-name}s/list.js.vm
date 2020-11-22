@@ -5,10 +5,10 @@ const Filters = (props) $esc.javascript('=>') (
     <Filter {...props}>
         #foreach($property in $nonIdProperties)
             #if($property.type.name == 'java.lang.String')
-                <TextInput label={'${property.comment}'} source="${property.name}" allowEmpty alwaysOn/>
+                <TextInput label={'${property.nationalName}'} source="${property.name}" allowEmpty alwaysOn/>
             #elseif($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                <DateInput label={'${property.comment}起始值'} source="${property.name}.lowerBound" allowEmpty alwaysOn/>
-                <DateInput label={'${property.comment}结束值'} source="${property.name}.upperBound" allowEmpty alwaysOn/>
+                <DateInput label={'${property.nationalName}起始值'} source="${property.name}.lowerBound" allowEmpty alwaysOn/>
+                <DateInput label={'${property.nationalName}结束值'} source="${property.name}.upperBound" allowEmpty alwaysOn/>
             #end
         #end
     </Filter>
@@ -22,9 +22,9 @@ export const ${ModuleName}List = props $esc.javascript('=>') {
             <Datagrid rowClick="show">
                 #foreach($property in $nonIdProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateField label={'${property.comment}'} source="${property.name}" showTime/>
+                        <DateField label={'${property.nationalName}'} source="${property.name}" showTime/>
                     #else
-                        <TextField label={'${property.comment}'} source="${property.name}"/>
+                        <TextField label={'${property.nationalName}'} source="${property.name}"/>
                     #end
                 #end
                 <EditButton/>

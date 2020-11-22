@@ -8,9 +8,9 @@ export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
             <SimpleForm>
                 #foreach($property in $nonIdAuditProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateTimeInput label={'$property.comment'} source="$property.name" validate={required()}/>
+                        <DateTimeInput label={'$property.nationalName'} source="$property.name" validate={required()}/>
                     #else
-                        <TextInput label={'$property.comment'} source="$property.name" validate={required()}/>
+                        <TextInput label={'$property.nationalName'} source="$property.name" validate={required()}/>
                     #end
                 #end
             </SimpleForm>

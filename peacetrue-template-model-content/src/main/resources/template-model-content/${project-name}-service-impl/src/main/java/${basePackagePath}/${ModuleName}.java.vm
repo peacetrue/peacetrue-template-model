@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 #listImport($properties)
 
 /**
- * ${comment}实体类
+ * ${nationalName}实体类
  *
  * @author xiayx
  */

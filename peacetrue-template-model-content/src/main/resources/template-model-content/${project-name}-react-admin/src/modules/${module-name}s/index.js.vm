@@ -7,5 +7,5 @@ import {${ModuleName}Edit} from './edit';
 import {${ModuleName}Show} from './show';
 
 export const ${ModuleName} = {list: ${ModuleName}List, create: ${ModuleName}Create, edit: ${ModuleName}Edit, show: ${ModuleName}Show};
-const ${ModuleName}Resource = <Resource options={{label: '${comment}'}} name="${module-name}s" {...${ModuleName}} />;
+const ${ModuleName}Resource = <Resource options={{label: '${nationalName}'}} name="${module-name}s" {...${ModuleName}} />;
 export default ${ModuleName}Resource;
