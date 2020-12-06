@@ -1,0 +1,12 @@
+export default {
+    resources: {
+        "${module-name}s": {
+            name: '${nationalName}',
+            fields: {
+                #foreach($property in $properties)
+                '$property.name': '$property.nationalName',
+                #end
+            },
+        }
+    }
+}

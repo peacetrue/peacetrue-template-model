@@ -1,16 +1,18 @@
 import React from 'react';
-import {Edit, required, SimpleForm, TextInput, DateTimeInput} from 'react-admin';
+import {Edit, required, SimpleForm, TextInput, DateTimeInput,min,maxLength} from 'react-admin';
 
 export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
     console.info('${ModuleName}Edit:', props);
     return (
-        <Edit {...props} title={`$esc.d{props.options.label}#$esc.d{props.id}`}>
+        <Edit {...props}>
             <SimpleForm>
                 #foreach($property in $nonIdAuditProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateTimeInput label={'$property.nationalName'} source="$property.name" validate={required()}/>
+                        <DateTimeInput entityOperations source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
+                    #elseif($property.type.name == 'java.lang.Long'||$property.type.name == 'java.lang.Integer')
+                        <NumberInput entityOperations source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')min(0)]}/>
                     #else
-                        <TextInput label={'$property.nationalName'} source="$property.name" validate={required()}/>
+                        <TextInput entityOperations source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]}/>
                     #end
                 #end
             </SimpleForm>

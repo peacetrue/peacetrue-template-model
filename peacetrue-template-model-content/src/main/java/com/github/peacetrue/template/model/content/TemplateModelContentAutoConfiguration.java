@@ -5,8 +5,10 @@ import com.github.peacetrue.generator.velocity.ContextFactory;
 import com.github.peacetrue.generator.velocity.ToolContextFactory;
 import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
 import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.sql.metadata.Model;
 import com.github.peacetrue.sql.metadata.ModelProperty;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -27,6 +29,7 @@ import java.util.stream.Collectors;
 /**
  * @author xiayx
  */
+@Slf4j
 @Configuration
 @Order(Ordered.HIGHEST_PRECEDENCE)
 @AutoConfigureBefore({
@@ -99,13 +102,16 @@ public class TemplateModelContentAutoConfiguration {
     @Bean
     @ConditionalOnMissingBean
     public ContextsSupplier contextsSupplier(@Autowired ModelSupplier modelSupplier) {
-        List<Map<String, Object>> contexts = modelSupplier.getModels()
+        List<Model> models = modelSupplier.getModels();
+        log.debug("models: {}", models);
+        List<Map<String, Object>> contexts = models
                 .stream().map(context -> {
                     Map<String, Object> map = BeanUtils.map(context);
                     map.put("ModuleName", context.getName());
                     map.put("moduleDescription", context.getComment());
                     return map;
                 }).collect(Collectors.toList());
+        log.debug("contexts: {}", contexts);
         return new ContextsSupplierImpl(contexts);
     }
 }

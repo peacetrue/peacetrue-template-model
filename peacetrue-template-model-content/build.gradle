@@ -5,8 +5,8 @@ dependencies {
     implementation "com.github.peacetrue:peacetrue-velocity"
     implementation 'com.google.guava:guava'
     implementation 'org.mybatis:mybatis'
-    implementation 'com.github.peacetrue.sql:peacetrue-sql:2+'
-    implementation 'com.github.peacetrue.sql:peacetrue-sql-metadata:2+'
+    implementation 'com.github.peacetrue.sql:peacetrue-sql:2.0.0-SNAPSHOT'
+    implementation 'com.github.peacetrue.sql:peacetrue-sql-metadata:2.0.0-SNAPSHOT'
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     compileOnly 'org.springframework.boot:spring-boot-autoconfigure'

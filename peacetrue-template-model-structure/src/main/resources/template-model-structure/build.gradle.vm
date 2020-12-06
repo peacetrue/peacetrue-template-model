@@ -12,7 +12,9 @@ buildscript {
             exclude group: 'ch.qos.logback'
         }
         classpath('com.h2database:h2:1.4.196')
-        classpath "io.spring.gradle:dependency-management-plugin:1+"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.3.RELEASE"
+        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:2.5.0"
     }
 }
 
@@ -44,16 +46,15 @@ allprojects { project ->
 
     repositories {
         mavenLocal()
+        mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url 'https://repo.spring.io/plugins-release' }
-        mavenCentral()
-        jcenter()
     }
 
     apply plugin: "io.spring.dependency-management"
     dependencyManagement {
         imports {
-            mavenBom "com.github.peacetrue:peacetrue-dependencies:2+"
+            mavenBom "com.github.peacetrue:peacetrue-dependencies:2.0.0-SNAPSHOT"
         }
     }
 

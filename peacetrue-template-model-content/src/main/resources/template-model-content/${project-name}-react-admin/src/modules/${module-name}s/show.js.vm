@@ -4,13 +4,13 @@ import {DateField, Show, SimpleShowLayout, TextField} from 'react-admin';
 export const ${ModuleName}Show = (props) $esc.javascript('=>') {
     console.info('${ModuleName}Show:', props);
     return (
-        <Show {...props} title={`${props.options.label}#${props.id}`}>
+        <Show {...props}>
             <SimpleShowLayout>
                 #foreach($property in $nonIdProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateField label={'$property.nationalName'} source="$property.name" showTime/>
+                        <DateField entityOperations source="$property.name" showTime/>
                     #else
-                        <TextField label={'$property.nationalName'} source="$property.name"/>
+                        <TextField entityOperations source="$property.name"/>
                     #end
                 #end
             </SimpleShowLayout>

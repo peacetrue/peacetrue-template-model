@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.PayloadApplicationEvent;
 import org.springframework.data.domain.*;
-import org.springframework.data.r2dbc.core.R2dbcEntityTemplate;
+import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.data.relational.core.query.Update;
@@ -38,7 +38,7 @@ import java.time.LocalDateTime;
 public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Autowired
-    private R2dbcEntityTemplate entityTemplate;
+    private R2dbcEntityOperations entityOperations;
     @Autowired
     private ApplicationEventPublisher eventPublisher;
 
@@ -72,7 +72,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
             entity.setModifierId(entity.getCreatorId());
             entity.setModifiedTime(entity.getCreatedTime());
         #end
-        return entityTemplate.insert(entity)
+        return entityOperations.insert(entity)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)));
     }
@@ -89,11 +89,11 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         Pageable finalPageable = pageable == null ? PageRequest.of(0, 10) : pageable;
         Criteria where = buildCriteria(params);
 
-        return entityTemplate.count(Query.query(where), ${ModuleName}.class)
+        return entityOperations.count(Query.query(where), ${ModuleName}.class)
                 .flatMap(total -> total == 0L ? Mono.empty() : Mono.just(total))
                 .<Page<${ModuleName}VO>>flatMap(total -> {
                     Query query = Query.query(where).with(finalPageable).sort(finalPageable.getSortOr(Sort.by("createdTime").descending()));
-                    return entityTemplate.select(query, ${ModuleName}.class)
+                    return entityOperations.select(query, ${ModuleName}.class)
                             .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
                             .reduce(new ArrayList<>(), StreamUtils.reduceToCollection())
                             .map(item -> new PageImpl<>(item, finalPageable, total));
@@ -113,7 +113,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         if (sort == null) sort = Sort.by("createdTime").descending();
         Criteria where = buildCriteria(params);
         Query query = Query.query(where).sort(sort).limit(100);
-        return entityTemplate.select(query, ${ModuleName}.class)
+        return entityOperations.select(query, ${ModuleName}.class)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
     }
 
@@ -125,7 +125,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 //                CriteriaUtils.nullableCriteria(Criteria.where("$id.name")::is, params::get${lc.uc($id.name)}),
 //        );
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
-        return entityTemplate.selectOne(Query.query(where), ${ModuleName}.class)
+        return entityOperations.selectOne(Query.query(where), ${ModuleName}.class)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
     }
 
@@ -133,21 +133,26 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     @Transactional
     public Mono<Integer> modify(${ModuleName}Modify params) {
         log.info("修改${nationalName}信息[{}]", params);
+        return this.modifyGeneric(params);
+    }
+
+    private <T extends IdCapable<Long> & OperatorCapable<Long>> Mono<Integer> modifyGeneric(T params) {
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         Query idQuery = Query.query(where);
         return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
                 .zipWhen(entity -> {
                     ${ModuleName} modify = BeanUtils.map(params, ${ModuleName}.class);
-                    #if($modifierId)
                     modify.setModifierId(params.getOperatorId());
                     modify.setModifiedTime(LocalDateTime.now());
-                    #end
                     Update update = UpdateUtils.selectiveUpdateFromExample(modify);
                     return entityTemplate.update(idQuery, update, ${ModuleName}.class);
                 })
-                .doOnNext(tuple2 -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(tuple2.getT1(), params)))
-                .map(Tuple2::getT2)
+                .map(tuple2 -> {
+                    ${ModuleName}VO vo = BeanUtils.map(tuple2.getT1(), ${ModuleName}VO.class);
+                    BeanUtils.copyProperties(params, vo, BeanUtils.EMPTY_PROPERTY_VALUE);
+                    eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
+                    return tuple2.getT2();
+                })
                 .switchIfEmpty(Mono.just(0));
     }
 
@@ -157,9 +162,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         log.info("删除${nationalName}信息[{}]", params);
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         Query idQuery = Query.query(where);
-        return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
+        return entityOperations.selectOne(idQuery, ${ModuleName}.class)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
-                .zipWhen(region -> entityTemplate.delete(idQuery, ${ModuleName}.class))
+                .zipWhen(region -> entityOperations.delete(idQuery, ${ModuleName}.class))
                 .doOnNext(tuple2 -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(tuple2.getT1(), params)))
                 .map(Tuple2::getT2)
                 .switchIfEmpty(Mono.just(0));

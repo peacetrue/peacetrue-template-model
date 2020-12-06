@@ -3,7 +3,7 @@ buildscript {
         maven { url 'https://repo.spring.io/plugins-release' }
     }
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
     }
 }
 
@@ -18,10 +18,9 @@ allprojects { project ->
 
     repositories {
         mavenLocal()
+        mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url 'https://repo.spring.io/plugins-release' }
-        mavenCentral()
-        jcenter()
     }
 
     apply plugin: "io.spring.dependency-management"
@@ -35,8 +34,6 @@ allprojects { project ->
             dependency "com.github.peacetrue.generator:peacetrue-generator-velocity:1+"
             dependency "com.github.peacetrue.generator:peacetrue-generator-context:1+"
             dependency "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
-            dependency "com.github.peacetrue.sql:peacetrue-sql:1.0.0-SNAPSHOT"
-            dependency "com.github.peacetrue.sql:peacetrue-sql-metadata:1.0.0-SNAPSHOT"
         }
     }
 
