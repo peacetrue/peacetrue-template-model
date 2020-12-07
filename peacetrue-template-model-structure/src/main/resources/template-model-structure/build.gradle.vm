@@ -14,24 +14,24 @@ buildscript {
         classpath('com.h2database:h2:1.4.196')
         classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.3.RELEASE"
-        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:2.5.0"
+##        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:2.5.0"
     }
 }
 
-apply plugin: 'com.github.peacetrue.generator'
-peacetrueGenerate {
-    properties = [
-            'peacetrue.generator.target-path': "${esc.d}rootDir",
-            'spring.datasource.schema'       : "file:${esc.d}rootDir/${project-name}-service-impl/src/main/resources/schema-h2.sql",
-    ]
-    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-impl/src/test/resources/application-${domain-name}-service-test.yml"
-    context = [
-            'project-name'     : "${project-name}",
-            'basePackageName'  : "${basePackageName}",
-            'DomainName'       : '$DomainName',
-            'domainDescription': '$domainDescription',
-    ]
-}
+##apply plugin: 'com.github.peacetrue.generator'
+##peacetrueGenerate {
+##    properties = [
+##            'peacetrue.generator.target-path': "${esc.d}rootDir",
+##            'spring.datasource.schema'       : "file:${esc.d}rootDir/${project-name}-service-impl/src/main/resources/schema-h2.sql",
+##    ]
+##    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-impl/src/test/resources/application-${domain-name}-service-test.yml"
+##    context = [
+##            'project-name'     : "${project-name}",
+##            'basePackageName'  : "${basePackageName}",
+##            'DomainName'       : '$DomainName',
+##            'domainDescription': '$domainDescription',
+##    ]
+##}
 
 
 allprojects { project ->

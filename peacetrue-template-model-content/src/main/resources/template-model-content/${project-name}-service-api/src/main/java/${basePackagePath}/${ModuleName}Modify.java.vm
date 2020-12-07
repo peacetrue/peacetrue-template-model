@@ -1,5 +1,6 @@
 package ${basePackageName};
 
+import com.github.peacetrue.core.IdCapable;
 import com.github.peacetrue.core.OperatorCapableImpl;
 import lombok.*;
 import javax.validation.constraints.NotNull;
@@ -17,7 +18,7 @@ import javax.validation.constraints.Size;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Modify extends OperatorCapableImpl<$creatorId.type.simpleName> {
+public class ${ModuleName}Modify extends OperatorCapableImpl<$creatorId.type.simpleName> implements IdCapable<$id.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 

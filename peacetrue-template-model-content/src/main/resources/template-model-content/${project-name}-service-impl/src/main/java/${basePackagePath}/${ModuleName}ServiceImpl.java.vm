@@ -1,5 +1,7 @@
 package ${basePackageName};
 
+import com.github.peacetrue.core.IdCapable;
+import com.github.peacetrue.core.OperatorCapable;
 import com.github.peacetrue.core.Range;
 import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
 import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
@@ -139,13 +141,13 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     private <T extends IdCapable<Long> & OperatorCapable<Long>> Mono<Integer> modifyGeneric(T params) {
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         Query idQuery = Query.query(where);
-        return entityTemplate.selectOne(idQuery, ${ModuleName}.class)
+        return entityOperations.selectOne(idQuery, ${ModuleName}.class)
                 .zipWhen(entity -> {
                     ${ModuleName} modify = BeanUtils.map(params, ${ModuleName}.class);
                     modify.setModifierId(params.getOperatorId());
                     modify.setModifiedTime(LocalDateTime.now());
                     Update update = UpdateUtils.selectiveUpdateFromExample(modify);
-                    return entityTemplate.update(idQuery, update, ${ModuleName}.class);
+                    return entityOperations.update(idQuery, update, ${ModuleName}.class);
                 })
                 .map(tuple2 -> {
                     ${ModuleName}VO vo = BeanUtils.map(tuple2.getT1(), ${ModuleName}VO.class);

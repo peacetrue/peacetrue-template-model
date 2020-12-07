@@ -1,4 +1,4 @@
-export default {
+export const ${moduleName}Messages =  {
     resources: {
         "${module-name}s": {
             name: '${nationalName}',
@@ -10,3 +10,5 @@ export default {
         }
     }
 }
+
+export default ${moduleName}Messages;

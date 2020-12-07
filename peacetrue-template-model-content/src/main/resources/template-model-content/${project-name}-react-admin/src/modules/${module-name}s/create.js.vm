@@ -1,5 +1,5 @@
 import React from 'react';
-import {Create, required, SimpleForm, DateTimeInput, TextInput,NumberInput,min,maxLength} from 'react-admin';
+import {Create, required, SimpleForm, DateTimeInput, TextInput,NumberInput,minValue,maxLength} from 'react-admin';
 
 export const ${ModuleName}Create = (props) $esc.javascript('=>') {
     console.info('${ModuleName}Create:', props);
@@ -8,11 +8,11 @@ export const ${ModuleName}Create = (props) $esc.javascript('=>') {
             <SimpleForm>
                 #foreach($property in $nonIdAuditProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateTimeInput label={'$property.nationalName'} source="$property.name" showTime validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
+                        <DateTimeInput source="$property.name" showTime validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
                     #elseif($property.type.name == 'java.lang.Long'||$property.type.name == 'java.lang.Integer')
-                        <NumberInput label={'$property.nationalName'} source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')min(0)]}/>
+                        <NumberInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')minValue(0)]} min={0}/>
                     #else
-                        <TextInput label={'$property.nationalName'} source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]}/>
+                        <TextInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]}/>
                     #end
                 #end
             </SimpleForm>

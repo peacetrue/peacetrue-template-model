@@ -1,18 +1,18 @@
 import React from 'react';
-import {Edit, required, SimpleForm, TextInput, DateTimeInput,min,maxLength} from 'react-admin';
+import {Edit, required, SimpleForm, NumberInput,TextInput, DateTimeInput,minValue,maxLength} from 'react-admin';
 
 export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
     console.info('${ModuleName}Edit:', props);
     return (
-        <Edit {...props}>
+        <Edit {...props} undoable={false}>
             <SimpleForm>
                 #foreach($property in $nonIdAuditProperties)
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
-                        <DateTimeInput entityOperations source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
+                        <DateTimeInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
                     #elseif($property.type.name == 'java.lang.Long'||$property.type.name == 'java.lang.Integer')
-                        <NumberInput entityOperations source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')min(0)]}/>
+                        <NumberInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')minValue(0)]} min={0}/>
                     #else
-                        <TextInput entityOperations source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]}/>
+                        <TextInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]}/>
                     #end
                 #end
             </SimpleForm>
