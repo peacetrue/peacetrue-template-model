@@ -1,5 +1,5 @@
 import React from 'react';
-import {DateField, Show, SimpleShowLayout, TextField,NumberField} from 'react-admin';
+import {DateField, Show, SimpleShowLayout, TextField,TextField} from 'react-admin';
 
 export const ${ModuleName}Show = (props) $esc.javascript('=>') {
     console.info('${ModuleName}Show:', props);
@@ -10,7 +10,7 @@ export const ${ModuleName}Show = (props) $esc.javascript('=>') {
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
                         <DateField source="$property.name" showTime/>
                     #elseif($property.type.name == 'java.lang.Long'||$property.type.name == 'java.lang.Integer')
-                        <NumberField source="$property.name" />
+                        <TextField source="$property.name" />
                     #else
                         <TextField source="$property.name"/>
                     #end

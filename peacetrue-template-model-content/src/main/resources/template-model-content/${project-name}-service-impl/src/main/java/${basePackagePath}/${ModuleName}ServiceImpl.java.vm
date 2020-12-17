@@ -81,9 +81,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional(readOnly = true)
-    public Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
+    public Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
         log.info("分页查询${nationalName}信息[{}]", params);
-        if (params == null) params = ${ModuleName}Query.DEFAULT;
+        //if (params == null) params = ${ModuleName}Query.DEFAULT;
         if (params.getCreatedTime() == null) params.setCreatedTime(Range.LocalDateTime.DEFAULT);
         #if($modifierId)
         if (params.getModifiedTime() == null) params.setModifiedTime(Range.LocalDateTime.DEFAULT);
@@ -97,7 +97,8 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                     Query query = Query.query(where).with(finalPageable).sort(finalPageable.getSortOr(Sort.by("createdTime").descending()));
                     return entityOperations.select(query, ${ModuleName}.class)
                             .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
-                            .reduce(new ArrayList<>(), StreamUtils.reduceToCollection())
+                            .collectList()
+                            .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
                             .map(item -> new PageImpl<>(item, finalPageable, total));
                 })
                 .switchIfEmpty(Mono.just(new PageImpl<>(Collections.emptyList(), finalPageable, 0L)));
@@ -105,9 +106,8 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional(readOnly = true)
-    public Flux<${ModuleName}VO> query(@Nullable ${ModuleName}Query params, @Nullable Sort sort, String... projection) {
+    public Flux<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection) {
         log.info("全量查询${nationalName}信息[{}]", params);
-        if (params == null) params = ${ModuleName}Query.DEFAULT;
         if (params.getCreatedTime() == null) params.setCreatedTime(Range.LocalDateTime.DEFAULT);
         #if($modifierId)
             if (params.getModifiedTime() == null) params.setModifiedTime(Range.LocalDateTime.DEFAULT);
@@ -116,7 +116,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         Criteria where = buildCriteria(params);
         Query query = Query.query(where).sort(sort).limit(100);
         return entityOperations.select(query, ${ModuleName}.class)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
+        ;
     }
 
     @Override
@@ -128,7 +130,9 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 //        );
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         return entityOperations.selectOne(Query.query(where), ${ModuleName}.class)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class));
+                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
+        ;
     }
 
     @Override

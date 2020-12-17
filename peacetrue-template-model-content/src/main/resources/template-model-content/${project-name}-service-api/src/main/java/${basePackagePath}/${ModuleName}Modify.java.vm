@@ -24,7 +24,7 @@ public class ${ModuleName}Modify extends OperatorCapableImpl<$creatorId.type.sim
 
     #foreach($property in $nonAuditProperties)
         /** $property.comment */
-        #if(!$property.nullable)
+        #if($property==$id)
             @NotNull
         #end
         #if($property.type.simpleName=='String')

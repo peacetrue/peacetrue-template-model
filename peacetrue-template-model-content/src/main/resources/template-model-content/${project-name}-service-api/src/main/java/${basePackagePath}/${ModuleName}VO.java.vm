@@ -1,5 +1,6 @@
 package ${basePackageName};
 
+import com.github.peacetrue.core.IdCapable;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,7 +11,7 @@ import java.util.Date;
  * @author xiayx
  */
 @Data
-public class ${ModuleName}VO implements Serializable {
+public class ${ModuleName}VO implements Serializable, IdCapable<$id.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 

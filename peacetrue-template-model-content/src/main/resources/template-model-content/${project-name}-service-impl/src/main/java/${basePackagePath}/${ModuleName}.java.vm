@@ -1,11 +1,9 @@
 package ${basePackageName};
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import com.github.peacetrue.core.IdCapable;
 import org.springframework.data.annotation.Id;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.time.LocalDateTime;
@@ -21,7 +19,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
-public class ${ModuleName} implements Serializable{
+@NoArgsConstructor
+@AllArgsConstructor
+public class ${ModuleName} implements Serializable, IdCapable<$id.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 

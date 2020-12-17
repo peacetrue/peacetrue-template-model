@@ -41,8 +41,8 @@ allprojects { project ->
     description "$domainDescription"
 
     apply plugin: "java-library"
-    sourceCompatibility = 9
-    targetCompatibility = 9
+    sourceCompatibility = 8
+    targetCompatibility = 8
 
     repositories {
         mavenLocal()
