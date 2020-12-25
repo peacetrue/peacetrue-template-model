@@ -11,4 +11,7 @@ export const ${moduleName}Messages =  {
     }
 }
 
+//[#foreach($property in $properties)'$property.name',#end]
+//[#foreach($property in $properties)'$property.nationalName',#end]
+
 export default ${moduleName}Messages;

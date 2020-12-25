@@ -142,7 +142,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
         return this.modifyGeneric(params);
     }
 
-    private <T extends IdCapable<Long> & OperatorCapable<Long>> Mono<Integer> modifyGeneric(T params) {
+    private <T extends IdCapable<$id.type.simpleName> & OperatorCapable<$id.type.simpleName>> Mono<Integer> modifyGeneric(T params) {
         Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
         Query idQuery = Query.query(where);
         return entityOperations.selectOne(idQuery, ${ModuleName}.class)
