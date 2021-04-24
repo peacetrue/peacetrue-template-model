@@ -7,9 +7,10 @@ spring:
       fail-fast: true
 
 ---
-
 spring:
-  profiles: prod
+  config:
+    activate:
+      on-profile: prod
   cloud:
     config:
       uri: https://peacetrue:${MICROSERVICE_SECURITY_PASSWORD}@peacetrue.cn:8888

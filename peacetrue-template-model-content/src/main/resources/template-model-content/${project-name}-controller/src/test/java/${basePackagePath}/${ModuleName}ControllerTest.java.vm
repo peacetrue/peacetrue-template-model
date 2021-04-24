@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import java.util.function.Consumer;
@@ -16,6 +17,7 @@ import java.util.function.Consumer;
  * @author xiayx
  */
 @SpringBootTest(classes = TestController${DomainName}AutoConfiguration.class)
+@ActiveProfiles({"${domain-name}-controller-test","${domain-name}-service-test"})
 @AutoConfigureWebTestClient
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ${ModuleName}ControllerTest {

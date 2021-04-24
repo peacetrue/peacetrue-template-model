@@ -1,5 +1,5 @@
 import React from 'react';
-import {Edit, required, SimpleForm, NumberInput,TextInput, DateTimeInput,minValue,maxLength} from 'react-admin';
+import {Edit, required, SimpleForm, NumberInput,TextInput, DateTimeInput,BooleanInput, minValue,maxLength} from 'react-admin';
 
 export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
     console.info('${ModuleName}Edit:', props);
@@ -10,9 +10,12 @@ export const ${ModuleName}Edit = (props) $esc.javascript('=>') {
                     #if($property.type.name == 'java.util.Date'||$property.type.name == 'java.time.LocalDateTime')
                         <DateTimeInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
                     #elseif($property.type.name == 'java.lang.Long'||$property.type.name == 'java.lang.Integer')
-                        <NumberInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')minValue(0)]} min={0}/>
+                        <NumberInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')minValue(0)]} min={0} resettable/>
+                    #elseif($property.type.name == 'java.lang.Boolean')
+                        <BooleanInput source="$property.name"/>
                     #else
-                        <TextInput  source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]}/>
+                        <TextInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]} resettable
+                            #if($property.size>=255) fullWidth #end />
                     #end
                 #end
             </SimpleForm>

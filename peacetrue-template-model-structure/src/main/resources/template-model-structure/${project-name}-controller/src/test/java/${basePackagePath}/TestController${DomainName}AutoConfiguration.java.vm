@@ -31,26 +31,7 @@ import org.springframework.web.reactive.result.method.annotation.ArgumentResolve
         SpringDataWebAutoConfiguration.class,
 })
 @EnableAutoConfiguration
-@ActiveProfiles("${domain-name}-controller-test")
 public class TestController${DomainName}AutoConfiguration {
 
-    @Configuration(proxyBeanMethods = false)
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    public static class WebFluxConfig implements WebFluxConfigurer {
-
-        @Override
-        public void configureArgumentResolvers(ArgumentResolverConfigurer configurer) {
-            configurer.addCustomResolver(new ReactivePageableHandlerMethodArgumentResolver());
-            configurer.addCustomResolver(new ReactiveSortHandlerMethodArgumentResolver());
-        }
-
-        @Override
-        public void addFormatters(FormatterRegistry registry) {
-            registry.addFormatter(new AutomaticDateFormatter());
-            registry.addFormatter(new AutomaticTimeFormatter());
-            registry.addFormatter(new AutomaticLocalDateFormatter());
-            registry.addFormatter(new AutomaticLocalDateTimeFormatter());
-        }
-    }
 
 }

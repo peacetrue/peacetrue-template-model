@@ -1,0 +1,9 @@
+logging:
+  level:
+    com.github.peacetrue: trace
+#    org.springframework: debug
+
+peacetrue:
+  init:
+    schema-script-locations:
+      '${basePackageName}.${DomainName}': /schema-${domain-name}-h2.sql

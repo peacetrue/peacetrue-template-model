@@ -1,1 +1,2 @@
 * xref:index.adoc[简介]
+* xref:version.adoc[版本说明]

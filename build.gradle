@@ -1,26 +1,27 @@
 buildscript {
     repositories {
-        maven { url 'https://repo.spring.io/plugins-release' }
+        mavenLocal()
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
     }
+
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
     }
 }
 
 allprojects { project ->
     group "com.github.peacetrue.template"
-    version "3.0.0-SNAPSHOT"
+    version "1.0.0-SNAPSHOT"
     description "模型模板"
 
     apply plugin: "java-library"
-    sourceCompatibility = 9
-    targetCompatibility = 9
+    sourceCompatibility = 8
+    targetCompatibility = 8
 
     repositories {
         mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url 'https://repo.spring.io/plugins-release' }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 
     apply plugin: "io.spring.dependency-management"
@@ -30,9 +31,9 @@ allprojects { project ->
         }
 
         dependencies {
-            dependency "com.github.peacetrue.generator:peacetrue-generator:1+"
-            dependency "com.github.peacetrue.generator:peacetrue-generator-velocity:1+"
-            dependency "com.github.peacetrue.generator:peacetrue-generator-context:1+"
+            dependency "com.github.peacetrue.generator:peacetrue-generator:1.0.0-SNAPSHOT"
+            dependency "com.github.peacetrue.generator:peacetrue-generator-velocity:1.0.0-SNAPSHOT"
+            dependency "com.github.peacetrue.generator:peacetrue-generator-context:1.0.0-SNAPSHOT"
             dependency "com.github.peacetrue:peacetrue-velocity:1.0.0-SNAPSHOT"
         }
     }

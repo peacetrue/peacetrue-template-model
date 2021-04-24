@@ -2,24 +2,27 @@ package ${basePackageName};
 
 import com.github.peacetrue.spring.util.BeanUtils;
 import org.jeasy.random.EasyRandom;
+import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.test.context.ActiveProfiles;
 import reactor.test.StepVerifier;
 
-
-
+import java.io.Serializable;
 
 /**
  * @author : xiayx
  * @since : 2020-05-22 16:43
  **/
 @SpringBootTest(classes = TestService${DomainName}AutoConfiguration.class)
+@ActiveProfiles("${domain-name}-service-test")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 class ${ModuleName}ServiceImplTest {
 
-    public static final EasyRandom EASY_RANDOM = new EasyRandom();
+    public static final EasyRandomParameters parameters = new EasyRandomParameters().randomize(Serializable.class, () -> 1L);
+    public static final EasyRandom EASY_RANDOM = new EasyRandom(parameters);
     public static final ${ModuleName}Add ADD = EASY_RANDOM.nextObject(${ModuleName}Add.class);
     public static final ${ModuleName}Modify MODIFY = EASY_RANDOM.nextObject(${ModuleName}Modify.class);
     public static ${ModuleName}VO vo;

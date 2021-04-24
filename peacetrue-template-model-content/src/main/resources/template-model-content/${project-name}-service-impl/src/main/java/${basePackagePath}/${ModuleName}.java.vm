@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName} implements Serializable, IdCapable<$id.type.simpleName> {
+public class ${ModuleName} implements Serializable, com.github.peacetrue.core.Id<$id.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 

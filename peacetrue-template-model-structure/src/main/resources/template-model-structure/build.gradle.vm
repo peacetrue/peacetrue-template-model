@@ -1,38 +1,13 @@
 buildscript {
     repositories {
         mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url 'https://repo.spring.io/plugins-release' }
+        maven { url "https://maven.aliyun.com/repository/gradle-plugin" }
     }
 
     dependencies {
-        classpath('com.github.peacetrue.generator:peacetrue-generator-plugin:1.1.0-SNAPSHOT')
-        classpath 'com.github.peacetrue.template:peacetrue-template-model-content:3.0.0-SNAPSHOT', {
-            exclude group: 'ch.qos.logback'
-        }
-        classpath('com.h2database:h2:1.4.196')
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.8.RELEASE"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:2.3.3.RELEASE"
-##        classpath "gradle.plugin.com.google.cloud.tools:jib-gradle-plugin:2.5.0"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
     }
 }
-
-##apply plugin: 'com.github.peacetrue.generator'
-##peacetrueGenerate {
-##    properties = [
-##            'peacetrue.generator.target-path': "${esc.d}rootDir",
-##            'spring.datasource.schema'       : "file:${esc.d}rootDir/${project-name}-service-impl/src/main/resources/schema-h2.sql",
-##    ]
-##    propertiesPath = "file:${esc.d}rootDir/${project-name}-service-impl/src/test/resources/application-${domain-name}-service-test.yml"
-##    context = [
-##            'project-name'     : "${project-name}",
-##            'basePackageName'  : "${basePackageName}",
-##            'DomainName'       : '$DomainName',
-##            'domainDescription': '$domainDescription',
-##    ]
-##}
-
 
 allprojects { project ->
 
@@ -46,9 +21,8 @@ allprojects { project ->
 
     repositories {
         mavenLocal()
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        maven { url 'https://repo.spring.io/plugins-release' }
+        maven { url "https://maven.aliyun.com/repository/public" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     }
 
     apply plugin: "io.spring.dependency-management"
@@ -79,6 +53,8 @@ allprojects { project ->
         testImplementation 'org.jeasy:easy-random-bean-validation', {
             exclude('group': 'org.yaml')
         }
+        testImplementation 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api'
+        testImplementation 'com.github.peacetrue:peacetrue-validation'
     }
 
     test {
