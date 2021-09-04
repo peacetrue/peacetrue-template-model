@@ -3,7 +3,14 @@ title: ${domainDescription}
 version: master
 asciidoc:
   attributes:
-    numbered: ''
+    numbered: '@'
+    allow-uri-read: true
+    source-options: 'source%nowrap@'
+    dev-host: 127.0.0.1
+    dev-url: http://127.0.0.1
+    prod-host: peacetrue.cn
+    prod-url: https://peacetrue.cn
+    #safe: unsafe
 start_page: ROOT:index.adoc
 nav:
   - modules/ROOT/nav.adoc
