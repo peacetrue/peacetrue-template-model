@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.r2dbc.R2dbcTransactionManagerAutoC
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author xiayx
+ * @author peace
  */
 @Configuration(proxyBeanMethods = false)
 @ImportAutoConfiguration({

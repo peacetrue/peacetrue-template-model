@@ -1,7 +1,8 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.IdCapable;
-import com.github.peacetrue.core.OperatorCapableImpl;
+import com.github.peacetrue.core.CreatorId;
+import com.github.peacetrue.core.Id;
+import com.github.peacetrue.core.OperatorImpl;
 import lombok.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -11,14 +12,14 @@ import javax.validation.constraints.Size;
 
 
 /**
- * @author xiayx
+ * @author peace
  */
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Modify extends OperatorCapableImpl<$creatorId.type.simpleName> implements IdCapable<$id.type.simpleName> {
+public class ${ModuleName}Modify extends OperatorImpl<$creatorId.type.simpleName> implements Id<$id.type.simpleName>, CreatorId<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 

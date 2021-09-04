@@ -1,0 +1,17 @@
+package ${basePackageName};
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * ${nationalName}控制器
+ *
+ * @author peace
+ */
+@Slf4j
+@RestController
+@RequestMapping(value = "/profile-${module-name}s")
+public class Profile${ModuleName}Controller extends ${ModuleName}Controller{
+
+}

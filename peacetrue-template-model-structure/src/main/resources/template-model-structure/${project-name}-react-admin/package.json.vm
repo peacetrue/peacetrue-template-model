@@ -1,15 +1,42 @@
 {
-  "name": "${project-name}",
-  "version": "0.1.0",
+  "name": "@peace/${project-name}",
+  "version": "0.0.0-1",
   "description": "${domainDescription}",
   "main": "src/index.js",
+  "typings": "dist/index.d.ts",
   "files": [
+    "dist",
     "src"
   ],
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test",
+    "lint": "tsdx lint",
+    "lint:fix": "tsdx lint --fix",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
+    "doc": "typedoc --out docs src"
+  },
+  "engines": {
+    "node": ">=10"
+  },
   "dependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-admin": "^3.14.0"
+    "react": "^17.0.2",
+    "react-admin": "^3.14.5",
+    "react-dom": "^17.0.2",
+    "@peace/react-admin": "^0.0.0-1",
+    "@peace/user": "^0.0.0-1"
+  },
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^4.9.1",
+    "husky": "^4.3.6",
+    "size-limit": "^4.9.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.0.3",
+    "typescript": "^4.1.3",
+    "typedoc": "^0.19.2"
   },
   "repository": {
     "type": "git",

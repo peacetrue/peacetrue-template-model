@@ -2,38 +2,46 @@ package ${basePackageName};
 
 import com.github.peacetrue.core.IdCapable;
 import com.github.peacetrue.core.OperatorCapable;
-import com.github.peacetrue.core.Range;
+import com.github.peacetrue.core.Operators;
+import com.github.peacetrue.result.ResultType;
+import com.github.peacetrue.result.exception.DataResultException;
+import com.github.peacetrue.result.exception.ResultException;
+import com.github.peacetrue.spring.data.domain.SortUtils;
+import com.github.peacetrue.spring.data.r2dbc.core.ConventionR2dbcEntityOperationsUtils;
 import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
 import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
-import com.github.peacetrue.util.DateUtils;
 import com.github.peacetrue.spring.util.BeanUtils;
-import com.github.peacetrue.util.StreamUtils;
+import com.github.peacetrue.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.PayloadApplicationEvent;
-import org.springframework.data.domain.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.r2dbc.core.R2dbcEntityOperations;
 import org.springframework.data.relational.core.query.Criteria;
 import org.springframework.data.relational.core.query.Query;
 import org.springframework.data.relational.core.query.Update;
+import org.springframework.r2dbc.core.DatabaseClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-import reactor.util.function.Tuple2;
 
-import javax.annotation.Nullable;
-import java.util.Calendar;
-import java.util.ArrayList;
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
-import java.time.LocalDateTime;
+import java.util.function.Consumer;
+import java.util.function.Function;
+
+import static com.github.peacetrue.spring.data.relational.core.query.ConventionCriteriaUtils.buildProfileCriteria;
 
 /**
  * ${nationalName}服务实现
  *
- * @author xiayx
+ * @author peace
  */
 @Slf4j
 @Service
@@ -66,13 +74,10 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     public Mono<${ModuleName}VO> add(${ModuleName}Add params) {
         log.info("新增${nationalName}信息[{}]", params);
         ${ModuleName} entity = BeanUtils.map(params, ${ModuleName}.class);
-        #if($creatorId)
-            entity.setCreatorId(params.getOperatorId());
-            entity.setCreatedTime(LocalDateTime.now());
-        #end
         #if($modifierId)
-            entity.setModifierId(entity.getCreatorId());
-            entity.setModifiedTime(entity.getCreatedTime());
+            Operators.setCreateModify(params, entity);
+        #elseif($creatorId)
+            Operators.setCreate(params, entity);
         #end
         return entityOperations.insert(entity)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
@@ -81,38 +86,27 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional(readOnly = true)
-    public Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, @Nullable Pageable pageable, String... projection) {
+    public Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, Pageable pageable, String... projection) {
         log.info("分页查询${nationalName}信息[{}]", params);
-        //if (params == null) params = ${ModuleName}Query.DEFAULT;
-        if (params.getCreatedTime() == null) params.setCreatedTime(Range.LocalDateTime.DEFAULT);
-        #if($modifierId)
-        if (params.getModifiedTime() == null) params.setModifiedTime(Range.LocalDateTime.DEFAULT);
-        #end
-        Pageable finalPageable = pageable == null ? PageRequest.of(0, 10) : pageable;
         Criteria where = buildCriteria(params);
-
         return entityOperations.count(Query.query(where), ${ModuleName}.class)
-                .flatMap(total -> total == 0L ? Mono.empty() : Mono.just(total))
-                .<Page<${ModuleName}VO>>flatMap(total -> {
-                    Query query = Query.query(where).with(finalPageable).sort(finalPageable.getSortOr(Sort.by("createdTime").descending()));
+                .flatMap(total -> {
+                    if (total == 0L) return Mono.just(new PageImpl<>(Collections.emptyList(), pageable, 0L));
+                    Query query = Query.query(where).with(pageable).sort(pageable.getSortOr(SortUtils.SORT_CREATED_TIME_DESC));
                     return entityOperations.select(query, ${ModuleName}.class)
                             .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
                             .collectList()
                             .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
-                            .map(item -> new PageImpl<>(item, finalPageable, total));
+                            .map(item -> new PageImpl<>(item, pageable, total))
+                            ;
                 })
-                .switchIfEmpty(Mono.just(new PageImpl<>(Collections.emptyList(), finalPageable, 0L)));
+                ;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Flux<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection) {
+    public Flux<${ModuleName}VO> query(${ModuleName}Query params, Sort sort, String... projection) {
         log.info("全量查询${nationalName}信息[{}]", params);
-        if (params.getCreatedTime() == null) params.setCreatedTime(Range.LocalDateTime.DEFAULT);
-        #if($modifierId)
-            if (params.getModifiedTime() == null) params.setModifiedTime(Range.LocalDateTime.DEFAULT);
-        #end
-        if (sort == null) sort = Sort.by("createdTime").descending();
         Criteria where = buildCriteria(params);
         Query query = Query.query(where).sort(sort).limit(100);
         return entityOperations.select(query, ${ModuleName}.class)
@@ -123,16 +117,32 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional(readOnly = true)
+    public Flux<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
+        return query(params, SortUtils.SORT_CREATED_TIME_DESC, projection);
+    }
+
+    private Mono<${ModuleName}> selectOne(IdCapable<?> params) {
+        return ConventionR2dbcEntityOperationsUtils
+                .selectOneOwned(entityOperations::selectOne, ${ModuleName}.class, params)
+                .doOnNext(entity -> log.debug("取得${nationalName}信息[{}]", entity))
+        ;
+    }
+
+    private Mono<${ModuleName}> selectOne(Query query, IdCapable<?> params) {
+        return ConventionR2dbcEntityOperationsUtils
+                .selectOneOwned(entityOperations::selectOne, query, ${ModuleName}.class, params)
+                .doOnNext(entity -> log.debug("取得${nationalName}信息[{}]", entity))
+        ;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection) {
         log.info("获取${nationalName}信息[{}]", params);
-//        Criteria where = CriteriaUtils.and(
-//                CriteriaUtils.nullableCriteria(Criteria.where("$id.name")::is, params::get${lc.uc($id.name)}),
-//        );
-        Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
-        return entityOperations.selectOne(Query.query(where), ${ModuleName}.class)
+        return selectOne(params)
                 .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
-        ;
+                ;
     }
 
     @Override
@@ -143,37 +153,41 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     private <T extends IdCapable<$id.type.simpleName> & OperatorCapable<$id.type.simpleName>> Mono<Integer> modifyGeneric(T params) {
-        Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
-        Query idQuery = Query.query(where);
-        return entityOperations.selectOne(idQuery, ${ModuleName}.class)
-                .zipWhen(entity -> {
+        Query query = Query.query(buildProfileCriteria(params))
+        return selectOne(query, params)
+                .flatMap(entity -> {
                     ${ModuleName} modify = BeanUtils.map(params, ${ModuleName}.class);
-                    modify.setModifierId(params.getOperatorId());
-                    modify.setModifiedTime(LocalDateTime.now());
-                    Update update = UpdateUtils.selectiveUpdateFromExample(modify);
-                    return entityOperations.update(idQuery, update, ${ModuleName}.class);
+                    modify.setCreatorId(null);//不更新创建者
+                    Update update = UpdateUtils.setModify(UpdateUtils.selectiveUpdateFromExample(modify), params);
+                    return entityOperations.update(query, update, Goods.class)
+                            .doOnNext(count -> log.debug("修改${nationalName}信息[{}]}影响[{}]行", params.getId(), count))
+                            .doOnNext(count -> {
+                                if (count == 0) return;
+                                ${ModuleName}VO vo = BeanUtils.map(entity, ${ModuleName}VO.class);
+                                BeanUtils.copyProperties(params, vo, BeanUtils.EMPTY_PROPERTY_VALUE);
+                                eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
+                            });
                 })
-                .map(tuple2 -> {
-                    ${ModuleName}VO vo = BeanUtils.map(tuple2.getT1(), ${ModuleName}VO.class);
-                    BeanUtils.copyProperties(params, vo, BeanUtils.EMPTY_PROPERTY_VALUE);
-                    eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
-                    return tuple2.getT2();
-                })
-                .switchIfEmpty(Mono.just(0));
+                ;
     }
 
     @Override
     @Transactional
     public Mono<Integer> delete(${ModuleName}Delete params) {
         log.info("删除${nationalName}信息[{}]", params);
-        Criteria where = Criteria.where("$id.name").is(params.get${lc.uc($id.name)}());
-        Query idQuery = Query.query(where);
-        return entityOperations.selectOne(idQuery, ${ModuleName}.class)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
-                .zipWhen(region -> entityOperations.delete(idQuery, ${ModuleName}.class))
-                .doOnNext(tuple2 -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(tuple2.getT1(), params)))
-                .map(Tuple2::getT2)
-                .switchIfEmpty(Mono.just(0));
+        Query query = Query.query(buildProfileCriteria(params));
+        return selectOne(query, params)
+                .flatMap(entity -> entityOperations.delete(query, ${ModuleName}.class)
+                        .doOnNext(count -> log.debug("删除${nationalName}[{}]影响[{}]行", params.getId(), count))
+                        .doOnNext(publishEvent(entity, params)))
+                ;
     }
 
+    private Consumer<Integer> publishEvent(${ModuleName} entity, Object params) {
+        return integer -> {
+            if (integer == 0) return;
+            ${ModuleName}VO vo = BeanUtils.map(entity, ${ModuleName}VO.class);
+            eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
+        };
+    }
 }

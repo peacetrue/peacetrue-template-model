@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 /**
- * @author xiayx
+ * @author peace
  */
 @Configuration
 @AutoConfigureBefore(GeneratorAutoConfiguration.class)

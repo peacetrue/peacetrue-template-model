@@ -1,0 +1,19 @@
+## @formatter:off
+import * as React from 'react';
+import {EditProps, SimpleForm, #frontImportWrite($nonIdAuditProperties)} from 'react-admin';
+import {PeaceEdit} from "@peace/react-admin";
+import {UserCreateModifyFields} from "@peace/user";
+
+export const ${ModuleName}Edit = (props: EditProps) $esc.javascript('=>') {
+  console.info('${ModuleName}Edit:', props);
+  return (
+    <PeaceEdit {...props} >
+      <SimpleForm>
+        #frontPropertiesWrite($nonIdAuditProperties)
+        {UserCreateModifyFields}
+      </SimpleForm>
+    </PeaceEdit>
+  );
+};
+
+## @formatter:on

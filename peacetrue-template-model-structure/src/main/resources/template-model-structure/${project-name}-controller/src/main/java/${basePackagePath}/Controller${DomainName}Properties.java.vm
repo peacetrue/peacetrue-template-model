@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * 控制器配置
  *
- * @author xiayx
+ * @author peace
  */
 @Getter
 @Setter

@@ -11,7 +11,7 @@ buildscript {
 
 allprojects { project ->
 
-    group "com.github.peacetrue.$domainname"
+    group "com.github.peacetrue.${domain-name}"
     version "1.0.0-SNAPSHOT"
     description "$domainDescription"
 

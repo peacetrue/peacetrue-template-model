@@ -17,7 +17,7 @@ import javax.annotation.Nullable;
 /**
  * ${nationalName}客户端
  *
- * @author xiayx
+ * @author peace
  */
 @ReactiveFeignClient(name = "${project-name}", url = "${esc.d}{peacetrue.${ModuleName}.url:${esc.d}{peacetrue.server.url:}}")
 public interface ${ModuleName}ServiceClient {

@@ -30,7 +30,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 /**
  * ${domainDescription}
  *
- * @author xiayx
+ * @author peace
  */
 @SpringBootApplication
 public class ${DomainName}MicroApplication {

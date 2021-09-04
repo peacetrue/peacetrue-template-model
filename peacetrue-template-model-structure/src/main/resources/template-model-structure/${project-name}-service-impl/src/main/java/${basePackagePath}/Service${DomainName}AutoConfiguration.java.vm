@@ -1,22 +1,20 @@
 package ${basePackageName};
 
-import org.springframework.data.r2dbc.core.DatabaseClient;
+import com.github.peacetrue.spring.core.io.support.YamlPropertySourceFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
 import java.util.Objects;
 
 /**
- * @author xiayx
+ * @author peace
  */
 @Configuration
 @EnableConfigurationProperties(Service${DomainName}Properties.class)
 @ComponentScan(basePackageClasses = Service${DomainName}AutoConfiguration.class)
-@PropertySource("classpath:/application-${domain-name}-service.yml")
+@PropertySource(value = "classpath:/application-${domain-name}-service.yml", factory = YamlPropertySourceFactory.class)
 public class Service${DomainName}AutoConfiguration {
 
     private Service${DomainName}Properties properties;

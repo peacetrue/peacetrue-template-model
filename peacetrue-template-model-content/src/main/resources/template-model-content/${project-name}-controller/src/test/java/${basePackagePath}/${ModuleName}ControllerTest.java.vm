@@ -14,20 +14,20 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import java.util.function.Consumer;
 
 /**
- * @author xiayx
+ * @author peace
  */
 @SpringBootTest(classes = TestController${DomainName}AutoConfiguration.class)
 @ActiveProfiles({"${domain-name}-controller-test","${domain-name}-service-test"})
 @AutoConfigureWebTestClient
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class ${ModuleName}ControllerTest {
+class ${ModuleName}ControllerTest {
 
     @Autowired
     private WebTestClient client;
 
     @Test
     @Order(10)
-    public void add() {
+    void add() {
         this.client.post().uri("/${module-name}s")
                 .bodyValue(${ModuleName}ServiceImplTest.ADD)
                 .accept(MediaType.APPLICATION_JSON)
@@ -39,7 +39,7 @@ public class ${ModuleName}ControllerTest {
 
     @Test
     @Order(20)
-    public void queryForPage() {
+    void queryForPage() {
         this.client.get()
                 .uri("/${module-name}s?page=0")
                 .accept(MediaType.APPLICATION_JSON)
@@ -51,7 +51,7 @@ public class ${ModuleName}ControllerTest {
 
     @Test
     @Order(30)
-    public void queryForList() {
+    void queryForList() {
         this.client.get()
                 .uri("/${module-name}s")
                 .accept(MediaType.APPLICATION_JSON)
@@ -63,7 +63,7 @@ public class ${ModuleName}ControllerTest {
 
     @Test
     @Order(40)
-    public void get() {
+    void get() {
         this.client.get()
                 .uri("/${module-name}s/{0}", ${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}())
                 .accept(MediaType.APPLICATION_JSON)
@@ -76,7 +76,7 @@ public class ${ModuleName}ControllerTest {
 
     @Test
     @Order(50)
-    public void modify() {
+    void modify() {
         ${ModuleName}Modify modify = ${ModuleName}ServiceImplTest.MODIFY;
         modify.set${lc.uc($id.name)}(${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}());
         this.client.put()
@@ -91,7 +91,7 @@ public class ${ModuleName}ControllerTest {
 
     @Test
     @Order(60)
-    public void delete() {
+    void delete() {
         this.client.delete()
                 .uri("/${module-name}s/{0}", ${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}())
                 .accept(MediaType.APPLICATION_JSON)

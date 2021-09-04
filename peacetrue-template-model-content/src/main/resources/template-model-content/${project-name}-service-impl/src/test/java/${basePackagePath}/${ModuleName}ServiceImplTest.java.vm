@@ -28,8 +28,8 @@ class ${ModuleName}ServiceImplTest {
     public static ${ModuleName}VO vo;
 
     static {
-        ADD.setOperatorId(EASY_RANDOM.nextObject(${creatorId.type.simpleName}.class));
-        MODIFY.setOperatorId(EASY_RANDOM.nextObject(${creatorId.type.simpleName}.class));
+        ADD.setOperatorId(1L);
+        MODIFY.setOperatorId(1L);
     }
 
     @Autowired

@@ -1,0 +1,13 @@
+## @formatter:off
+import * as React from "react";
+import {Resource} from "react-admin";
+
+import {${ModuleName}List} from './List';
+import {${ModuleName}Create} from './Create';
+import {${ModuleName}Edit} from './Edit';
+import {${ModuleName}Show} from './Show';
+
+export const ${ModuleName} = {list: ${ModuleName}List, create: ${ModuleName}Create, edit: ${ModuleName}Edit, show: ${ModuleName}Show};
+export const ${ModuleName}Resource = <Resource name="${moduleName}s" {...${ModuleName}} />;
+export default ${ModuleName}Resource;
+## @formatter:on

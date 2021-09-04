@@ -1,0 +1,23 @@
+## @formatter:off
+import * as React from "react";
+import {
+  ShowProps,
+  SimpleShowLayout,
+  #frontImportRead($nonIdAuditProperties)
+} from "react-admin";
+import {PeaceShow} from "@peace/react-admin";
+import {UserCreateModifyFields} from "@peace/user";
+
+export const ${ModuleName}Show = (props: ShowProps) => {
+  console.info("${ModuleName}Show:", props);
+  return (
+    <PeaceShow {...props}>
+      <SimpleShowLayout>
+        #frontPropertiesRead($nonIdAuditProperties)
+        {UserCreateModifyFields}
+      </SimpleShowLayout>
+    </PeaceShow>
+  );
+};
+
+## @formatter:on

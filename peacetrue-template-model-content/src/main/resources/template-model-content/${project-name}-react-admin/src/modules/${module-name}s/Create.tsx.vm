@@ -1,0 +1,15 @@
+## @formatter:off
+import * as React from 'react';
+import {Create, CreateProps, SimpleForm, #frontImportWrite($nonIdAuditProperties)} from 'react-admin';
+
+export const ${ModuleName}Create = (props: CreateProps) => {
+  console.info('${ModuleName}Create:', props);
+  return (
+    <Create {...props}>
+      <SimpleForm>
+        #frontPropertiesWrite($nonIdAuditProperties)
+      </SimpleForm>
+    </Create>
+  );
+};
+## @formatter:on

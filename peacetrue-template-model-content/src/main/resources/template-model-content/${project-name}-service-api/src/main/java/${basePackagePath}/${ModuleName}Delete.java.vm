@@ -1,26 +1,33 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.IdCapable;
-import com.github.peacetrue.core.OperatorCapableImpl;
+import com.github.peacetrue.core.CreatorId;
+import com.github.peacetrue.core.Id;
+import com.github.peacetrue.core.OperatorImpl;
 import lombok.*;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
- * @author xiayx
+ * @author peace
  */
 @Getter
 @Setter
-@ToString
+@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ${ModuleName}Delete extends OperatorCapableImpl<$creatorId.type.simpleName> implements IdCapable<$id.type.simpleName>  {
+public class ${ModuleName}Delete extends OperatorImpl<$creatorId.type.simpleName> implements Id<$id.type.simpleName>, CreatorId<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 
     @NotNull
     @Min(1)
     private ${id.type.simpleName} ${id.name};
+    @Min(1)
+    private $creatorId.type.simpleName ${creatorId.name};
+
+    public ${ModuleName}Delete($id.type.simpleName id) {
+        this.id = id;
+    }
 
 }

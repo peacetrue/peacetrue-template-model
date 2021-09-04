@@ -1,0 +1,19 @@
+## @formatter:off
+import {Messages} from "@peace/user";
+
+export const ${ModuleName}Messages = {
+  resources: {
+    "${module-name}s": {
+      name: '${nationalName}',
+      fields: {
+        #foreach($property in $nonIdAuditProperties)
+          '$property.name': '$property.nationalName',
+        #end
+        ...Messages,
+      },
+    },
+  }
+}
+
+export default ${ModuleName}Messages;
+## @formatter:on

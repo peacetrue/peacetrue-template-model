@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 /**
  * ${nationalName}服务接口
  *
- * @author xiayx
+ * @author peace
  */
 public interface ${ModuleName}Service {
 
@@ -19,15 +19,13 @@ public interface ${ModuleName}Service {
     Mono<${ModuleName}VO> add(${ModuleName}Add params);
 
     /** 分页查询 */
-    Mono<Page<${ModuleName}VO>> query(@Nullable ${ModuleName}Query params, @Nullable Pageable pageable, String... projection);
+    Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, Pageable pageable, String... projection);
 
     /** 全量查询 */
-    Flux<${ModuleName}VO> query(${ModuleName}Query params, @Nullable Sort sort, String... projection);
+    Flux<${ModuleName}VO> query(${ModuleName}Query params, Sort sort, String... projection);
 
     /** 全量查询 */
-    default Flux<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
-        return this.query(params, (Sort) null, projection);
-    }
+    Flux<${ModuleName}VO> query(${ModuleName}Query params, String... projection);
 
     /** 获取 */
     Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection);

@@ -8,7 +8,7 @@ import java.nio.file.attribute.BasicFileAttributes;
 import java.util.function.Function;
 
 /**
- * @author xiayx
+ * @author peace
  */
 public class FileTest {
 

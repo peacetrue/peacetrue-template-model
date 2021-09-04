@@ -1,0 +1,26 @@
+## @formatter:off
+import * as React from 'react';
+import {Datagrid, Filter, ListProps, EditButton, #frontImportRead($nonIdAuditProperties), #frontImportFilter($nonIdAuditProperties)} from 'react-admin';
+import {PeaceList} from '@peace/react-admin';
+import {UserCreatedTimeFilter, UserCreateModifyFields} from "@peace/user";
+
+const Filters = (props: any) $esc.javascript('=>') (
+  <Filter {...props}>
+    #frontPropertiesFilter($nonIdAuditProperties)
+    {UserCreatedTimeFilter}
+  </Filter>
+);
+
+export const ${ModuleName}List = (props: ListProps) $esc.javascript('=>') {
+  console.info('${ModuleName}List:', props);
+  return (
+    <PeaceList {...props} filters={<Filters/>}>
+      <Datagrid rowClick="show">
+        #frontPropertiesRead($nonIdAuditProperties)
+        {UserCreateModifyFields}
+        <EditButton/>
+      </Datagrid>
+    </PeaceList>
+  )
+};
+## @formatter:on

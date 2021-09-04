@@ -1,6 +1,6 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.IdCapable;
+import com.github.peacetrue.core.Id;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -8,12 +8,16 @@ import java.util.Date;
 
 #listImport($properties)
 /**
- * @author xiayx
+ * @author peace
  */
 @Data
-public class ${ModuleName}VO implements Serializable, IdCapable<$id.type.simpleName> {
+public class ${ModuleName}VO implements Serializable, Id<$id.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
+
+    #foreach($property in $nonIdAuditProperties)
+    private static final String PROPERTY_${lc.uu($property.name)}="${property.name}",
+    #end
 
     #listProperties($properties)
 }

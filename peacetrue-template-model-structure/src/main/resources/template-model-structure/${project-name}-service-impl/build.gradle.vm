@@ -18,6 +18,7 @@ dependencies {
     api project(":${project-name}-service-api")
     api 'org.slf4j:slf4j-api'
     implementation 'com.github.peacetrue:peacetrue-spring'
+    implementation 'com.github.peacetrue:peacetrue-convention'
     implementation 'org.apache.commons:commons-lang3'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation "org.springframework.boot:spring-boot-autoconfigure"

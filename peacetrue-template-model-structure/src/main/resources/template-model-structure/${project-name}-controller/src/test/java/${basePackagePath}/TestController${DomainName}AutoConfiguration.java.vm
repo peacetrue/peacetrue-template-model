@@ -20,7 +20,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 import org.springframework.web.reactive.result.method.annotation.ArgumentResolverConfigurer;
 
 /**
- * @author xiayx
+ * @author peace
  */
 @Configuration
 @ImportAutoConfiguration(classes = {
