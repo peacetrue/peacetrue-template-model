@@ -82,6 +82,7 @@ class ${ModuleName}ServiceImplTest {
     void modify() {
         ${ModuleName}Modify params = MODIFY;
         params.set${lc.uc($id.name)}(vo.get${lc.uc($id.name)}());
+        params.setCreatorId(null);
         service.modify(params)
                 .as(StepVerifier::create)
                 .expectNext(1)

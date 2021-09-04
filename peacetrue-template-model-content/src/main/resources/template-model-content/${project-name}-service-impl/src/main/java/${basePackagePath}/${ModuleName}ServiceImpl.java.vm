@@ -3,9 +3,6 @@ package ${basePackageName};
 import com.github.peacetrue.core.IdCapable;
 import com.github.peacetrue.core.OperatorCapable;
 import com.github.peacetrue.core.Operators;
-import com.github.peacetrue.result.ResultType;
-import com.github.peacetrue.result.exception.DataResultException;
-import com.github.peacetrue.result.exception.ResultException;
 import com.github.peacetrue.spring.data.domain.SortUtils;
 import com.github.peacetrue.spring.data.r2dbc.core.ConventionR2dbcEntityOperationsUtils;
 import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
@@ -153,13 +150,13 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     }
 
     private <T extends IdCapable<$id.type.simpleName> & OperatorCapable<$id.type.simpleName>> Mono<Integer> modifyGeneric(T params) {
-        Query query = Query.query(buildProfileCriteria(params))
+        Query query = Query.query(buildProfileCriteria(params));
         return selectOne(query, params)
                 .flatMap(entity -> {
                     ${ModuleName} modify = BeanUtils.map(params, ${ModuleName}.class);
                     modify.setCreatorId(null);//不更新创建者
                     Update update = UpdateUtils.setModify(UpdateUtils.selectiveUpdateFromExample(modify), params);
-                    return entityOperations.update(query, update, Goods.class)
+                    return entityOperations.update(query, update, ${ModuleName}.class)
                             .doOnNext(count -> log.debug("修改${nationalName}信息[{}]}影响[{}]行", params.getId(), count))
                             .doOnNext(count -> {
                                 if (count == 0) return;

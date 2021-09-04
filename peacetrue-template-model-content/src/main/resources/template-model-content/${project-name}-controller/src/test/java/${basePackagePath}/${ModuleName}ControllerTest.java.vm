@@ -79,6 +79,7 @@ class ${ModuleName}ControllerTest {
     void modify() {
         ${ModuleName}Modify modify = ${ModuleName}ServiceImplTest.MODIFY;
         modify.set${lc.uc($id.name)}(${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}());
+        modify.setCreatorId(null);
         this.client.put()
                 .uri("/${module-name}s/{id}", ${ModuleName}ServiceImplTest.vo.get${lc.uc($id.name)}())
                 .bodyValue(modify)

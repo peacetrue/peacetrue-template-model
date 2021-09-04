@@ -1,5 +1,6 @@
 package ${basePackageName};
 
+import com.github.peacetrue.init.InitAutoConfiguration;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration;
@@ -15,7 +16,8 @@ import org.springframework.context.annotation.Configuration;
         R2dbcAutoConfiguration.class,
         R2dbcDataAutoConfiguration.class,
         R2dbcTransactionManagerAutoConfiguration.class,
-        Service${DomainName}AutoConfiguration.class
+        Service${DomainName}AutoConfiguration.class,
+        InitAutoConfiguration.class
 })
 @EnableAutoConfiguration
 public class TestService${DomainName}AutoConfiguration {

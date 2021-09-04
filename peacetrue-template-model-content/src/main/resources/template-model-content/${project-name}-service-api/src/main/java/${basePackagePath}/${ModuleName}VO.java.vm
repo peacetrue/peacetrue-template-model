@@ -15,9 +15,5 @@ public class ${ModuleName}VO implements Serializable, Id<$id.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
 
-    #foreach($property in $nonIdAuditProperties)
-    private static final String PROPERTY_${lc.uu($property.name)}="${property.name}",
-    #end
-
     #listProperties($properties)
 }

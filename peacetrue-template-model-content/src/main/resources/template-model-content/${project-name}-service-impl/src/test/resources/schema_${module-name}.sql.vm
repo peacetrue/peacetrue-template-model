@@ -1,0 +1,10 @@
+DROP TABLE IF EXISTS `${module-name}`;
+CREATE TABLE `${module-name}`
+(
+    id            BIGINT AUTO_INCREMENT PRIMARY KEY NOT NULL ,
+    creator_id    BIGINT                            NOT NULL COMMENT '创建者. 主键',
+    created_time  DATETIME                          NOT NULL COMMENT '创建时间',
+    modifier_id   BIGINT                            NOT NULL COMMENT '修改者. 主键',
+    modified_time DATETIME                          NOT NULL COMMENT '修改时间'
+) ;
+

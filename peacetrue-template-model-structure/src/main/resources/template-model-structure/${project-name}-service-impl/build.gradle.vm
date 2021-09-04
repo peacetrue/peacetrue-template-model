@@ -20,11 +20,13 @@ dependencies {
     implementation 'com.github.peacetrue:peacetrue-spring'
     implementation 'com.github.peacetrue:peacetrue-convention'
     implementation 'org.apache.commons:commons-lang3'
+    implementation 'org.flywaydb:flyway-core'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     compileOnly "org.springframework.boot:spring-boot-configuration-processor"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    testImplementation 'io.r2dbc:r2dbc-h2'
+##    testImplementation 'io.r2dbc:r2dbc-h2'
     testImplementation 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-validation'
 }

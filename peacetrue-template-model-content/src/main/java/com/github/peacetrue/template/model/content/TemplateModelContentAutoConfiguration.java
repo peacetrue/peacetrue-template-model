@@ -88,6 +88,7 @@ public class TemplateModelContentAutoConfiguration {
         return context -> {
             @SuppressWarnings("unchecked")
             List<ModelProperty> properties = (List<ModelProperty>) context.get("properties");
+            context.put("literalPropertyNames", properties.stream().map(ModelProperty::getName).map(name -> "\"" + name + "\"").collect(Collectors.joining(",")));
             context.put("nonIdProperties", properties.stream().filter(property -> !property.getName().equals(fields.getId())).collect(Collectors.toList()));
             context.put("nonAuditProperties", properties.stream().filter(property -> !auditFieldNames.contains(property.getName())).collect(Collectors.toList()));
             context.put("nonIdAuditProperties", properties.stream().filter(property -> !idAuditFieldNames.contains(property.getName())).collect(Collectors.toList()));

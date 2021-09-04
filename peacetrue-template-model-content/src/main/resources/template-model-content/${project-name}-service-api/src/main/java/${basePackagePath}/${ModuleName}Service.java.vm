@@ -15,6 +15,12 @@ import javax.annotation.Nullable;
  */
 public interface ${ModuleName}Service {
 
+    #foreach($property in $nonIdAuditProperties)
+        /** $property.comment */
+        String PROPERTY_${lc.uu($property.name)} = "${property.name}";
+    #end
+    String[] PROPERTIES = {${literalPropertyNames}};
+
     /** 新增 */
     Mono<${ModuleName}VO> add(${ModuleName}Add params);
 

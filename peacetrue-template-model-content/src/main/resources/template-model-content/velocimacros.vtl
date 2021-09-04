@@ -1,5 +1,10 @@
 ## @formatter:off
 
+## 属性名
+#macro( propertyNames $properties)
+    #foreach($property in $properties)$property.name,#end
+#end
+
 ## 列出属性需要导入的类
 #macro( listImport $properties)
     #foreach($property in $properties)

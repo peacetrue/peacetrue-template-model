@@ -5,6 +5,7 @@ import com.github.peacetrue.core.Id;
 import com.github.peacetrue.core.OperatorImpl;
 import lombok.*;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 
@@ -15,9 +16,9 @@ import javax.validation.constraints.NotNull;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class ${ModuleName}Get extends OperatorImpl<$creatorId.type.simpleName> implements Id<$id.type.simpleName>, CreatorId<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;

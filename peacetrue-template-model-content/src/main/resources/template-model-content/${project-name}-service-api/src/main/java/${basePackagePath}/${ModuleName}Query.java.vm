@@ -1,5 +1,6 @@
 package ${basePackageName};
 
+import com.github.peacetrue.core.CreatorId;
 import com.github.peacetrue.core.OperatorImpl;
 import com.github.peacetrue.core.Range;
 import lombok.*;
@@ -15,9 +16,9 @@ import java.io.Serializable;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class ${ModuleName}Query extends OperatorImpl<$creatorId.type.simpleName> implements CreatorId<$creatorId.type.simpleName> {
 
     public static final ${ModuleName}Query DEFAULT = new ${ModuleName}Query();

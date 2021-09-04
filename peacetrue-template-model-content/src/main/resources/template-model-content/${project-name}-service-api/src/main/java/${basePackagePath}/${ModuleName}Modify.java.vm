@@ -16,9 +16,9 @@ import javax.validation.constraints.Size;
  */
 @Getter
 @Setter
-@ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
 public class ${ModuleName}Modify extends OperatorImpl<$creatorId.type.simpleName> implements Id<$id.type.simpleName>, CreatorId<$creatorId.type.simpleName> {
 
     private static final long serialVersionUID = 0L;
@@ -29,9 +29,12 @@ public class ${ModuleName}Modify extends OperatorImpl<$creatorId.type.simpleName
             @NotNull
         #end
         #if($property.type.simpleName=='String')
-            @Size(min = 1, max = $property.size)
+            @Size(max = $property.size)
         #end
         private $property.type.simpleName $property.name;
     #end
+    /** 创建者. 主键 */
+    @Min(1)
+    private $creatorId.type.simpleName ${creatorId.name};
 
 }
