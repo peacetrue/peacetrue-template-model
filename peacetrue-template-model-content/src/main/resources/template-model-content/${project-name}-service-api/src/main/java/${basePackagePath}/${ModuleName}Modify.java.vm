@@ -4,12 +4,11 @@ import com.github.peacetrue.core.CreatorId;
 import com.github.peacetrue.core.Id;
 import com.github.peacetrue.core.OperatorImpl;
 import lombok.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 #listImport($properties)
-
-
 
 /**
  * @author peace
@@ -29,7 +28,9 @@ public class ${ModuleName}Modify extends OperatorImpl<$creatorId.type.simpleName
             @NotNull
         #end
         #if($property.type.simpleName=='String')
-            @Size(max = $property.size)
+            @Size(min = 1, max = $property.size)
+        #elseif($property.type.superclass.simpleName=='Number')
+            @Min(1)
         #end
         private $property.type.simpleName $property.name;
     #end

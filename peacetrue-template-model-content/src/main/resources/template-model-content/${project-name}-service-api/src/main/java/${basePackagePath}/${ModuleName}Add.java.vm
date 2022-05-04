@@ -24,7 +24,7 @@ public class ${ModuleName}Add extends OperatorImpl<$creatorId.type.simpleName> {
     #foreach($property in $nonIdAuditProperties)
         /** $property.comment */
         #if(!$property.nullable)@NotNull#end
-        #if($property.type.simpleName=='String')@Size(max = $property.size)#end
+        #if($property.type.simpleName=='String')@Size(min = 1, max = $property.size)#end
         #if($property.type.superclass.simpleName=='Number')@Min(1)#end
         private $property.type.simpleName $property.name;
     #end

@@ -19,6 +19,7 @@ public interface ${ModuleName}Service {
         /** $property.comment */
         String PROPERTY_${lc.uu($property.name)} = "${property.name}";
     #end
+    /** 所有属性 */
     String[] PROPERTIES = {${literalPropertyNames}};
 
     /** 新增 */

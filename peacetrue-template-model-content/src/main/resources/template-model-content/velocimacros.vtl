@@ -75,13 +75,13 @@
 #macro( frontPropertiesWrite $properties)
     #foreach($property in $properties)
         #if($property.type.name == 'java.lang.String')
-            <TextInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required,')maxLength($property.size)]} resettable #if($property.size>=255) fullWidth #end />
+            <TextInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')maxLength($property.size)]} resettable #if($property.size>=255) fullWidth #end />
         #elseif($property.type.name == 'java.lang.Long' || $property.type.name == 'java.lang.Integer')
-            <NumberInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required,')minValue(0)]} min={0} resettable/>
+            <NumberInput source="$property.name" validate={[#ternaryOperateFalse($property.nullable,'required(),')minValue(0)]} min={0} resettable/>
         #elseif($property.type.name == 'java.lang.Boolean')
             <BooleanInput source="$property.name"/>
         #elseif($property.type.name == 'java.util.Date' || $property.type.name == 'java.time.LocalDateTime')
-            <DateTimeInput source="$property.name" showTime validate={[#ternaryOperateFalse($property.nullable,'required,')]}/>
+            <DateTimeInput source="$property.name" showTime validate={[#ternaryOperateFalse($property.nullable,'required(),')]}/>
         #end
     #end
 #end
