@@ -1,14 +1,10 @@
 package ${basePackageName};
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import com.github.peacetrue.spring.core.io.support.YamlPropertySourceFactory;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-import org.springframework.data.web.ReactivePageableHandlerMethodArgumentResolver;
-import org.springframework.data.web.ReactiveSortHandlerMethodArgumentResolver;
-
 
 /**
  * @author peace
@@ -16,18 +12,8 @@ import org.springframework.data.web.ReactiveSortHandlerMethodArgumentResolver;
 @Configuration
 @EnableConfigurationProperties(Controller${DomainName}Properties.class)
 @ComponentScan(basePackageClasses = Controller${DomainName}AutoConfiguration.class)
-@PropertySource("classpath:/application-${domain-name}-controller.yml")
+@PropertySource("classpath:/application-${domain-name}-controller.yml", factory = YamlPropertySourceFactory.class)
 public class Controller${DomainName}AutoConfiguration {
 
-    @Bean
-    @ConditionalOnMissingBean(ReactivePageableHandlerMethodArgumentResolver.class)
-    public ReactivePageableHandlerMethodArgumentResolver reactivePageableHandlerMethodArgumentResolver() {
-        return new ReactivePageableHandlerMethodArgumentResolver();
-    }
-
-    @Bean
-    @ConditionalOnMissingBean(ReactivePageableHandlerMethodArgumentResolver.class)
-    public ReactiveSortHandlerMethodArgumentResolver reactiveSortHandlerMethodArgumentResolver() {
-        return new ReactiveSortHandlerMethodArgumentResolver();
-    }
 }
+

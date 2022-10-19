@@ -1,15 +1,13 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.CreatorId;
-import com.github.peacetrue.core.OperatorImpl;
-import com.github.peacetrue.core.Range;
+import com.github.peacetrue.beans.properties.creatorid.CreatorId;
+import com.github.peacetrue.beans.operator.OperatorImpl;
+import com.github.peacetrue.range.LocalDateTimeRange;
 import lombok.*;
 
 import java.io.Serializable;
 
 #listImport($properties)
-
-
 
 /**
  * @author peace
@@ -22,8 +20,6 @@ import java.io.Serializable;
 public class ${ModuleName}Query extends OperatorImpl<$creatorId.type.simpleName> implements CreatorId<$creatorId.type.simpleName> {
 
     public static final ${ModuleName}Query DEFAULT = new ${ModuleName}Query();
-
-    private static final long serialVersionUID = 0L;
 
     /** $id.comment */
     private $id.type.simpleName [] $id.name;

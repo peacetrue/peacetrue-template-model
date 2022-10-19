@@ -1,26 +1,28 @@
 package ${basePackageName};
 
 import com.github.peacetrue.spring.core.io.support.YamlPropertySourceFactory;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
-
-import java.util.Objects;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * @author peace
  */
 @Configuration
-@EnableConfigurationProperties(Service${DomainName}Properties.class)
+@EntityScan(basePackageClasses = Service${DomainName}AutoConfiguration.class)
+@EnableJpaRepositories(basePackageClasses = Service${DomainName}AutoConfiguration.class)
 @ComponentScan(basePackageClasses = Service${DomainName}AutoConfiguration.class)
+@EnableConfigurationProperties(Service${DomainName}Properties.class)
 @PropertySource(value = "classpath:/application-${domain-name}-service.yml", factory = YamlPropertySourceFactory.class)
 public class Service${DomainName}AutoConfiguration {
 
     private Service${DomainName}Properties properties;
 
     public Service${DomainName}AutoConfiguration(Service${DomainName}Properties properties) {
-        this.properties = Objects.requireNonNull(properties);
+        this.properties = properties;
     }
 
 }

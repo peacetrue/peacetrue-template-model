@@ -23,24 +23,24 @@ import javax.annotation.Nullable;
 public interface ${ModuleName}ServiceClient {
 
     @PostMapping(value = "/${module-name}s")
-    Mono<${ModuleName}VO> add(${ModuleName}Add params);
+    ${ModuleName}VO add(${ModuleName}Add params);
 
     @GetMapping(value = "/${module-name}s", params = "page")
-    Mono<Page<${ModuleName}VO>> query(@Nullable @SpringQueryMap ${ModuleName}Query params, @Nullable Pageable pageable, @SpringQueryMap String... projection) ;
+    Page<${ModuleName}VO> query(@Nullable @SpringQueryMap ${ModuleName}Query params, @Nullable Pageable pageable, @SpringQueryMap String... projection) ;
 
     @GetMapping(value = "/${module-name}s", params = "sort")
-    Flux<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, Sort sort, @SpringQueryMap String... projection) ;
+    ${ModuleName}VO query(@SpringQueryMap ${ModuleName}Query params, Sort sort, @SpringQueryMap String... projection) ;
 
     @GetMapping(value = "/${module-name}s")
-    Flux<${ModuleName}VO> query(@SpringQueryMap ${ModuleName}Query params, @SpringQueryMap String... projection) ;
+    ${ModuleName}VO query(@SpringQueryMap ${ModuleName}Query params, @SpringQueryMap String... projection) ;
 
     @GetMapping(value = "/${module-name}s/get")
-    Mono<${ModuleName}VO> get(@SpringQueryMap ${ModuleName}Get params, @SpringQueryMap String... projection) ;
+    ${ModuleName}VO get(@SpringQueryMap ${ModuleName}Get params, @SpringQueryMap String... projection) ;
 
     @PutMapping(value = "/${module-name}s")
-    Mono<Integer> modify(${ModuleName}Modify params) ;
+    Integer modify(${ModuleName}Modify params) ;
 
     @DeleteMapping(value = "/${module-name}s/delete")
-    Mono<Integer> delete(@SpringQueryMap ${ModuleName}Delete params);
+    Integer delete(@SpringQueryMap ${ModuleName}Delete params);
 
 }

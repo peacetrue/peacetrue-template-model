@@ -1,2 +1,1 @@
 * xref:index.adoc[简介]
-* xref:github-template.adoc[github 模板项目]

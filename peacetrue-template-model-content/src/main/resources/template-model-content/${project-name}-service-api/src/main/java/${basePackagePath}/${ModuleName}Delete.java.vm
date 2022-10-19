@@ -1,8 +1,8 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.CreatorId;
-import com.github.peacetrue.core.Id;
-import com.github.peacetrue.core.OperatorImpl;
+import com.github.peacetrue.beans.properties.creatorid.CreatorId;
+import com.github.peacetrue.beans.properties.id.Id;
+import com.github.peacetrue.beans.operator.OperatorImpl;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -17,8 +17,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ${ModuleName}Delete extends OperatorImpl<$creatorId.type.simpleName> implements Id<$id.type.simpleName>, CreatorId<$creatorId.type.simpleName> {
-
-    private static final long serialVersionUID = 0L;
 
     @NotNull
     @Min(1)

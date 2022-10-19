@@ -1,0 +1,4 @@
+logging:
+  level:
+    com.github.peacetrue: trace
+    org.springframework: warn

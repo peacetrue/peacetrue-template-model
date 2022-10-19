@@ -46,9 +46,9 @@
         #if($property.name=="id")
             private $property.type.simpleName [] $property.name;
         #elseif($property.type.name=="java.util.Date")
-            private Range.Date $property.name = new Range.LocalDateTime();
+            private LocalDateTimeRange $property.name = new LocalDateTimeRange();
         #elseif($property.type.name=="java.time.LocalDateTime")
-            private Range.LocalDateTime $property.name = new Range.LocalDateTime();
+            private LocalDateTimeRange $property.name = new LocalDateTimeRange();
         #else
             private $property.type.simpleName $property.name;
         #end

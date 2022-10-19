@@ -1,6 +1,6 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.OperatorImpl;
+import com.github.peacetrue.beans.operator.OperatorImpl;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -18,8 +18,6 @@ import javax.validation.constraints.Min;
 @AllArgsConstructor
 @ToString(callSuper = true)
 public class ${ModuleName}Add extends OperatorImpl<$creatorId.type.simpleName> {
-
-    private static final long serialVersionUID = 0L;
 
     #foreach($property in $nonIdAuditProperties)
         /** $property.comment */

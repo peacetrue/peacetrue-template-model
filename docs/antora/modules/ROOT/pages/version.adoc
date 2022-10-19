@@ -15,4 +15,6 @@
 
 react-admin 从 JavaScript 改为 TypeScript。
 
+=== 4.0.0
 
+支持阻塞式编程。

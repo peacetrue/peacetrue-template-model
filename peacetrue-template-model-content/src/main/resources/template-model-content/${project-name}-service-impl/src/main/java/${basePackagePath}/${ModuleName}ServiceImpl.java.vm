@@ -1,13 +1,13 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.IdCapable;
+import com.github.peacetrue.beans.properties.id.IdCapable;
 import com.github.peacetrue.core.OperatorCapable;
 import com.github.peacetrue.core.Operators;
 import com.github.peacetrue.spring.data.domain.SortUtils;
 import com.github.peacetrue.spring.data.r2dbc.core.ConventionR2dbcEntityOperationsUtils;
 import com.github.peacetrue.spring.data.relational.core.query.CriteriaUtils;
 import com.github.peacetrue.spring.data.relational.core.query.UpdateUtils;
-import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.spring.beans.BeanUtils;
 import com.github.peacetrue.util.DateUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,22 +68,22 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional
-    public Mono<${ModuleName}VO> add(${ModuleName}Add params) {
+    public ${ModuleName}VO add(${ModuleName}Add params) {
         log.info("新增${nationalName}信息[{}]", params);
-        ${ModuleName} entity = BeanUtils.map(params, ${ModuleName}.class);
+        ${ModuleName} entity = BeanUtils.convert(params, ${ModuleName}.class);
         #if($modifierId)
             Operators.setCreateModify(params, entity);
         #elseif($creatorId)
             Operators.setCreate(params, entity);
         #end
         return entityOperations.insert(entity)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .map(item -> BeanUtils.convert(item, ${ModuleName}VO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, Pageable pageable, String... projection) {
+    public Page<${ModuleName}VO> query(${ModuleName}Query params, Pageable pageable, String... projection) {
         log.info("分页查询${nationalName}信息[{}]", params);
         Criteria where = buildCriteria(params);
         return entityOperations.count(Query.query(where), ${ModuleName}.class)
@@ -91,7 +91,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
                     if (total == 0L) return Mono.just(new PageImpl<>(Collections.emptyList(), pageable, 0L));
                     Query query = Query.query(where).with(pageable).sort(pageable.getSortOr(SortUtils.SORT_CREATED_TIME_DESC));
                     return entityOperations.select(query, ${ModuleName}.class)
-                            .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                            .map(item -> BeanUtils.convert(item, ${ModuleName}VO.class))
                             .collectList()
                             .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
                             .map(item -> new PageImpl<>(item, pageable, total))
@@ -102,30 +102,30 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional(readOnly = true)
-    public Flux<${ModuleName}VO> query(${ModuleName}Query params, Sort sort, String... projection) {
+    public ${ModuleName}VO query(${ModuleName}Query params, Sort sort, String... projection) {
         log.info("全量查询${nationalName}信息[{}]", params);
         Criteria where = buildCriteria(params);
         Query query = Query.query(where).sort(sort).limit(100);
         return entityOperations.select(query, ${ModuleName}.class)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .map(item -> BeanUtils.convert(item, ${ModuleName}VO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
         ;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Flux<${ModuleName}VO> query(${ModuleName}Query params, String... projection) {
+    public ${ModuleName}VO query(${ModuleName}Query params, String... projection) {
         return query(params, SortUtils.SORT_CREATED_TIME_DESC, projection);
     }
 
-    private Mono<${ModuleName}> selectOne(IdCapable<?> params) {
+    private ${ModuleName}> selectOne(IdCapable<? params) {
         return ConventionR2dbcEntityOperationsUtils
                 .selectOneOwned(entityOperations::selectOne, ${ModuleName}.class, params)
                 .doOnNext(entity -> log.debug("取得${nationalName}信息[{}]", entity))
         ;
     }
 
-    private Mono<${ModuleName}> selectOne(Query query, IdCapable<?> params) {
+    private ${ModuleName}> selectOne(Query query, IdCapable<? params) {
         return ConventionR2dbcEntityOperationsUtils
                 .selectOneOwned(entityOperations::selectOne, query, ${ModuleName}.class, params)
                 .doOnNext(entity -> log.debug("取得${nationalName}信息[{}]", entity))
@@ -134,33 +134,33 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional(readOnly = true)
-    public Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection) {
+    public ${ModuleName}VO get(${ModuleName}Get params, String... projection) {
         log.info("获取${nationalName}信息[{}]", params);
         return selectOne(params)
-                .map(item -> BeanUtils.map(item, ${ModuleName}VO.class))
+                .map(item -> BeanUtils.convert(item, ${ModuleName}VO.class))
                 .doOnNext(item -> eventPublisher.publishEvent(new PayloadApplicationEvent<>(item, params)))
                 ;
     }
 
     @Override
     @Transactional
-    public Mono<Integer> modify(${ModuleName}Modify params) {
+    public Integer modify(${ModuleName}Modify params) {
         log.info("修改${nationalName}信息[{}]", params);
         return this.modifyGeneric(params);
     }
 
-    private <T extends IdCapable<$id.type.simpleName> & OperatorCapable<$id.type.simpleName>> Mono<Integer> modifyGeneric(T params) {
+    private <T extends IdCapable<$id.type.simpleName> & OperatorCapable<$id.type.simpleName>> Integer modifyGeneric(T params) {
         Query query = Query.query(buildProfileCriteria(params));
         return selectOne(query, params)
                 .flatMap(entity -> {
-                    ${ModuleName} modify = BeanUtils.map(params, ${ModuleName}.class);
+                    ${ModuleName} modify = BeanUtils.convert(params, ${ModuleName}.class);
                     modify.setCreatorId(null);//不更新创建者
                     Update update = UpdateUtils.setModify(UpdateUtils.selectiveUpdateFromExample(modify), params);
                     return entityOperations.update(query, update, ${ModuleName}.class)
                             .doOnNext(count -> log.debug("修改${nationalName}信息[{}]}影响[{}]行", params.getId(), count))
                             .doOnNext(count -> {
                                 if (count == 0) return;
-                                ${ModuleName}VO vo = BeanUtils.map(entity, ${ModuleName}VO.class);
+                                ${ModuleName}VO vo = BeanUtils.convert(entity, ${ModuleName}VO.class);
                                 BeanUtils.copyProperties(params, vo, BeanUtils.EMPTY_PROPERTY_VALUE);
                                 eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
                             });
@@ -170,7 +170,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
 
     @Override
     @Transactional
-    public Mono<Integer> delete(${ModuleName}Delete params) {
+    public Integer delete(${ModuleName}Delete params) {
         log.info("删除${nationalName}信息[{}]", params);
         Query query = Query.query(buildProfileCriteria(params));
         return selectOne(query, params)
@@ -183,7 +183,7 @@ public class ${ModuleName}ServiceImpl implements ${ModuleName}Service {
     private Consumer<Integer> publishEvent(${ModuleName} entity, Object params) {
         return integer -> {
             if (integer == 0) return;
-            ${ModuleName}VO vo = BeanUtils.map(entity, ${ModuleName}VO.class);
+            ${ModuleName}VO vo = BeanUtils.convert(entity, ${ModuleName}VO.class);
             eventPublisher.publishEvent(new PayloadApplicationEvent<>(vo, params));
         };
     }

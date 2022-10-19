@@ -1,13 +1,15 @@
 package ${basePackageName};
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author peace
  */
-@Data
-@ConfigurationProperties(prefix = "peacetrue.${domain-name}")
+@Getter
+@Setter
+@ConfigurationProperties(prefix = "peacetrue.modules.${domain-name}")
 public class Service${DomainName}Properties {
 
 }

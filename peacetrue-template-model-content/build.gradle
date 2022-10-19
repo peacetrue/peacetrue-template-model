@@ -3,18 +3,18 @@ dependencies {
     implementation "com.github.peacetrue.generator:peacetrue-generator-velocity"
     implementation "com.github.peacetrue.generator:peacetrue-generator-context"
     implementation "com.github.peacetrue:peacetrue-velocity"
-    implementation 'com.google.guava:guava'
-    implementation 'org.mybatis:mybatis'
-    implementation 'com.github.peacetrue.sql:peacetrue-sql:2.0.0-SNAPSHOT'
-    implementation 'com.github.peacetrue.sql:peacetrue-sql-metadata:2.0.0-SNAPSHOT'
-    implementation 'com.github.peacetrue:peacetrue-spring'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
-    compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation "com.google.guava:guava"
+//    implementation "org.mybatis:mybatis"
+    implementation "com.github.peacetrue.sql:peacetrue-sql:2.0.0-SNAPSHOT"
+    implementation "com.github.peacetrue.sql:peacetrue-sql-metadata:2.0.0-SNAPSHOT"
+    implementation "com.github.peacetrue.spring:peacetrue-spring-beans"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc"
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    testImplementation project(path: ':peacetrue-template-model-structure', configuration: 'testArtifacts')
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-logging'
-    testImplementation 'com.h2database:h2:1.4.196'
+    testImplementation project(path: ":peacetrue-template-model-structure", configuration: "testArtifacts")
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-logging"
+    testImplementation "com.h2database:h2:1.4.196"
 }

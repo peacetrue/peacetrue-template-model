@@ -2,10 +2,15 @@ description '${domainDescription}控制器'
 
 dependencies {
     api project(":${project-name}-service-api")
-    implementation "com.github.peacetrue:peacetrue-spring"
-    implementation "org.springframework.boot:spring-boot-starter-webflux"
-    implementation "org.springframework.data:spring-data-commons"
+    implementation "com.github.peacetrue.spring:peacetrue-spring-beans"
+    implementation "org.springframework:spring-webmvc"
+    implementation "org.springframework.boot:spring-boot"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
     testImplementation project(':${project-name}-service-impl')
     testImplementation project(path: ':${project-name}-service-impl', configuration: 'testArtifacts')
+    testImplementation "org.springframework.boot:spring-boot-starter-web"
+    testImplementation "org.springframework.boot:spring-boot-starter-json"
+    testImplementation "com.github.peacetrue:peacetrue-jackson"
 }

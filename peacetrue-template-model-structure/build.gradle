@@ -3,7 +3,7 @@ configurations {
 }
 
 task testJar(type: Jar) {
-    archiveClassifier = 'test'
+    archiveClassifier = "test"
     from sourceSets.test.output
 }
 
@@ -12,16 +12,16 @@ artifacts {
 }
 
 dependencies {
-    api 'com.github.peacetrue.generator:peacetrue-generator'
-    implementation 'com.github.peacetrue.generator:peacetrue-generator-context'
-    implementation 'com.google.guava:guava' //for UpperCamelContextHandler
-    implementation 'com.github.peacetrue.generator:peacetrue-generator-velocity'
+    api "com.github.peacetrue.generator:peacetrue-generator"
+    implementation "com.github.peacetrue.generator:peacetrue-generator-context"
+    implementation "com.google.guava:guava" //for UpperCamelContextHandler
+    implementation "com.github.peacetrue.generator:peacetrue-generator-velocity"
     implementation "com.github.peacetrue:peacetrue-velocity"
-    compileOnly 'org.springframework.boot:spring-boot-autoconfigure'
-    compileOnly 'org.springframework.boot:spring-boot-configuration-processor'
-    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    compileOnly "org.springframework.boot:spring-boot-autoconfigure"
+    compileOnly "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.boot:spring-boot-starter-logging'
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.boot:spring-boot-starter-logging"
 
 }

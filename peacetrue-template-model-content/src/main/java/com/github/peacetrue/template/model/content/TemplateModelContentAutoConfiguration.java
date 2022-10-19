@@ -4,7 +4,7 @@ import com.github.peacetrue.generator.*;
 import com.github.peacetrue.generator.velocity.ContextFactory;
 import com.github.peacetrue.generator.velocity.ToolContextFactory;
 import com.github.peacetrue.generator.velocity.VelocityGeneratorAutoConfiguration;
-import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.spring.beans.BeanUtils;
 import com.github.peacetrue.sql.metadata.Model;
 import com.github.peacetrue.sql.metadata.ModelProperty;
 import com.github.peacetrue.sql.metadata.ModelSupplier;
@@ -107,7 +107,7 @@ public class TemplateModelContentAutoConfiguration {
         log.debug("models: {}", models);
         List<Map<String, Object>> contexts = models
                 .stream().map(context -> {
-                    Map<String, Object> map = BeanUtils.map(context);
+                    Map<String, Object> map = BeanUtils.getPropertyValues(context);
                     map.put("ModuleName", context.getName());
                     map.put("moduleDescription", context.getComment());
                     return map;

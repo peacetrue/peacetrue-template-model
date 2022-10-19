@@ -1,6 +1,6 @@
 package ${basePackageName};
 
-import com.github.peacetrue.core.Id;
+import com.github.peacetrue.beans.properties.id.Id;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -12,8 +12,6 @@ import java.util.Date;
  */
 @Data
 public class ${ModuleName}VO implements Serializable, Id<$id.type.simpleName> {
-
-    private static final long serialVersionUID = 0L;
 
     #listProperties($properties)
 }

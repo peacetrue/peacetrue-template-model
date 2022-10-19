@@ -16,17 +16,14 @@ description '${domainDescription}服务实现'
 dependencies {
 
     api project(":${project-name}-service-api")
-    api 'org.slf4j:slf4j-api'
-    implementation 'com.github.peacetrue:peacetrue-spring'
-    implementation 'com.github.peacetrue:peacetrue-convention'
-    implementation 'org.apache.commons:commons-lang3'
-    implementation 'org.flywaydb:flyway-core'
-    implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
+    api "org.slf4j:slf4j-api"
+    implementation "com.github.peacetrue.spring:peacetrue-spring-beans"
+    implementation "com.github.peacetrue.spring:peacetrue-spring-data"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     compileOnly "org.springframework.boot:spring-boot-configuration-processor"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
 
-##    testImplementation 'io.r2dbc:r2dbc-h2'
-    testImplementation 'com.h2database:h2'
-    testImplementation 'org.springframework.boot:spring-boot-starter-validation'
+    testImplementation "com.h2database:h2"
+    testImplementation "org.flywaydb:flyway-core"
 }

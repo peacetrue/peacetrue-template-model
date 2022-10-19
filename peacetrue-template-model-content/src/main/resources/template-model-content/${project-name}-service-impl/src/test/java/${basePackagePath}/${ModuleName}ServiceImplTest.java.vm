@@ -1,6 +1,6 @@
 package ${basePackageName};
 
-import com.github.peacetrue.spring.util.BeanUtils;
+import com.github.peacetrue.spring.beans.BeanUtils;
 import org.jeasy.random.EasyRandom;
 import org.jeasy.random.EasyRandomParameters;
 import org.junit.jupiter.api.*;
@@ -50,7 +50,7 @@ class ${ModuleName}ServiceImplTest {
     @Test
     @Order(20)
     void queryForPage() {
-        ${ModuleName}Query params = BeanUtils.map(vo, ${ModuleName}Query.class);
+        ${ModuleName}Query params = BeanUtils.convert(vo, ${ModuleName}Query.class);
         service.query(params, PageRequest.of(0, 10))
                 .as(StepVerifier::create)
                 .assertNext(page -> Assertions.assertEquals(1, page.getTotalElements()))
@@ -60,7 +60,7 @@ class ${ModuleName}ServiceImplTest {
     @Test
     @Order(30)
     void queryForList() {
-        ${ModuleName}Query params = BeanUtils.map(vo, ${ModuleName}Query.class);
+        ${ModuleName}Query params = BeanUtils.convert(vo, ${ModuleName}Query.class);
         service.query(params)
                 .as(StepVerifier::create)
                 .expectNextCount(1)
@@ -70,7 +70,7 @@ class ${ModuleName}ServiceImplTest {
     @Test
     @Order(40)
     void get() {
-        ${ModuleName}Get params = BeanUtils.map(vo, ${ModuleName}Get.class);
+        ${ModuleName}Get params = BeanUtils.convert(vo, ${ModuleName}Get.class);
         service.get(params)
                 .as(StepVerifier::create)
                 .assertNext(item -> Assertions.assertEquals(vo.get${lc.uc($id.name)}(), item.get${lc.uc($id.name)}()))

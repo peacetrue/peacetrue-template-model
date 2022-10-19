@@ -15,32 +15,25 @@ import javax.annotation.Nullable;
  */
 public interface ${ModuleName}Service {
 
-    #foreach($property in $nonIdAuditProperties)
-        /** $property.comment */
-        String PROPERTY_${lc.uu($property.name)} = "${property.name}";
-    #end
-    /** 所有属性 */
-    String[] PROPERTIES = {${literalPropertyNames}};
-
     /** 新增 */
-    Mono<${ModuleName}VO> add(${ModuleName}Add params);
+    ${ModuleName}VO add(${ModuleName}Add params);
 
     /** 分页查询 */
-    Mono<Page<${ModuleName}VO>> query(${ModuleName}Query params, Pageable pageable, String... projection);
+    Page<${ModuleName}VO> query(${ModuleName}Query params, Pageable pageable, String... projection);
 
     /** 全量查询 */
-    Flux<${ModuleName}VO> query(${ModuleName}Query params, Sort sort, String... projection);
+    List<${ModuleName}VO> query(${ModuleName}Query params, Sort sort, String... projection);
 
     /** 全量查询 */
-    Flux<${ModuleName}VO> query(${ModuleName}Query params, String... projection);
+    List<${ModuleName}VO> query(${ModuleName}Query params, String... projection);
 
     /** 获取 */
-    Mono<${ModuleName}VO> get(${ModuleName}Get params, String... projection);
+    ${ModuleName}VO get(${ModuleName}Get params, String... projection);
 
     /** 修改 */
-    Mono<Integer> modify(${ModuleName}Modify params);
+    Integer modify(${ModuleName}Modify params);
 
     /** 删除 */
-    Mono<Integer> delete(${ModuleName}Delete params);
+    Integer delete(${ModuleName}Delete params);
 
 }

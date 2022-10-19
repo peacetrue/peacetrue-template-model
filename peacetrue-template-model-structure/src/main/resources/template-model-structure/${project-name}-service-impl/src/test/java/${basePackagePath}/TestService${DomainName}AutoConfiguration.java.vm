@@ -1,25 +1,23 @@
 package ${basePackageName};
 
-import com.github.peacetrue.init.InitAutoConfiguration;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.ImportAutoConfiguration;
-import org.springframework.boot.autoconfigure.data.r2dbc.R2dbcDataAutoConfiguration;
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcAutoConfiguration;
-import org.springframework.boot.autoconfigure.r2dbc.R2dbcTransactionManagerAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.autoconfigure.transaction.TransactionAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /**
  * @author peace
  */
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ImportAutoConfiguration({
-        R2dbcAutoConfiguration.class,
-        R2dbcDataAutoConfiguration.class,
-        R2dbcTransactionManagerAutoConfiguration.class,
-        Service${DomainName}AutoConfiguration.class,
-        InitAutoConfiguration.class
+        DataSourceAutoConfiguration.class,
+        HibernateJpaAutoConfiguration.class,
+        TransactionAutoConfiguration.class,
+        Service${DomainName}AutoConfiguration.class
 })
-@EnableAutoConfiguration
+@EnableJpaRepositories
 public class TestService${DomainName}AutoConfiguration {
 
 }
